@@ -1,0 +1,4 @@
+{
+  "extends": "./configs/ts-config/tsconfig.rules.json",
+  "include": ["src", "**/*__tests__"]
+}

@@ -2,6 +2,11 @@
 
 ### This applications does data fetching and processing in the background with submission of final result to main app.
 
+## Setup for development
+
+After cloning the project run following command `git config core.hooksPath .git-hooks` to enable git hooks.
+
+
 This approach might be useful for apps with complex data processing whether it long arrays or complex object merging.
 Using processing of data in the background it is possible to save main application as interactive and responsive as possible.
 
