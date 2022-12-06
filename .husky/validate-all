@@ -1,9 +1,0 @@
-#!/bin/bash
-
-. "$(dirname "$0")/_/husky.sh"
-
-yarn typecheck &
-P1=$!
-yarn lint-all &
-P2=$!
-wait $P1 $P2
