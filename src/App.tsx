@@ -1,9 +1,10 @@
-import { useState } from "react";
-import diceIcon from "./assets/dice.svg";
-import "./App.css";
+import { type FC } from "react";
 
-function App() {
-  return (
+import "./App.css";
+import diceIcon from "./assets/dice.svg";
+
+const App: FC = () => {
+  return(
     <div className="App">
       <img src={diceIcon} className="logo speed0" alt="dice icon" />
       <img src={diceIcon} className="logo speed1" alt="dice icon" />
@@ -13,6 +14,7 @@ function App() {
       <h1>Offscreen canvas worker</h1>
     </div>
   );
-}
+};
 
 export default App;
+
