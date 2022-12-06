@@ -1,10 +1,10 @@
-import { type FC } from "react";
+import type { FC } from "react";
 
 import "./App.css";
 import diceIcon from "./assets/dice.svg";
 
 const App: FC = () => {
-  return(
+  return (
     <div className="App">
       <img src={diceIcon} className="logo speed0" alt="dice icon" />
       <img src={diceIcon} className="logo speed1" alt="dice icon" />
