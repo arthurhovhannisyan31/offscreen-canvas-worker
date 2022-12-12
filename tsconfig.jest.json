@@ -1,4 +1,8 @@
 {
   "extends": "./configs/ts-config/tsconfig.rules.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": ["jest"]
+  },
   "include": ["src", "**/*__tests__"]
 }
