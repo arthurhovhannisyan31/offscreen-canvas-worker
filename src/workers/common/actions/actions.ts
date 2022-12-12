@@ -1,0 +1,16 @@
+export const MAIN = "MAIN";
+export const MAIN_INIT = `${MAIN}_INIT`;
+export const MAIN_DRAW_REQUEST = `${MAIN}_DRAW_REQUEST`;
+export const MAIN_DRAW_DONE = `${MAIN}_DRAW_DONE`;
+export const MAIN_IMAGE_DATA_DONE = `${MAIN}_IMAGE_DATA_DONE`;
+
+export const SECOND = "SECOND";
+export const SECOND_INIT = `${SECOND}_INIT`;
+export const SECOND_DRAW_REQUEST = `${SECOND}_DRAW_REQUEST`;
+export const SECOND_DRAW_DONE = `${SECOND}_DRAW_DONE`;
+
+export const PROCESS_IMAGE_DATA = "PROCESS_IMAGE_DATA";
+export const PROCESS_IMAGE_DATA_REQUEST = `${PROCESS_IMAGE_DATA}_REQUEST`;
+export const PROCESS_IMAGE_DATA_DONE = `${PROCESS_IMAGE_DATA}_DONE`;
+
+export const ERROR = "ERROR";
