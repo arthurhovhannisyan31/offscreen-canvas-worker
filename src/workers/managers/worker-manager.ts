@@ -7,7 +7,8 @@ export default class WorkerManager<T> {
     errorHandler: Worker["onerror"],
     options?: WorkerOptions,
   ) {
-    this.worker = new Worker(url, {
+    this.worker = new Worker(
+      new URL(url, import.meta.url), {
       type: "module",
       credentials: "include",
       ...options

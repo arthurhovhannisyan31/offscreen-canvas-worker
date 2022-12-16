@@ -42,10 +42,6 @@
     "react-hooks"
   ],
   "rules": {
-    "quotes": ["error", "double"],
-    "@typescript-eslint/no-unused-vars": "warn",
-    "no-underscore-dangle": 0,
-    "no-console": "warn",
     "@typescript-eslint/semi": 0,
     "@typescript-eslint/indent": 0,
     "@typescript-eslint/explicit-function-return-type": [
@@ -54,33 +50,17 @@
         "allowExpressions": true
       }
     ],
-     "@typescript-eslint/consistent-type-exports":
-     ["error", { "fixMixedExportsWithInlineTypeSpecifier": true }],
-     "@typescript-eslint/consistent-type-imports": [
-         "warn",
-         {
-           "prefer": "type-imports",
-           "disallowTypeAnnotations": false,
-           "fixStyle": "separate-type-imports"
-         }
-     ],
-    "react/jsx-one-expression-per-line": 0,
-    "react/jsx-props-no-spreading": 0,
-    "react/jsx-curly-newline": 0,
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error",
-    "react/display-name": 0,
-    "react/prop-types": 0,
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/require-default-props": 0,
-    "react/no-unstable-nested-components": [
+    "@typescript-eslint/consistent-type-exports":
+    ["error", { "fixMixedExportsWithInlineTypeSpecifier": true }],
+    "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
-        "allowAsProps": true
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": false,
+        "fixStyle": "inline-type-imports"
       }
     ],
-    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
     "import/no-cycle": [2, { "ignoreExternal": true }],
     "import/default": 0,
     "import/named": 0,
@@ -116,7 +96,35 @@
         },
         "warnOnUnassignedImports": true
       }
-    ]
+    ],
+    "max-len": ["error", { "code": 120 }],
+    "no-underscore-dangle": 0,
+    "no-console": "warn",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 1}],
+    "object-curly-spacing": ["error", "always"],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "*", "next": "return" }
+    ],
+    "react/jsx-one-expression-per-line": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/jsx-curly-newline": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/display-name": 0,
+    "react/prop-types": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "react/require-default-props": 0,
+    "react/no-unstable-nested-components": [
+      "warn",
+      {
+        "allowAsProps": true
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "semi": ["warn", "always"],
+    "quotes": ["error", "double"]
   },
   "settings": {
     "import/ignore:": [

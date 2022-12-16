@@ -1,4 +1,4 @@
-import type { BoxedArrayBufferView } from "./types"
+import type { BoxedArrayBufferView } from "./types";
 
 import WorkerManager from "../managers/worker-manager";
 

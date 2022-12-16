@@ -1,15 +1,26 @@
 import { memo, useRef } from "react";
 
+// import type CanvasManager from "../../workers/managers/canvas-manager";
+
+// import { getMainWorker } from "../../workers/main";
+
 export const CanvasContainer = memo(() => {
-  const canvas1Ref = useRef(null);
-  const canvas2Ref = useRef(null);
+  const canvas1Ref = useRef<HTMLCanvasElement | null>(null);
+  const canvas2Ref = useRef<HTMLCanvasElement | null>(null);
+  // const canvasWorker = useRef<CanvasManager | null>(null);
+
+  // useEffect(() => {
+  //   if (canvas1Ref.current && !canvasWorker.current) {
+  //     canvasWorker.current = getMainWorker(canvas1Ref.current);
+  //   }
+  // }, []);
 
   return(
       <div>
         <canvas ref={canvas1Ref} />
         <canvas ref={canvas2Ref} />
       </div>
-  )
-})
+  );
+});
 
-CanvasContainer.displayName = "CanvasContainer"
+CanvasContainer.displayName = "CanvasContainer";

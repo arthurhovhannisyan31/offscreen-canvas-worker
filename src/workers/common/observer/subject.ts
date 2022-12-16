@@ -1,6 +1,6 @@
 import type { Observer } from "./types";
 
-import ObserverList from "./observer-list.js";
+import ObserverList from "./observer-list";
 
 export default class Subject<T> {
   observers = new ObserverList();

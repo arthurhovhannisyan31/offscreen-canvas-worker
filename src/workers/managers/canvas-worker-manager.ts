@@ -1,7 +1,9 @@
-import { createAction } from "../common/actions/createAction"
+// import { createAction } from "../common/actions";
 import WorkerManager from "../managers/worker-manager";
 
-type MessagesType = Action<BoxedType<File>>;
+type MessagesType = Action<Message<File>>;
+
+export type CanvasWorkerManagerProps = ConstructorParameters<typeof CanvasWorkerManager>
 
 export default class CanvasWorkerManager extends WorkerManager<MessagesType> {
   constructor(
@@ -19,12 +21,14 @@ export default class CanvasWorkerManager extends WorkerManager<MessagesType> {
     canvasRef: HTMLCanvasElement,
     initAction: string
   ): void {
-    const canvasControl = canvasRef.transferControlToOffscreen();
-    this.worker.postMessage(
-      createAction(initAction, {
-        data: canvasControl,
-      }),
-      [canvasControl]
-    );
+    console.log(canvasRef);
+    console.log(initAction);
+    // const canvasControl = canvasRef.transferControlToOffscreen();
+    // this.worker.postMessage(
+    //   createAction(initAction, {
+    //     data: canvasControl,
+    //   }),
+    //   [canvasControl]
+    // );
   }
 }

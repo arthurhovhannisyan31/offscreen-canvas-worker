@@ -1,4 +1,4 @@
-import type {Config} from "jest";
+import type { Config } from "jest";
 
 const config: Config = {
   clearMocks: true,
@@ -31,11 +31,10 @@ const config: Config = {
   preset: "ts-jest",
   setupFiles: ["<rootDir>/configs/jest/utils/polyfill.ts"],
   setupFilesAfterEnv: [
-    "jest-extended/all",
-    "<rootDir>/configs/jest/setup.config.js"
+    "jest-extended/all"
   ],
   testEnvironment: "jsdom",
   testMatch: ["**/__tests__/**/*.test.ts?(x)"],
-}
+};
 
-export default config
+export default config;

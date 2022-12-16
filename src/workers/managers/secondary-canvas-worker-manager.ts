@@ -1,17 +1,16 @@
-import { SECOND_DRAW_REQUEST } from "../common/actions/actions";
-import { createAction } from "../common/actions/createAction";
-import CanvasWorkerManager from "./canvas-worker-manager";
+import { SECOND_DRAW_REQUEST , createAction } from "../common/actions";
+import CanvasWorkerManager, { type CanvasWorkerManagerProps } from "./canvas-worker-manager";
 
-interface WorkerMessagePayload {
+interface WorkerUpdateMessage {
   data: ArrayBufferView
 }
 
 export default class SecondaryCanvasWorkerManager extends CanvasWorkerManager {
-  constructor(...args: ConstructorParameters<typeof CanvasWorkerManager>) {
+  constructor(...args: CanvasWorkerManagerProps) {
     super(...args);
   }
 
-  update(data: WorkerMessagePayload): void  {
+  update(data: WorkerUpdateMessage): void  {
     this.worker.postMessage(
       createAction(SECOND_DRAW_REQUEST, {
         data,

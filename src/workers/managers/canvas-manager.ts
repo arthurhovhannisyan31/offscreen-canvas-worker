@@ -1,41 +1,36 @@
-import type { CanvasMessage } from "./types"
-
 import {
   MAIN_DRAW_DONE,
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
   MAIN_INIT,
   PROCESS_IMAGE_DATA_DONE,
-  PROCESS_IMAGE_DATA_REQUEST,
+  // PROCESS_IMAGE_DATA_REQUEST,
   SECOND_DRAW_DONE,
-} from "../common/actions/actions";
-import { createAction } from "../common/actions/createAction";
-import Subject from "../common/observer/subject";
+} from "workers/common/actions/actions";
+import { createAction } from "workers/common/actions/createAction";
+import Subject from "workers/common/observer/subject";
+
+import type { CanvasMessage } from "./types";
+
 import CanvasWorkerManager from "./canvas-worker-manager";
-import ProcessImageWorkerManager from "./process-image-worker-manager";
+// import ProcessImageWorkerManager from "./process-image-worker-manager";
 import SecondaryCanvasWorkerManager from "./secondary-canvas-worker-manager";
 
 export default class CanvasManager {
   mainCanvasWorker: CanvasWorkerManager;
-  processImageWorker: ProcessImageWorkerManager;
+  // processImageWorker: ProcessImageWorkerManager;
   subject = new Subject();
 
   constructor(
     mainCanvas: HTMLCanvasElement,
   ) {
     this.mainCanvasWorker = new CanvasWorkerManager(
-      "./workers/first-offscreen.js",
+      "../workers/first-offscreen",
       mainCanvas,
       this._onMessage,
       this._onError,
       MAIN_INIT
     );
-
-    this.processImageWorker = new ProcessImageWorkerManager(
-      this._onMessage,
-      this._onError
-    );
-
   }
 
   addObserver(
@@ -50,6 +45,7 @@ export default class CanvasManager {
       this._onError,
       initAction
     );
+
     return this.subject.addObserver(workerManager);
   }
 
@@ -66,13 +62,13 @@ export default class CanvasManager {
         break;
       }
       case MAIN_IMAGE_DATA_DONE: {
-        this.processImageWorker.postMessage(
-          createAction(PROCESS_IMAGE_DATA_REQUEST, {
-            data: payload.data,
-            alpha: 0.5,
-          }),
-          [payload.data.data.buffer]
-        );
+        // this.processImageWorker.postMessage(
+        //   createAction(PROCESS_IMAGE_DATA_REQUEST, {
+        //     data: payload.data,
+        //     alpha: 0.5,
+        //   }),
+        //   [payload.data.data.buffer]
+        // );
         break;
       }
       case PROCESS_IMAGE_DATA_DONE: {

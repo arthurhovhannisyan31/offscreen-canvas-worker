@@ -1,3 +1,20 @@
 run validation for staged files
 
 https://vitest.dev/ for tests
+
+would be great to have modular system to apply separate canvas managers and run them
+
+main worker
+
+all modules should have list of subscribers,
+any emitted event from a module should be accepted by the subscriber
+all subscribers should implement bypass logic to not run in infinite loop
+
+
+fetch data in the background, store it, process it, print it
+
+draw an countdown with decreasing circle line and countdown in the center
+then update main image
+
+creation of main worker should be independed from project
+create of all necessary modules comes after creation of main worker

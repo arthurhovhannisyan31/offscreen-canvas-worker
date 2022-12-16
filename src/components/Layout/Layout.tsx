@@ -1,8 +1,8 @@
 import { memo } from "react";
 
-import type { LayoutProps } from "./Layout.types"
+import type { LayoutProps } from "./Layout.types";
 
-export const Layout = memo<LayoutProps>(({children}) => {
+export const Layout = memo<LayoutProps>(({ children }) => {
   return(
       <article>
         <header>
@@ -15,7 +15,7 @@ export const Layout = memo<LayoutProps>(({children}) => {
           <p>footer</p>
         </footer>
       </article>
-  )
-})
+  );
+});
 
-Layout.displayName = "Layout"
+Layout.displayName = "Layout";

@@ -1,7 +1,8 @@
 import { type FC, memo } from "react";
 
-import { CanvasContainer } from "../CanvasContainer/CanvasContainer"
-import { Layout } from "../Layout/Layout"
+import { CanvasContainer } from "components/CanvasContainer/CanvasContainer";
+import { Layout } from "components/Layout/Layout";
+
 import "./App.css";
 import diceIcon from "./assets/dice.svg";
 
@@ -21,5 +22,4 @@ export const App: FC = memo(() => {
   );
 });
 
-App.displayName = "App"
-
+App.displayName = "App";

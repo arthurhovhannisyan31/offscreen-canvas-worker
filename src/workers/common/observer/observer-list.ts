@@ -1,4 +1,4 @@
-import type { Observer } from "./types"
+import type { Observer } from "./types";
 
 export default class ObserverList<T> {
   #observerList: Observer<T>[] = [];
@@ -15,7 +15,8 @@ export default class ObserverList<T> {
     if (index > -1 && index < this.#observerList.length) {
       return this.#observerList[index];
     }
-    return
+
+    return;
   }
 
   indexOf(obj: Observer<T>, startIndex = 0): number {
@@ -24,6 +25,7 @@ export default class ObserverList<T> {
     while (i < this.#observerList.length) {
       if (this.#observerList[i] === obj) return i;
     }
+
     return -1;
   }
 
