@@ -1,21 +1,31 @@
-import type { BoxedArrayBufferView } from "./types";
+import type { ArrayBufferViewMessage } from "./types";
 
+import { createAction, PROCESS_IMAGE_DATA_REQUEST } from "../common/actions";
 import WorkerManager from "../managers/worker-manager";
 
-interface ProcessImageWorkerMessage {
-  data: BoxedArrayBufferView
+export interface ProcessImageWorkerMessage extends Message<ImageData>{
   alpha: number
 }
 
-export default class ProcessImageWorkerManager extends WorkerManager<Action<ProcessImageWorkerMessage>> {
+export type ProcessImageWorkerManagerAction = Action<ProcessImageWorkerMessage>;
+
+export default class ProcessImageWorkerManager
+  extends WorkerManager<ProcessImageWorkerManagerAction> {
   constructor(
+    url: string,
     messageHandler: Worker["onmessage"],
     errorHandler: Worker["onerror"],
   ) {
-    super("./workers/process-image-worker", messageHandler, errorHandler);
+    super(url, messageHandler, errorHandler);
   }
 
-  processImageData(imageData: BoxedArrayBufferView, alpha: number): void {
-    this.worker.postMessage({ imageData, alpha }, [imageData.data.buffer]);
+  processImageData(imageData: ArrayBufferViewMessage, alpha: number): void {
+    this.worker.postMessage(
+      createAction(
+        PROCESS_IMAGE_DATA_REQUEST,
+        { imageData, alpha }
+      ),
+      [imageData.data.buffer]
+    );
   }
 }

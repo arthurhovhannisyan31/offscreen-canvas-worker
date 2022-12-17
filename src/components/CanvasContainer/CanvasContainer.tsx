@@ -1,19 +1,19 @@
-import { memo, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 
-// import type CanvasManager from "../../workers/managers/canvas-manager";
+import type CanvasManager from "../../workers/managers/canvas-manager";
 
-// import { getMainWorker } from "../../workers/main";
+import { getMainWorker } from "../../workers/main";
 
 export const CanvasContainer = memo(() => {
   const canvas1Ref = useRef<HTMLCanvasElement | null>(null);
   const canvas2Ref = useRef<HTMLCanvasElement | null>(null);
-  // const canvasWorker = useRef<CanvasManager | null>(null);
+  const canvasWorker = useRef<CanvasManager | null>(null);
 
-  // useEffect(() => {
-  //   if (canvas1Ref.current && !canvasWorker.current) {
-  //     canvasWorker.current = getMainWorker(canvas1Ref.current);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (canvas1Ref.current && !canvasWorker.current) {
+      canvasWorker.current = getMainWorker(canvas1Ref.current);
+    }
+  }, []);
 
   return(
       <div>

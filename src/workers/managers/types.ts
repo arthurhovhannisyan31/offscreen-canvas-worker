@@ -1,8 +1,2 @@
-export type BoxedArrayBufferView = Message<ArrayBufferView>;
-
-export interface CanvasMessage {
-  data: Action<{
-    data: BoxedArrayBufferView
-  }>
-}
+export type ArrayBufferViewMessage = Message<ArrayBufferView>;
 

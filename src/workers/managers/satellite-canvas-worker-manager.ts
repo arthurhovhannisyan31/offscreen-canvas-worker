@@ -5,7 +5,7 @@ interface WorkerUpdateMessage {
   data: ArrayBufferView
 }
 
-export default class SecondaryCanvasWorkerManager extends CanvasWorkerManager {
+export default class SatelliteCanvasWorkerManager extends CanvasWorkerManager {
   constructor(...args: CanvasWorkerManagerProps) {
     super(...args);
   }

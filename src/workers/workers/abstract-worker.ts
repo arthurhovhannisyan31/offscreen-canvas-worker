@@ -6,7 +6,7 @@ export default abstract class AbstractWorker<T> {
   protected constructor(worker: DedicatedWorkerGlobalScope) {
     this.worker = worker;
     this.worker.addEventListener("message", this.onMessage);
-    this.worker.addEventListener("messageerror", this.onMessageError);
+    this.worker.addEventListener("error", this.onError);
   }
 
   abstract onMessage(_: Message): void;
@@ -15,7 +15,7 @@ export default abstract class AbstractWorker<T> {
     this.worker.postMessage(message, transfer);
   }
 
-  onMessageError(error: Message):void {
+  onError(error: ErrorEvent):void {
     this.worker.postMessage(createAction(ERROR, error));
   }
 

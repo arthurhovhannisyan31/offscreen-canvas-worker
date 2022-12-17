@@ -1,5 +1,5 @@
 export default class WorkerManager<T> {
-  worker: Worker;
+  protected worker: Worker;
 
   constructor(
     url: string,
@@ -21,7 +21,8 @@ export default class WorkerManager<T> {
     this.worker.postMessage(message, transfer);
   }
 
-  onMessage(): void {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
+  onMessage(_: Message<T>): void {
     throw new Error("onMessage not implemented!");
   }
 

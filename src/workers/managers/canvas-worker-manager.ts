@@ -1,16 +1,17 @@
 // import { createAction } from "../common/actions";
 import WorkerManager from "../managers/worker-manager";
 
-type MessagesType = Action<Message<File>>;
+export type CanvasWorkerManagerAction = Action<Message<File>>;
 
 export type CanvasWorkerManagerProps = ConstructorParameters<typeof CanvasWorkerManager>
 
-export default class CanvasWorkerManager extends WorkerManager<MessagesType> {
+export default class CanvasWorkerManager
+  extends WorkerManager<CanvasWorkerManagerAction> {
   constructor(
     url: string,
-    canvasRef: HTMLCanvasElement,
     messageHandler: Worker["onmessage"],
     errorHandler: Worker["onerror"],
+    canvasRef: HTMLCanvasElement,
     initActionName: string
   ) {
     super(url, messageHandler, errorHandler);
@@ -21,7 +22,9 @@ export default class CanvasWorkerManager extends WorkerManager<MessagesType> {
     canvasRef: HTMLCanvasElement,
     initAction: string
   ): void {
+    // eslint-disable-next-line no-console
     console.log(canvasRef);
+    // eslint-disable-next-line no-console
     console.log(initAction);
     // const canvasControl = canvasRef.transferControlToOffscreen();
     // this.worker.postMessage(

@@ -10,10 +10,10 @@ import { drawMainCanvasBitMap } from "workers/common/helpers";
 import type { CanvasWorkerAction } from "./types";
 
 import AbstractCanvasWorker from "./abstract-canvas-worker";
-import { isHTMLCanvasElement, isImageBitmapSource } from "./typeCheck";
+import { isHTMLCanvasElement, isImageBitmapSource } from "./typeGuards";
 import { type CanvasWorkerDrawMessage } from "./types";
 
-class FirstOffscreen extends AbstractCanvasWorker {
+class FirstOffscreenWorker extends AbstractCanvasWorker {
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
   }
@@ -21,14 +21,14 @@ class FirstOffscreen extends AbstractCanvasWorker {
   async draw(payload: CanvasWorkerDrawMessage): Promise<void> {
     const bitMap = await createImageBitmap(payload.data);
     drawMainCanvasBitMap(this.previewCtx, bitMap);
-    this.postMessage(createSimpleAction(MAIN_DRAW_DONE));
+    this.worker.postMessage(createSimpleAction(MAIN_DRAW_DONE));
     this.processImageData();
   }
 
   processImageData(): void {
     if (this.previewCtx){
       const imageData = this.previewCtx.getImageData(0, 0, 400, 400);
-      this.postMessage(
+      this.worker.postMessage(
         createAction(MAIN_IMAGE_DATA_DONE, {
           data: imageData,
         }),
@@ -55,6 +55,6 @@ class FirstOffscreen extends AbstractCanvasWorker {
   };
 }
 
-new FirstOffscreen(self as DedicatedWorkerGlobalScope);
+new FirstOffscreenWorker(self as DedicatedWorkerGlobalScope);
 
 export default {} as DedicatedWorker;

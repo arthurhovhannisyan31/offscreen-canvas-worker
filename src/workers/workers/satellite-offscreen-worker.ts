@@ -9,9 +9,9 @@ import { drawToCanvas } from "workers/common/helpers";
 import type { CanvasWorkerAction, CanvasWorkerDrawMessage } from "./types";
 
 import AbstractCanvasWorker from "./abstract-canvas-worker";
-import { isHTMLCanvasElement, isImageBitmapSource } from "./typeCheck";
+import { isHTMLCanvasElement, isImageBitmapSource } from "./typeGuards";
 
-class SecondOffscreen extends AbstractCanvasWorker {
+class SatelliteOffscreen extends AbstractCanvasWorker {
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
   }
@@ -39,6 +39,6 @@ class SecondOffscreen extends AbstractCanvasWorker {
   };
 }
 
-new SecondOffscreen(self as DedicatedWorkerGlobalScope);
+new SatelliteOffscreen(self as DedicatedWorkerGlobalScope);
 
 export default {} as DedicatedWorker;
