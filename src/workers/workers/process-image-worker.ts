@@ -27,14 +27,14 @@ class ProcessImageWorker extends AbstractWorker<ProcessImageWorkerAction> {
     );
   }
 
-  onMessage = ({ data }: Message<ProcessImageWorkerAction>): void => {
+  processMessage({ data }: Message<ProcessImageWorkerAction>): void {
     switch (data.type) {
       case PROCESS_IMAGE_DATA_REQUEST: {
         this.processImageData(data.payload);
         break;
       }
     }
-  };
+  }
 }
 
 new ProcessImageWorker(self as DedicatedWorkerGlobalScope);

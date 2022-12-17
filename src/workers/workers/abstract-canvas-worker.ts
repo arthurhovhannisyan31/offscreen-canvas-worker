@@ -21,5 +21,5 @@ export default abstract class AbstractCanvasWorker
 
   abstract draw(image: CanvasWorkerDrawMessage): Promise<void>;
 
-  abstract onMessage(message: Message<CanvasWorkerAction>): void;
+  abstract processMessage(message: Message<CanvasWorkerAction>): void;
 }

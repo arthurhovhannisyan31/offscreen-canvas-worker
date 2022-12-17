@@ -21,7 +21,7 @@ class SatelliteOffscreen extends AbstractCanvasWorker {
     this.worker.postMessage(createSimpleAction(SECOND_DRAW_DONE));
   }
 
-  onMessage = ({ data }: Message<CanvasWorkerAction>): void => {
+  processMessage({ data }: Message<CanvasWorkerAction>): void {
     switch (data.type) {
       case SECOND_INIT: {
         if (isHTMLCanvasElement(data.payload)){
@@ -36,7 +36,7 @@ class SatelliteOffscreen extends AbstractCanvasWorker {
         break;
       }
     }
-  };
+  }
 }
 
 new SatelliteOffscreen(self as DedicatedWorkerGlobalScope);

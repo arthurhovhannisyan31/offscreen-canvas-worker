@@ -10,6 +10,8 @@ import Subject from "workers/common/observer/subject";
 
 import type { CanvasManagerMessageType } from "./canvas-manager-types";
 
+import mainCanvasWorker from "../workers/first-offscreen-worker?worker&url";
+import processImageWorker from "../workers/process-image-worker?worker&url";
 import CanvasWorkerManager from "./canvas-worker-manager";
 import ProcessImageWorkerManager from "./process-image-worker-manager";
 import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
@@ -24,18 +26,20 @@ export default class CanvasManager {
     mainCanvas: HTMLCanvasElement,
   ) {
     this.mainCanvasWorker = new CanvasWorkerManager(
-      "../workers/first-offscreen-worker",
-      this._onMessage,
-      this._onError,
+      mainCanvasWorker,
+      this.#onMessage,
+      this.#onError,
       mainCanvas,
       MAIN_INIT
     );
 
     this.processImageWorker = new ProcessImageWorkerManager(
-      "../workers/process-image-worker",
-      this._onMessage,
-      this._onError
+      processImageWorker,
+      this.#onMessage,
+      this.#onError
     );
+
+    this.fetchImage();
   }
 
   addObserver(
@@ -45,8 +49,8 @@ export default class CanvasManager {
   ): number {
     const workerManager = new SatelliteCanvasWorkerManager(
       url,
-      this._onMessage,
-      this._onError,
+      this.#onMessage,
+      this.#onError,
       canvas,
       initAction
     );
@@ -54,14 +58,16 @@ export default class CanvasManager {
     return this.subject.addObserver(workerManager);
   }
 
-  processImageFile(file: File): void {
+  async fetchImage(): Promise<void> {
+    const response = await fetch("https://picsum.photos/300/150");
+    const blob = await response.blob();
+    const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });
     this.mainCanvasWorker.postMessage(
       createAction(MAIN_DRAW_REQUEST, { data: file })
     );
   }
 
-  // CanvasWorkerAction
-  _onMessage = ({ data }: CanvasManagerMessageType): void => {
+  #onMessage = ({ data }: CanvasManagerMessageType): void => {
     switch (data.type) {
       case MAIN_IMAGE_DATA_DONE: {
         if (isArrayBufferViewMessage(data)){
@@ -83,8 +89,8 @@ export default class CanvasManager {
       }
     }
   };
-  _onError(this: AbstractWorker, ev: ErrorEvent): void {
+  #onError = (ev: ErrorEvent): void => {
     // eslint-disable-next-line no-console
-    console.log(ev.error);
-  }
+    console.log("onError", ev.error);
+  };
 }

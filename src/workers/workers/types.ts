@@ -3,6 +3,6 @@ export type CanvasWorkerDrawMessage = Message<ImageData>;
 
 export type CanvasWorkerMessage =
   | Message<HTMLCanvasElement>
-  | Message<ImageData>
+  | Message<File|ImageData>
 
 export type CanvasWorkerAction = Action<CanvasWorkerMessage>

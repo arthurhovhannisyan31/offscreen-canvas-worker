@@ -10,8 +10,14 @@ export const CanvasContainer = memo(() => {
   const canvasWorker = useRef<CanvasManager | null>(null);
 
   useEffect(() => {
-    if (canvas1Ref.current && !canvasWorker.current) {
-      canvasWorker.current = getMainWorker(canvas1Ref.current);
+    if (!canvasWorker.current
+      && canvas1Ref.current
+      && canvas2Ref.current
+    ) {
+      canvasWorker.current = getMainWorker(
+        canvas1Ref.current,
+        canvas2Ref.current
+      );
     }
   }, []);
 

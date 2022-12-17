@@ -18,6 +18,7 @@ export default class WorkerManager<T> {
   }
 
   postMessage(message: T, transfer: Transferable[] = []): void {
+    console.log("WorkerManager", message);
     this.worker.postMessage(message, transfer);
   }
 

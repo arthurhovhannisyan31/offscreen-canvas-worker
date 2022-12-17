@@ -19,34 +19,6 @@ then update main image
 creation of main worker should be independed from project
 create of all necessary modules comes after creation of main worker
 
+REFACTOR
 
-Description:
-
-The idea and implementation should stay simple
-
-application should have only 2 canvases for the main page
-
-main worker is responsible for hosting other workers
-
-data-fetch-worker responsible for fetching and storing data
-
-image-process-worker responsible for image drawing and processing
-
-structure
-
- __________                ______________________
-|          |     post     |
-| main-app |------------->| main-worker
-|          |   onMessage  |
-|          |<-------------|      ___________________
-|__________|              |     |                   |
-                          |     | data-fetch-worker |
-                          |     |___________________|
-                          |
-                          |      ______________________
-                          |     |                      |
-                          |     | image-process-worker |
-                          |     |______________________|
-                          |
-                          |
-
+update private, protected class fields

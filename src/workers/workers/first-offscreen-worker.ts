@@ -10,7 +10,7 @@ import { drawMainCanvasBitMap } from "workers/common/helpers";
 import type { CanvasWorkerAction } from "./types";
 
 import AbstractCanvasWorker from "./abstract-canvas-worker";
-import { isHTMLCanvasElement, isImageBitmapSource } from "./typeGuards";
+import { isHTMLCanvasElement, isImageFile } from "./typeGuards";
 import { type CanvasWorkerDrawMessage } from "./types";
 
 class FirstOffscreenWorker extends AbstractCanvasWorker {
@@ -37,7 +37,7 @@ class FirstOffscreenWorker extends AbstractCanvasWorker {
     }
   }
 
-  onMessage = ({ data }: Message<CanvasWorkerAction>): void => {
+  processMessage({ data }: Message<CanvasWorkerAction>): void {
     switch (data.type) {
       case MAIN_INIT: {
         if (isHTMLCanvasElement(data.payload)){
@@ -46,13 +46,13 @@ class FirstOffscreenWorker extends AbstractCanvasWorker {
         break;
       }
       case MAIN_DRAW_REQUEST: {
-        if (isImageBitmapSource(data.payload)){
+        if (isImageFile(data.payload)){
           this.draw(data.payload);
         }
         break;
       }
     }
-  };
+  }
 }
 
 new FirstOffscreenWorker(self as DedicatedWorkerGlobalScope);
