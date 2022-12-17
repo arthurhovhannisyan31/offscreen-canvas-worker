@@ -7,16 +7,16 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint",
-    "lint-all": "yarn lint --ext .ts,.tsx,.js src/",
-    "format": "yarn lint --fix",
+    "lint": "yarn eslint --ext .ts,.tsx,.js src/",
+    "lint-staged": "bash configs/scripts/lint-staged",
+    "format": "yarn eslint --fix",
     "postinstall": "node ./configs/install/index.js",
     "jest-base": "node --expose-gc ./node_modules/jest/bin/jest.js",
     "test": "yarn jest-base --silent --coverage --maxWorkers=4 --no-cache --logHeapUsage",
     "test-staged": "yarn jest-base --notify --onlyChanged",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "prepare": "husky install",
-    "validate": "yarn typecheck && yarn lint-all && yarn test"
+    "validate": "yarn typecheck && yarn lint && yarn test"
   },
   "dependencies": {
     "react": "^18.2.0",
