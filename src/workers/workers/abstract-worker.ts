@@ -1,4 +1,4 @@
-import { createAction, ERROR } from "workers/common/actions";
+import { createAction, ERROR } from "../common/actions";
 
 export default abstract class AbstractWorker<T> {
   protected worker: DedicatedWorkerGlobalScope;

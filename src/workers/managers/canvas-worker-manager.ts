@@ -8,13 +8,13 @@ export type CanvasWorkerManagerProps = ConstructorParameters<typeof CanvasWorker
 export default class CanvasWorkerManager
   extends WorkerManager<Action<Message<File>>> {
   constructor(
-    url: string,
+    worker: Worker,
     messageHandler: Worker["onmessage"],
     errorHandler: Worker["onerror"],
     canvasRef: HTMLCanvasElement,
     initActionName: string
   ) {
-    super(url, messageHandler, errorHandler);
+    super(worker, messageHandler, errorHandler);
     this.transferControl(canvasRef, initActionName);
   }
 

@@ -18,7 +18,7 @@ class ProcessImageWorker extends AbstractWorker<ProcessImageWorkerAction> {
   }
 
   processImageData(payload: ProcessImageWorkerMessage): void {
-    processImageData(payload.data, payload.alpha);
+    processImageData(payload.data);
     this.worker.postMessage(
       createAction(PROCESS_IMAGE_DATA_DONE, {
         data: payload.data,

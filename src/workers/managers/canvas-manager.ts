@@ -1,17 +1,16 @@
+import type { CanvasManagerMessageType } from "./canvas-manager-types";
+
 import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
   MAIN_INIT,
   PROCESS_IMAGE_DATA_DONE,
   PROCESS_IMAGE_DATA_REQUEST,
-} from "workers/common/actions/actions";
-import { createAction } from "workers/common/actions/createAction";
-import Subject from "workers/common/observer/subject";
-
-import type { CanvasManagerMessageType } from "./canvas-manager-types";
-
-import mainCanvasWorker from "../workers/first-offscreen-worker?worker&url";
-import processImageWorker from "../workers/process-image-worker?worker&url";
+  createAction
+} from "../common/actions";
+import Subject from "../common/observer/subject";
+import MainCanvasWorker from "../workers/first-offscreen-worker?worker";
+import ProcessImageWorker from "../workers/process-image-worker?worker";
 import CanvasWorkerManager from "./canvas-worker-manager";
 import ProcessImageWorkerManager from "./process-image-worker-manager";
 import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
@@ -26,7 +25,7 @@ export default class CanvasManager {
     mainCanvas: HTMLCanvasElement,
   ) {
     this.mainCanvasWorker = new CanvasWorkerManager(
-      mainCanvasWorker,
+      new MainCanvasWorker(),
       this.#onMessage,
       this.#onError,
       mainCanvas,
@@ -34,7 +33,7 @@ export default class CanvasManager {
     );
 
     this.processImageWorker = new ProcessImageWorkerManager(
-      processImageWorker,
+      new ProcessImageWorker(),
       this.#onMessage,
       this.#onError
     );
@@ -43,12 +42,12 @@ export default class CanvasManager {
   }
 
   addObserver(
-    url: string,
+    worker: Worker,
     canvas: HTMLCanvasElement,
     initAction: string
   ): number {
     const workerManager = new SatelliteCanvasWorkerManager(
-      url,
+      worker,
       this.#onMessage,
       this.#onError,
       canvas,

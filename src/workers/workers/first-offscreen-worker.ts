@@ -1,14 +1,13 @@
+import type { CanvasWorkerAction } from "./types";
+
 import {
   createAction, createSimpleAction,
   MAIN_DRAW_DONE,
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
   MAIN_INIT,
-} from "workers/common/actions";
-import { drawMainCanvasBitMap } from "workers/common/helpers";
-
-import type { CanvasWorkerAction } from "./types";
-
+} from "../common/actions";
+import { drawMainCanvasBitMap } from "../common/helpers";
 import AbstractCanvasWorker from "./abstract-canvas-worker";
 import { isHTMLCanvasElement, isImageFile } from "./typeGuards";
 import { type CanvasWorkerDrawMessage } from "./types";

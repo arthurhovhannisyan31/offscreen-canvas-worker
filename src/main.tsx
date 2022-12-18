@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 
 import { App } from "components/App/App";
@@ -6,7 +6,9 @@ import { App } from "components/App/App";
 import "./main.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <StrictMode>
+    <Suspense fallback={"Loading"}>
+      <App />
+    </Suspense>
+  </StrictMode>,
 );

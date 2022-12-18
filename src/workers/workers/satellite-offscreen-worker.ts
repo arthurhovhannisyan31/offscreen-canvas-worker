@@ -1,13 +1,12 @@
+import type { CanvasWorkerAction, CanvasWorkerDrawMessage } from "./types";
+
 import {
   createSimpleAction,
   SECOND_DRAW_DONE,
   SECOND_DRAW_REQUEST,
   SECOND_INIT,
-} from "workers/common/actions";
-import { drawToCanvas } from "workers/common/helpers";
-
-import type { CanvasWorkerAction, CanvasWorkerDrawMessage } from "./types";
-
+} from "../common/actions";
+import { drawToCanvas } from "../common/helpers";
 import AbstractCanvasWorker from "./abstract-canvas-worker";
 import { isHTMLCanvasElement, isImageBitmapSource } from "./typeGuards";
 

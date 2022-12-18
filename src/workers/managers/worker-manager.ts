@@ -2,23 +2,16 @@ export default class WorkerManager<T> {
   protected worker: Worker;
 
   constructor(
-    url: string,
+    worker: Worker,
     messageHandler: Worker["onmessage"],
     errorHandler: Worker["onerror"],
-    options?: WorkerOptions,
   ) {
-    this.worker = new Worker(
-      new URL(url, import.meta.url), {
-      type: "module",
-      credentials: "include",
-      ...options
-    });
+    this.worker = worker;
     this.worker.onerror = errorHandler ?? this.onError;
     this.worker.onmessage = messageHandler ?? this.onMessage;
   }
 
   postMessage(message: T, transfer: Transferable[] = []): void {
-    console.log("WorkerManager", message);
     this.worker.postMessage(message, transfer);
   }
 

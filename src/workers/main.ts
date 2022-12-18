@@ -1,6 +1,6 @@
 import { SECOND_INIT } from "./common/actions";
 import CanvasManager from "./managers/canvas-manager";
-import satelliteCanvasWorker from "./workers/satellite-offscreen-worker?worker&url";
+import SatelliteCanvasWorker from "./workers/satellite-offscreen-worker?worker" assert {type: "module"};
 
 export const getMainWorker = (
   canvas: HTMLCanvasElement,
@@ -9,10 +9,12 @@ export const getMainWorker = (
   const manager = new CanvasManager(canvas);
 
   manager.addObserver(
-    satelliteCanvasWorker,
+    new SatelliteCanvasWorker(),
     satelliteCanvas,
     SECOND_INIT
   );
 
   return manager;
 };
+
+export default getMainWorker;

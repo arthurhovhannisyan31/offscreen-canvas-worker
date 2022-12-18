@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef,  } from "react";
 
 import type CanvasManager from "../../workers/managers/canvas-manager";
 
@@ -30,3 +30,5 @@ export const CanvasContainer = memo(() => {
 });
 
 CanvasContainer.displayName = "CanvasContainer";
+
+export default CanvasContainer;

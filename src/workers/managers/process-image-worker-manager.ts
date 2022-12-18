@@ -12,11 +12,11 @@ export type ProcessImageWorkerManagerAction = Action<ProcessImageWorkerMessage>;
 export default class ProcessImageWorkerManager
   extends WorkerManager<ProcessImageWorkerManagerAction> {
   constructor(
-    url: string,
+    worker: Worker,
     messageHandler: Worker["onmessage"],
     errorHandler: Worker["onerror"],
   ) {
-    super(url, messageHandler, errorHandler);
+    super(worker, messageHandler, errorHandler);
   }
 
   processImageData(imageData: ArrayBufferViewMessage, alpha: number): void {

@@ -15,5 +15,5 @@ export const isImageFile =
 
 export const isImageBitmapSource =
   (bitMap: CanvasWorkerMessage): bitMap is Message<ImageData> => {
-    return (bitMap.data as ImageData).colorSpace !== undefined;
+    return (bitMap.data as ImageData).data.byteLength > 0;
 };
