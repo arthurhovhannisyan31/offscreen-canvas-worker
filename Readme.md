@@ -7,6 +7,12 @@
 After cloning the project run following command `git config core.hooksPath .git-hooks` to enable git hooks.
 
 
+### Absolut path resolution
+
+Please keep in mind that workers are loaded as separate modules and absolut path resolution is not supported.
+All relevant path imports will be added to module bundle. 
+Please check source files in preview mode.
+
 This approach might be useful for apps with complex data processing whether it long arrays or complex object merging.
 Using processing of data in the background it is possible to save main application as interactive and responsive as possible.
 
