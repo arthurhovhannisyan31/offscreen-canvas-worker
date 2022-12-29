@@ -1,12 +1,12 @@
 import type {
   CanvasWorkerContextMessage,
-  CanvasWorkerDrawMessage
-} from "./types";
+  CanvasWorkerDrawMessage,
+  CanvasWorkerAction
+} from "../../types";
 
-import AbstractWorker from "./abstract-worker.js";
-import { type CanvasWorkerAction } from "./types";
+import { AbstractWorker } from "../../common/workers";
 
-export default abstract class AbstractCanvasWorker
+export abstract class AbstractCanvasWorker
   extends AbstractWorker<CanvasWorkerAction> {
   previewCtx: CanvasRenderingContext2D | null = null;
 

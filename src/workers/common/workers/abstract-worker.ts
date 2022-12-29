@@ -1,6 +1,6 @@
-import { createAction, ERROR } from "../common/actions";
+import { createAction, ERROR } from "../actions";
 
-export default abstract class AbstractWorker<T> {
+export abstract class AbstractWorker<T> {
   protected worker: DedicatedWorkerGlobalScope;
 
   protected constructor(worker: DedicatedWorkerGlobalScope) {

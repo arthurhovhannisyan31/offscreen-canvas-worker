@@ -1,8 +1,8 @@
 import type { Observer } from "./types";
 
-import ObserverList from "./observer-list";
+import { ObserverList } from "./observer-list";
 
-export default class Subject<T> {
+export class Subject<T> {
   observers = new ObserverList();
 
   addObserver(observer: Observer<T>): number {
@@ -13,10 +13,12 @@ export default class Subject<T> {
     this.observers.removeAt(this.observers.indexOf(observer, 0));
   }
 
-  notify(context: T): void {
+  notify(data: T): void {
+    //     this.observers.forEach((observer) => observer.update());
+    // make observers request data rather than get
     const observerCount = this.observers.count();
     for (let i = 0; i < observerCount; i++) {
-      this.observers.get(i)?.update(context);
+      this.observers.get(i)?.update(data);
     }
   }
 }

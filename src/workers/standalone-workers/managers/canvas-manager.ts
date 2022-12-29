@@ -6,15 +6,15 @@ import {
   MAIN_INIT,
   PROCESS_IMAGE_DATA_DONE,
   PROCESS_IMAGE_DATA_REQUEST,
-  createAction
-} from "../common/actions";
-import Subject from "../common/observer/subject";
+  createAction,
+  Subject
+} from "../../common";
+import { isArrayBufferViewMessage } from "../typeGuards";
 import MainCanvasWorker from "../workers/first-offscreen-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";
 import CanvasWorkerManager from "./canvas-worker-manager";
 import ProcessImageWorkerManager from "./process-image-worker-manager";
 import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
-import { isArrayBufferViewMessage } from "./typeGuards";
 
 export default class CanvasManager {
   mainCanvasWorker: CanvasWorkerManager;
@@ -64,6 +64,9 @@ export default class CanvasManager {
     this.mainCanvasWorker.postMessage(
       createAction(MAIN_DRAW_REQUEST, { data: file })
     );
+    setTimeout(() => {
+      this.fetchImage();
+    }, 5000);
   }
 
   #onMessage = ({ data }: CanvasManagerMessageType): void => {

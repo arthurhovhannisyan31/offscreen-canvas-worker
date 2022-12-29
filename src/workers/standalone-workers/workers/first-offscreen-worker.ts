@@ -1,4 +1,4 @@
-import type { CanvasWorkerAction } from "./types";
+import type { CanvasWorkerAction } from "../../types";
 
 import {
   createAction, createSimpleAction,
@@ -6,11 +6,11 @@ import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
   MAIN_INIT,
-} from "../common/actions";
-import { drawMainCanvasBitMap } from "../common/helpers";
-import AbstractCanvasWorker from "./abstract-canvas-worker";
-import { isHTMLCanvasElement, isImageFile } from "./typeGuards";
-import { type CanvasWorkerDrawMessage } from "./types";
+  drawMainCanvasBitMap,
+} from "../../common";
+import { isHTMLCanvasElement, isImageFile } from "../../typeGuards";
+import { type CanvasWorkerDrawMessage } from "../../types";
+import { AbstractCanvasWorker } from "./abstract-canvas-worker";
 
 class FirstOffscreenWorker extends AbstractCanvasWorker {
   constructor(worker: DedicatedWorkerGlobalScope) {

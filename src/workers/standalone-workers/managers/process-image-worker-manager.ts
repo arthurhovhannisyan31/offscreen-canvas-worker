@@ -1,6 +1,6 @@
-import type { ArrayBufferViewMessage } from "./types";
+import type { ArrayBufferViewMessage } from "../types";
 
-import { createAction, PROCESS_IMAGE_DATA_REQUEST } from "../common/actions";
+import { createAction, PROCESS_IMAGE_DATA_REQUEST } from "../../common";
 import WorkerManager from "../managers/worker-manager";
 
 export interface ProcessImageWorkerMessage extends Message<ImageData>{

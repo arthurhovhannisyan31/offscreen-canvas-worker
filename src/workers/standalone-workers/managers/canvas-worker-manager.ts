@@ -1,4 +1,4 @@
-import { createAction } from "../common/actions";
+import { createAction } from "../../common";
 import WorkerManager from "../managers/worker-manager";
 
 export type CanvasWorkerManagerAction = Action<Message<File>>;

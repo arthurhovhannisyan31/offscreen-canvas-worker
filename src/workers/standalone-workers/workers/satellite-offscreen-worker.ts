@@ -1,14 +1,14 @@
-import type { CanvasWorkerAction, CanvasWorkerDrawMessage } from "./types";
+import type { CanvasWorkerAction, CanvasWorkerDrawMessage } from "../../types";
 
 import {
   createSimpleAction,
   SECOND_DRAW_DONE,
   SECOND_DRAW_REQUEST,
   SECOND_INIT,
-} from "../common/actions";
-import { drawToCanvas } from "../common/helpers";
-import AbstractCanvasWorker from "./abstract-canvas-worker";
-import { isHTMLCanvasElement, isImageBitmapSource } from "./typeGuards";
+  drawToCanvas,
+} from "../../common";
+import { isHTMLCanvasElement, isImageBitmapSource } from "../../typeGuards";
+import { AbstractCanvasWorker } from "./abstract-canvas-worker"
 
 class SatelliteOffscreen extends AbstractCanvasWorker {
   constructor(worker: DedicatedWorkerGlobalScope) {

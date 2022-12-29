@@ -22,3 +22,8 @@ create of all necessary modules comes after creation of main worker
 REFACTOR
 
 update private, protected class fields
+
+main worker:
+- initializes all related workers
+- creates post method which call postMessage method
+- dispathes all incoming messages to all created workers

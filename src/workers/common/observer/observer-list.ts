@@ -1,6 +1,6 @@
 import type { Observer } from "./types";
 
-export default class ObserverList<T> {
+export class ObserverList<T> {
   #observerList: Observer<T>[] = [];
 
   add(obj: Observer<T>): number {

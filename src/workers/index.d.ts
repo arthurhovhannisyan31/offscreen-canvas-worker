@@ -8,7 +8,7 @@ interface Action<T> extends SimpleAction{
 
 type CreateAction = <T>(type: string, payload: T) => Action<T>
 
-type CreateSimpleAction = (type: string) => SimpleAction<undefined>
+type CreateSimpleAction = (type: string) => SimpleAction
 
 type DedicatedWorker = Worker & (new () => Worker)
 

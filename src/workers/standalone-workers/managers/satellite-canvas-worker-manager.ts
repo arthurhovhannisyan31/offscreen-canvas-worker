@@ -1,4 +1,4 @@
-import { SECOND_DRAW_REQUEST , createAction } from "../common/actions";
+import { SECOND_DRAW_REQUEST , createAction } from "../../common";
 import CanvasWorkerManager, { type CanvasWorkerManagerProps } from "./canvas-worker-manager";
 
 interface WorkerUpdateMessage {

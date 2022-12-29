@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "rootDir": ".",
-    "typeRoots": ["./src/workers/typings/index.d.ts"],
+    "typeRoots": ["./src/typings", "./src/workers/typings"],
     "types": ["jest"],
   },
   "include": ["src", "configs/**/*", "**/*.config.ts"],
