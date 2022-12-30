@@ -1,4 +1,4 @@
-import { SECOND_DRAW_REQUEST , createAction } from "../../common";
+import { SATELLITE_DRAW_REQUEST , createAction } from "../../common";
 import CanvasWorkerManager, { type CanvasWorkerManagerProps } from "./canvas-worker-manager";
 
 interface WorkerUpdateMessage {
@@ -12,7 +12,7 @@ export default class SatelliteCanvasWorkerManager extends CanvasWorkerManager {
 
   update(data: WorkerUpdateMessage): void  {
     this.worker.postMessage(
-      createAction(SECOND_DRAW_REQUEST, {
+      createAction(SATELLITE_DRAW_REQUEST, {
         data,
       }),
       [data.data.buffer]

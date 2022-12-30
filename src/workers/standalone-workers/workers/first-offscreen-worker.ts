@@ -1,15 +1,14 @@
-import type { CanvasWorkerAction } from "../../types";
+import type { CanvasAction , ProcessFileMessage } from "../../types";
 
 import {
   createAction, createSimpleAction,
   MAIN_DRAW_DONE,
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
-  MAIN_INIT,
+  MAIN_SET_CONTEXT,
   drawMainCanvasBitMap,
 } from "../../common";
 import { isHTMLCanvasElement, isImageFile } from "../../typeGuards";
-import { type CanvasWorkerDrawMessage } from "../../types";
 import { AbstractCanvasWorker } from "./abstract-canvas-worker";
 
 class FirstOffscreenWorker extends AbstractCanvasWorker {
@@ -17,7 +16,7 @@ class FirstOffscreenWorker extends AbstractCanvasWorker {
     super(worker);
   }
 
-  async draw(payload: CanvasWorkerDrawMessage): Promise<void> {
+  async draw(payload: ProcessFileMessage): Promise<void> {
     const bitMap = await createImageBitmap(payload.data);
     drawMainCanvasBitMap(this.previewCtx, bitMap);
     this.worker.postMessage(createSimpleAction(MAIN_DRAW_DONE));
@@ -36,9 +35,9 @@ class FirstOffscreenWorker extends AbstractCanvasWorker {
     }
   }
 
-  processMessage({ data }: Message<CanvasWorkerAction>): void {
+  processMessage({ data }: Message<CanvasAction>): void {
     switch (data.type) {
-      case MAIN_INIT: {
+      case MAIN_SET_CONTEXT: {
         if (isHTMLCanvasElement(data.payload)){
           this.setContext(data.payload);
         }

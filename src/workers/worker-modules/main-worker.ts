@@ -8,12 +8,11 @@ class MainWorker extends AbstractWorker<MainWorkerAction>{
 
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
-
     this.init();
   }
 
   init():void {
-    this.subject.addObserver(new CanvasManagerModule());
+    this.subject.addObserver(new CanvasManagerModule(this.processMessage));
   }
 
   processMessage(message: Message<MainWorkerAction>): void {

@@ -6,18 +6,18 @@ import {
   AbstractWorker
 } from "../../common";
 
-interface ProcessImageWorkerMessage extends Message<ImageData> {
+interface ProcessImageMessage extends Message<ImageData> {
   alpha: number;
 }
 
-export type ProcessImageWorkerAction = Action<ProcessImageWorkerMessage>;
+export type ProcessImageAction = Action<ProcessImageMessage>;
 
-class ProcessImageWorker extends AbstractWorker<ProcessImageWorkerAction> {
+class ProcessImageWorker extends AbstractWorker<ProcessImageAction> {
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
   }
 
-  processImageData(payload: ProcessImageWorkerMessage): void {
+  processImageData(payload: ProcessImageMessage): void {
     processImageData(payload.data);
     this.worker.postMessage(
       createAction(PROCESS_IMAGE_DATA_DONE, {
@@ -27,7 +27,7 @@ class ProcessImageWorker extends AbstractWorker<ProcessImageWorkerAction> {
     );
   }
 
-  processMessage({ data }: Message<ProcessImageWorkerAction>): void {
+  processMessage({ data }: Message<ProcessImageAction>): void {
     switch (data.type) {
       case PROCESS_IMAGE_DATA_REQUEST: {
         this.processImageData(data.payload);

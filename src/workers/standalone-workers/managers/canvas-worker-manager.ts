@@ -6,7 +6,7 @@ export type CanvasWorkerManagerAction = Action<Message<File>>;
 export type CanvasWorkerManagerProps = ConstructorParameters<typeof CanvasWorkerManager>
 
 export default class CanvasWorkerManager
-  extends WorkerManager<Action<Message<File>>> {
+  extends WorkerManager<CanvasWorkerManagerAction> {
   constructor(
     worker: Worker,
     messageHandler: Worker["onmessage"],

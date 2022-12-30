@@ -3,7 +3,7 @@ import type { CanvasManagerMessageType } from "./canvas-manager-types";
 import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
-  MAIN_INIT,
+  MAIN_SET_CONTEXT,
   PROCESS_IMAGE_DATA_DONE,
   PROCESS_IMAGE_DATA_REQUEST,
   createAction,
@@ -29,7 +29,7 @@ export default class CanvasManager {
       this.#onMessage,
       this.#onError,
       mainCanvas,
-      MAIN_INIT
+      MAIN_SET_CONTEXT
     );
 
     this.processImageWorker = new ProcessImageWorkerManager(

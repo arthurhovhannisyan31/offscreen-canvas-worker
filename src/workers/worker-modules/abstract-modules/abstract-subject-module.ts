@@ -1,9 +1,14 @@
-import { type Observer, Subject } from "../../common";
+import { Subject } from "../../common";
+import { AbstractModule } from "./abstract-module";
 
-export class AbstractSubjectModule<T> implements Observer<T>{
+export abstract class AbstractSubjectModule<T> extends AbstractModule<T>{
   subject = new Subject();
 
-  update(message: T): void {
+  protected constructor(postMessage: Worker["postMessage"]) {
+    super(postMessage);
+  }
+
+  updateObservers(message: T):void{
     this.subject.notify(message);
   }
 }

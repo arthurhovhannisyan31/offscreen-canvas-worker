@@ -1,6 +1,4 @@
-import type { CanvasWorkerMessage } from "./types";
-
-import { type CanvasWorkerDrawMessage } from "./types";
+import type { CanvasWorkerMessage , ProcessFileMessage, ProcessImageMessage } from "./types";
 
 export const isHTMLCanvasElement =
   (canvas: CanvasWorkerMessage):
@@ -9,11 +7,11 @@ export const isHTMLCanvasElement =
 };
 
 export const isImageFile =
-  (bitMap: CanvasWorkerMessage): bitMap is CanvasWorkerDrawMessage => {
+  (bitMap: CanvasWorkerMessage): bitMap is ProcessFileMessage => {
   return (bitMap.data as File).type === "image/jpeg";
 };
 
 export const isImageBitmapSource =
-  (bitMap: CanvasWorkerMessage): bitMap is Message<ImageData> => {
+  (bitMap: CanvasWorkerMessage): bitMap is ProcessImageMessage => {
     return (bitMap.data as ImageData).data.byteLength > 0;
 };

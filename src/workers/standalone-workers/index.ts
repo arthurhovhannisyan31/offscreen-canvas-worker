@@ -1,4 +1,4 @@
-import { SECOND_INIT } from "../common";
+import { SATELLITE_SET_CONTEXT } from "../common";
 import CanvasManager from "./managers/canvas-manager";
 import SatelliteCanvasWorker from "./workers/satellite-offscreen-worker?worker" assert {type: "module"};
 
@@ -11,7 +11,7 @@ export const getMainWorker = (
   manager.addObserver(
     new SatelliteCanvasWorker(),
     satelliteCanvases[0],
-    SECOND_INIT
+    SATELLITE_SET_CONTEXT
   );
 
   return manager;

@@ -1,7 +1,7 @@
 import { type Observer } from "../../common";
 
-export class AbstractModule<T> implements Observer<T>{
-  update(val: T): void {
-    console.log(val);
-  }
+export abstract class AbstractModule<T> implements Observer<T>{
+  constructor(protected postMessage: Worker["postMessage"]) {}
+
+  abstract update(val: T): void;
 }

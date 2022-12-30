@@ -1,8 +1,12 @@
-export type CanvasWorkerContextMessage = Message<HTMLCanvasElement>;
-export type CanvasWorkerDrawMessage = Message<ImageData>;
+export type CanvasContextMessage = Message<HTMLCanvasElement>;
+export interface ProcessImageMessage extends Message<ImageData> {
+  alpha: number;
+}
+export type ProcessFileMessage = Message<File>;
+export type CanvasDrawMessage = ProcessFileMessage | ProcessImageMessage
 
 export type CanvasWorkerMessage =
   | Message<HTMLCanvasElement>
-  | Message<File|ImageData>
+  | ProcessFileMessage | ProcessImageMessage
 
-export type CanvasWorkerAction = Action<CanvasWorkerMessage>
+export type CanvasAction = Action<CanvasWorkerMessage>
