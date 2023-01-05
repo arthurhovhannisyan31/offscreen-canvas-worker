@@ -10,7 +10,7 @@ import {
   Subject
 } from "../../common";
 import { isArrayBufferViewMessage } from "../typeGuards";
-import MainCanvasWorker from "../workers/first-offscreen-worker?worker";
+import MainCanvasWorker from "../workers/main-offscreen-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";
 import CanvasWorkerManager from "./canvas-worker-manager";
 import ProcessImageWorkerManager from "./process-image-worker-manager";
@@ -38,14 +38,14 @@ export default class CanvasManager {
       this.#onError
     );
 
-    this.fetchImage();
+    this.fetchData();
   }
 
   addObserver(
     worker: Worker,
     canvas: HTMLCanvasElement,
     initAction: string
-  ): number {
+  ): void {
     const workerManager = new SatelliteCanvasWorkerManager(
       worker,
       this.#onMessage,
@@ -54,10 +54,10 @@ export default class CanvasManager {
       initAction
     );
 
-    return this.subject.addObserver(workerManager);
+    this.subject.addObserver(workerManager);
   }
 
-  async fetchImage(): Promise<void> {
+  async fetchData(): Promise<void> {
     const response = await fetch("https://picsum.photos/300/150");
     const blob = await response.blob();
     const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });
@@ -65,8 +65,8 @@ export default class CanvasManager {
       createAction(MAIN_DRAW_REQUEST, { data: file })
     );
     setTimeout(() => {
-      this.fetchImage();
-    }, 5000);
+      this.fetchData();
+    }, 1000);
   }
 
   #onMessage = ({ data }: CanvasManagerMessageType): void => {
@@ -76,7 +76,7 @@ export default class CanvasManager {
           this.processImageWorker.postMessage(
             createAction(PROCESS_IMAGE_DATA_REQUEST, {
               data: data.payload.data,
-              alpha: 0.5,
+              alpha: data.payload.alpha,
             }),
             [data.payload.data.data.buffer]
           );

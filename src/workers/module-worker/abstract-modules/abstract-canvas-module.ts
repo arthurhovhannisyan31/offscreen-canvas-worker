@@ -1,14 +1,9 @@
 import type { CanvasAction } from "../../types";
 
-import { AbstractWorker } from "../../common";
+import { AbstractModule } from "./abstract-module";
 
-export abstract class AbstractCanvasWorker
-  extends AbstractWorker<CanvasAction> {
+export abstract class AbstractCanvasModule extends AbstractModule<CanvasAction>{
   previewCtx: CanvasRenderingContext2D | null = null;
-
-  protected constructor(worker: DedicatedWorkerGlobalScope) {
-    super(worker);
-  }
 
   setContext(message: Message<HTMLCanvasElement>):void {
     const canvas = message.data;
@@ -16,6 +11,4 @@ export abstract class AbstractCanvasWorker
   }
 
   abstract draw(image: Message<File|ImageData>): Promise<void>;
-
-  abstract processMessage(message: Message<CanvasAction>): void;
 }

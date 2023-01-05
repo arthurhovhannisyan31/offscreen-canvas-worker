@@ -1,8 +1,8 @@
-import type { CanvasAction, ProcessImageMessage } from "../../types";
+import type { CanvasAction } from "../../types";
 
 import {
   createSimpleAction,
-  drawToCanvas,
+  putImageData,
   processImageData,
   SATELLITE_DRAW_DONE,
   SATELLITE_DRAW_REQUEST,
@@ -16,27 +16,27 @@ export class SatelliteOffscreenModule extends AbstractCanvasModule {
     super(postMessage);
   }
 
-  async draw(payload: ProcessImageMessage): Promise<void> {
-    drawToCanvas(this.previewCtx, payload.data);
+  async draw(payload: Message<ImageData>): Promise<void> {
+    putImageData(this.previewCtx, payload.data);
     this.postMessage(createSimpleAction(SATELLITE_DRAW_DONE));
   }
 
-  processImageData(message: ProcessImageMessage): void {
+  processImageData(message: Message<ImageData>): void {
     processImageData(message.data);
     this.draw(message);
   }
 
-  update({ data }: Message<CanvasAction>): void {
-    switch (data.type) {
+  update(action: CanvasAction): void {
+    switch (action.type) {
       case SATELLITE_SET_CONTEXT: {
-        if (isHTMLCanvasElement(data.payload)){
-          this.setContext(data.payload);
+        if (isHTMLCanvasElement(action.payload)){
+          this.setContext(action.payload);
         }
         break;
       }
       case SATELLITE_DRAW_REQUEST: {
-        if (isImageBitmapSource(data.payload)){
-          this.processImageData(data.payload);
+        if (isImageBitmapSource(action.payload)){
+          this.processImageData(action.payload);
         }
         break;
       }

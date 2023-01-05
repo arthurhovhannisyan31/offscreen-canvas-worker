@@ -6,7 +6,7 @@ import {
   AbstractWorker
 } from "../../common";
 
-interface ProcessImageMessage extends Message<ImageData> {
+export interface ProcessImageMessage extends Message<ImageData> {
   alpha: number;
 }
 

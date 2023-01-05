@@ -1,11 +1,11 @@
-import type { CanvasAction, ProcessImageMessage } from "../../types";
+import type { CanvasAction } from "../../types";
 
 import {
   createSimpleAction,
   SATELLITE_DRAW_DONE,
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT,
-  drawToCanvas,
+  putImageData,
 } from "../../common";
 import { isHTMLCanvasElement, isImageBitmapSource } from "../../typeGuards";
 import { AbstractCanvasWorker } from "./abstract-canvas-worker";
@@ -15,8 +15,8 @@ class SatelliteOffscreen extends AbstractCanvasWorker {
     super(worker);
   }
 
-  async draw(payload: ProcessImageMessage): Promise<void> {
-    drawToCanvas(this.previewCtx, payload.data);
+  async draw(payload: Message<ImageData>): Promise<void> {
+    putImageData(this.previewCtx, payload.data);
     this.worker.postMessage(createSimpleAction(SATELLITE_DRAW_DONE));
   }
 

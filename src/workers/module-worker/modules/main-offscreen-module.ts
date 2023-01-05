@@ -1,9 +1,9 @@
-import type { CanvasAction, ProcessFileMessage } from "../../types";
+import type { CanvasAction } from "../../types";
 
 import {
   createAction,
   createSimpleAction,
-  drawMainCanvasBitMap,
+  drawImage,
   MAIN_DRAW_DONE,
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
@@ -17,36 +17,34 @@ export class MainOffscreenModule extends AbstractCanvasModule {
     super(postMessage);
   }
 
-  async draw({ data }: ProcessFileMessage): Promise<void>{
+  async draw({ data }: Message<File>): Promise<void>{
     const bitMap = await createImageBitmap(data);
-    drawMainCanvasBitMap(this.previewCtx, bitMap);
+    drawImage(this.previewCtx, bitMap);
     this.postMessage(createSimpleAction(MAIN_DRAW_DONE));
     this.processImageData();
   }
 
   processImageData(): void {
     if (this.previewCtx){
-      const imageData = this.previewCtx.getImageData(0, 0, 400, 400);
+      // TODO get from main thread
+      const imageData = this.previewCtx.getImageData(0, 0, 300, 150);
       this.postMessage(
-        createAction(MAIN_IMAGE_DATA_DONE, {
-          data: imageData,
-        }),
-        [imageData.data.buffer]
+        createAction(MAIN_IMAGE_DATA_DONE, { data: imageData })
       );
     }
   }
 
-  update({ data }: Message<CanvasAction>): void {
-    switch (data.type) {
+  update( action: CanvasAction): void {
+    switch (action.type) {
       case MAIN_SET_CONTEXT: {
-        if (isHTMLCanvasElement(data.payload)){
-          this.setContext(data.payload);
+        if (isHTMLCanvasElement(action.payload)){
+          this.setContext(action.payload);
         }
         break;
       }
       case MAIN_DRAW_REQUEST: {
-        if (isImageFile(data.payload)){
-          this.draw(data.payload);
+        if (isImageFile(action.payload)){
+          this.draw(action.payload);
         }
         break;
       }

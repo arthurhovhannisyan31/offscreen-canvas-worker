@@ -2,28 +2,20 @@ run validation for staged files
 
 https://vitest.dev/ for tests
 
-would be great to have modular system to apply separate canvas managers and run them
-
-main worker
-
-all modules should have list of subscribers,
-any emitted event from a module should be accepted by the subscriber
-all subscribers should implement bypass logic to not run in infinite loop
-
-
-fetch data in the background, store it, process it, print it
+fetch data in the background,
+store it,
+process it,
+print it
 
 draw an countdown with decreasing circle line and countdown in the center
 then update main image
 
-creation of main worker should be independed from project
-create of all necessary modules comes after creation of main worker
 
-REFACTOR
+separate processing from canvas, do the assignment of processor at creation of worker/module
+add possibility to have multiple canvases with their own processing
+collect the metrics of performance
+pass performance metrics from worker to main thread
+store canvas size in mobx store
+pass canvas size from main thread to worker
 
-update private, protected class fields
-
-main worker:
-- initializes all related workers
-- creates post method which call postMessage method
-- dispathes all incoming messages to all created workers
+aggregate data in the background, post it to the main thread

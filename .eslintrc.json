@@ -78,7 +78,7 @@
         "newlines-between": "always",
         "pathGroups": [
           {
-            "pattern": "*./styles?|*.css",
+            "pattern": "*.css",
             "group": "index",
             "patternOptions": {
               "matchBase": true

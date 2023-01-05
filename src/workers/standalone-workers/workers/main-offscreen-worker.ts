@@ -1,4 +1,4 @@
-import type { CanvasAction , ProcessFileMessage } from "../../types";
+import type { CanvasAction } from "../../types";
 
 import {
   createAction, createSimpleAction,
@@ -6,19 +6,19 @@ import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
-  drawMainCanvasBitMap,
+  drawImage,
 } from "../../common";
 import { isHTMLCanvasElement, isImageFile } from "../../typeGuards";
 import { AbstractCanvasWorker } from "./abstract-canvas-worker";
 
-class FirstOffscreenWorker extends AbstractCanvasWorker {
+class MainOffscreenWorker extends AbstractCanvasWorker {
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
   }
 
-  async draw(payload: ProcessFileMessage): Promise<void> {
+  async draw(payload: Message<File>): Promise<void> {
     const bitMap = await createImageBitmap(payload.data);
-    drawMainCanvasBitMap(this.previewCtx, bitMap);
+    drawImage(this.previewCtx, bitMap);
     this.worker.postMessage(createSimpleAction(MAIN_DRAW_DONE));
     this.processImageData();
   }
@@ -53,6 +53,6 @@ class FirstOffscreenWorker extends AbstractCanvasWorker {
   }
 }
 
-new FirstOffscreenWorker(self as DedicatedWorkerGlobalScope);
+new MainOffscreenWorker(self as DedicatedWorkerGlobalScope);
 
 export default {} as DedicatedWorker;

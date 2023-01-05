@@ -5,8 +5,13 @@ import { App } from "../App";
 jest.mock("../../../workers/standalone-workers", () => ({
   getMainWorker: jest.fn()
 }));
-jest.mock("../../../workers/worker-modules", () => ({
+jest.mock("../../../workers/module-worker", () => ({
   getMainModuleWorker: jest.fn()
+}));
+jest.mock("../../../workers/common", () => ({
+  putImageData: jest.fn(),
+  drawImage: jest.fn(),
+  processImageData: jest.fn(),
 }));
 
 describe("<App />", () => {

@@ -1,47 +1,26 @@
-import { memo, useEffect, useRef,  } from "react";
+import { memo } from "react";
 
-import type CanvasManager from "../../workers/standalone-workers/managers/canvas-manager";
+import { useModuleWorker } from "./hooks/useModuleWorker";
+import { useStandaloneWorkers } from "./hooks/useStandaloneWorkers";
 
-import { getMainWorker } from "../../workers/standalone-workers";
-import { getMainModuleWorker } from "../../workers/worker-modules";
+import styles from "./CanvasContainer.module.css";
 
 export const CanvasContainer = memo(() => {
-  const canvas1Ref = useRef<HTMLCanvasElement | null>(null);
-  const canvas2Ref = useRef<HTMLCanvasElement | null>(null);
-  const canvas3Ref = useRef<HTMLCanvasElement | null>(null);
-  const canvas4Ref = useRef<HTMLCanvasElement | null>(null);
-  const canvasWorker = useRef<CanvasManager | null>(null);
-  const moduleWorker = useRef<Worker | null>(null);
-
-  useEffect(() => {
-    if (!moduleWorker.current){
-      moduleWorker.current = getMainModuleWorker();
-    }
-
-    if (!canvasWorker.current
-      && canvas1Ref.current
-      && canvas2Ref.current
-      && canvas3Ref.current
-      && canvas4Ref.current
-    ) {
-      canvasWorker.current = getMainWorker(
-        canvas1Ref.current,
-        [
-          canvas2Ref.current,
-          canvas3Ref.current,
-          canvas4Ref.current
-        ]
-
-      );
-    }
-  }, []);
+  const { refs: standAloneWorkerRefs } = useStandaloneWorkers();
+  const { refs: moduleWorkerRefs } = useModuleWorker();
 
   return(
-      <div>
-        <canvas ref={canvas1Ref} />
-        <canvas ref={canvas2Ref} />
-        <canvas ref={canvas3Ref} />
-        <canvas ref={canvas4Ref} />
+      <div className={styles.container}>
+        <span>Standalone workers for each canvas</span>
+        <div className={styles.canvasContainer}>
+          <canvas className={styles.canvas} ref={standAloneWorkerRefs[0]} />
+          <canvas className={styles.canvas} ref={standAloneWorkerRefs[1]} />
+        </div>
+        <span>Worker with modules for each canvas</span>
+        <div className={styles.canvasContainer}>
+          <canvas className={styles.canvas} ref={moduleWorkerRefs[0]} />
+          <canvas className={styles.canvas} ref={moduleWorkerRefs[1]} />
+        </div>
       </div>
   );
 });

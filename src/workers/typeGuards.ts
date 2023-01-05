@@ -1,17 +1,17 @@
-import type { CanvasWorkerMessage , ProcessFileMessage, ProcessImageMessage } from "./types";
+import type { CanvasMessage } from "./types";
 
 export const isHTMLCanvasElement =
-  (canvas: CanvasWorkerMessage):
+  (canvas: CanvasMessage):
     canvas is Message<HTMLCanvasElement> => {
   return (canvas.data as HTMLCanvasElement).getContext !== undefined;
 };
 
 export const isImageFile =
-  (bitMap: CanvasWorkerMessage): bitMap is ProcessFileMessage => {
-  return (bitMap.data as File).type === "image/jpeg";
+  (message: CanvasMessage): message is Message<File> => {
+  return /^image\/.+/.test((message.data as File).type);
 };
 
 export const isImageBitmapSource =
-  (bitMap: CanvasWorkerMessage): bitMap is ProcessImageMessage => {
-    return (bitMap.data as ImageData).data.byteLength > 0;
+  (message: CanvasMessage): message is Message<ImageData> => {
+    return (message.data as ImageData).data.byteLength > 0;
 };

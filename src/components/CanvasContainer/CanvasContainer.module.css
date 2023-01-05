@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-flow: column;
+}
+
+.canvas-container {
+  display: flex;
+}
+
+.canvas {
+  margin: 5px;
+}

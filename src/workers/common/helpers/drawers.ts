@@ -1,10 +1,10 @@
-export function drawToCanvas(
+export function putImageData(
   context:CanvasRenderingContext2D | null,
   imageData: ImageData
 ):void {
   context?.putImageData(imageData, 0, 0);
 }
-export function drawMainCanvasBitMap(
+export function drawImage(
   context: CanvasRenderingContext2D | null,
   bitMap: CanvasImageSource
 ):void {
