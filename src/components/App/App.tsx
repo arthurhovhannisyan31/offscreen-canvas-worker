@@ -11,7 +11,6 @@ export const App: FC = memo(() => {
     <div className="App">
       <Layout>
         <Dices />
-        <h1>Offscreen canvas worker</h1>
         <CanvasContainer />
       </Layout>
     </div>

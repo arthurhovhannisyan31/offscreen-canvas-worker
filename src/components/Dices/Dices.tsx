@@ -7,7 +7,7 @@ import styles from "./Dices.module.css";
 
 export const Dices = memo(() => {
   return(
-      <div>
+      <div className={styles.container}>
         <div>
           <img src={diceIcon} className={clsx(styles.logo, styles.speed0)} alt="dice icon" />
           <img src={diceIcon} className={clsx(styles.logo, styles.speed1)} alt="dice icon" />

@@ -2,11 +2,26 @@
   display: flex;
   flex-flow: column;
 }
-
+.label {
+  margin: 0 auto;
+}
+.secondaryLabel {
+  font-size: 1.5em;
+  line-height: 1.8em;
+}
 .canvas-container {
-  display: flex;
+  flex-shrink: 1;
 }
 
 .canvas {
   margin: 5px;
+}
+
+.box {
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin: 10px auto;
 }
