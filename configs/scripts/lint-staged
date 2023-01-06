@@ -1,0 +1,3 @@
+#!/bin/bash
+
+yarn eslint $(git diff --cached --diff-filter=d --name-only '*.ts*')

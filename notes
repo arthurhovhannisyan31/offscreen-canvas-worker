@@ -1,1 +1,21 @@
 run validation for staged files
+
+https://vitest.dev/ for tests
+
+fetch data in the background,
+store it,
+process it,
+print it
+
+draw an countdown with decreasing circle line and countdown in the center
+then update main image
+
+
+separate processing from canvas, do the assignment of processor at creation of worker/module
+add possibility to have multiple canvases with their own processing
+collect the metrics of performance
+pass performance metrics from worker to main thread
+store canvas size in mobx store
+pass canvas size from main thread to worker
+
+aggregate data in the background, post it to the main thread

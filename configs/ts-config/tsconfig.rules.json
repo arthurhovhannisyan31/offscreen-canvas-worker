@@ -7,7 +7,7 @@
     "jsx": "react-jsx",
     "isolatedModules": true,
     "target": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
     "module": "ESNext",
     "moduleResolution": "Node",
     "resolveJsonModule": true,

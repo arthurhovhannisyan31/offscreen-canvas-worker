@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# get list of committed files ts, css
+# run validation checks on files

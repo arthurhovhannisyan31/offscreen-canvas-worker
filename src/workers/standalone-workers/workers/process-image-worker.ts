@@ -1,0 +1,42 @@
+import {
+  createAction,
+  PROCESS_IMAGE_DATA_DONE,
+  PROCESS_IMAGE_DATA_REQUEST,
+  processImageData,
+  AbstractWorker
+} from "../../common";
+
+export interface ProcessImageMessage extends Message<ImageData> {
+  alpha: number;
+}
+
+export type ProcessImageAction = Action<ProcessImageMessage>;
+
+class ProcessImageWorker extends AbstractWorker<ProcessImageAction> {
+  constructor(worker: DedicatedWorkerGlobalScope) {
+    super(worker);
+  }
+
+  processImageData(payload: ProcessImageMessage): void {
+    processImageData(payload.data);
+    this.worker.postMessage(
+      createAction(PROCESS_IMAGE_DATA_DONE, {
+        data: payload.data,
+      }),
+      [payload.data.data.buffer]
+    );
+  }
+
+  processMessage({ data }: Message<ProcessImageAction>): void {
+    switch (data.type) {
+      case PROCESS_IMAGE_DATA_REQUEST: {
+        this.processImageData(data.payload);
+        break;
+      }
+    }
+  }
+}
+
+new ProcessImageWorker(self as DedicatedWorkerGlobalScope);
+
+export default {} as DedicatedWorker;
