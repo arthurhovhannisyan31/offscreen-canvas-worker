@@ -2,28 +2,28 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 .logo {
-  height: 4em;
+  height: 3em;
   padding: 1.5em;
   will-change: filter;
 }
 .logo.speed0 {
-  filter: drop-shadow(0 0 2em rgba(201, 235, 252, 0.67));
+  filter: drop-shadow(0 0 1.5em rgba(201, 235, 252, 0.67));
 }
 .logo.speed1 {
-  filter: drop-shadow(0 0 2em rgba(157, 242, 255, 0.67));
+  filter: drop-shadow(0 0 1.5em rgba(157, 242, 255, 0.67));
 }
 .logo.speed2 {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: drop-shadow(0 0 1.5em #61dafbaa);
 }
 .logo.speed3 {
-  filter: drop-shadow(0 0 2em rgba(50, 216, 251, 0.67));
+  filter: drop-shadow(0 0 1.5em rgba(50, 216, 251, 0.67));
 }
 .logo.speed4 {
-  filter: drop-shadow(0 0 2em rgba(29, 200, 255, 0.67));
+  filter: drop-shadow(0 0 1.5em rgba(29, 200, 255, 0.67));
 }
 
 @keyframes logo-spin {

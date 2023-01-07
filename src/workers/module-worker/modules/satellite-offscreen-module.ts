@@ -26,7 +26,7 @@ export class SatelliteOffscreenModule extends AbstractCanvasModule {
     this.draw(message);
   }
 
-  update(action: CanvasAction): void {
+  onMessage(action: CanvasAction): void {
     switch (action.type) {
       case SATELLITE_SET_CONTEXT: {
         if (isHTMLCanvasElement(action.payload)){

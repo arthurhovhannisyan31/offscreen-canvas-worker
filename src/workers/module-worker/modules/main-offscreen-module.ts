@@ -26,7 +26,6 @@ export class MainOffscreenModule extends AbstractCanvasModule {
 
   processImageData(): void {
     if (this.previewCtx){
-      // TODO get from main thread
       const imageData = this.previewCtx.getImageData(0, 0, 300, 150);
       this.postMessage(
         createAction(MAIN_IMAGE_DATA_DONE, { data: imageData })
@@ -34,7 +33,7 @@ export class MainOffscreenModule extends AbstractCanvasModule {
     }
   }
 
-  update( action: CanvasAction): void {
+  onMessage( action: CanvasAction): void {
     switch (action.type) {
       case MAIN_SET_CONTEXT: {
         if (isHTMLCanvasElement(action.payload)){

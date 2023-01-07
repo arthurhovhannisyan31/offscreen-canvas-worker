@@ -39,7 +39,7 @@ export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
     this.subject.notify(createAction(action.type, action.payload));
   }
 
-  update = (action: UpdateAction): void => {
+  onMessage = (action: UpdateAction): void => {
     switch (action.type){
       case MAIN_SET_CONTEXT: {
         this.subject.addObserver(new MainOffscreenModule(this.update));

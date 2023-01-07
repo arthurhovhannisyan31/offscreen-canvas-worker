@@ -1,3 +1,4 @@
+import { isSafari } from "../../../helpers";
 import { createAction } from "../../common";
 import WorkerManager from "../managers/worker-manager";
 
@@ -5,8 +6,7 @@ export type CanvasWorkerManagerAction = Action<Message<File>>;
 
 export type CanvasWorkerManagerProps = ConstructorParameters<typeof CanvasWorkerManager>
 
-export default class CanvasWorkerManager
-  extends WorkerManager<CanvasWorkerManagerAction> {
+export default class CanvasWorkerManager extends WorkerManager<CanvasWorkerManagerAction> {
   constructor(
     worker: Worker,
     messageHandler: Worker["onmessage"],
@@ -22,12 +22,14 @@ export default class CanvasWorkerManager
     canvasRef: HTMLCanvasElement,
     initAction: string
   ): void {
-    const canvasControl = canvasRef.transferControlToOffscreen();
-    this.worker.postMessage(
-      createAction(initAction, {
-        data: canvasControl,
-      }),
-      [canvasControl]
-    );
+    if (!isSafari(navigator)){
+      const canvasControl = canvasRef.transferControlToOffscreen();
+      this.worker.postMessage(
+        createAction(initAction, {
+          data: canvasControl,
+        }),
+        [canvasControl]
+      );
+    }
   }
 }

@@ -2,8 +2,7 @@ import type { CanvasAction } from "../../types";
 
 import { AbstractWorker } from "../../common";
 
-export abstract class AbstractCanvasWorker
-  extends AbstractWorker<CanvasAction> {
+export abstract class AbstractCanvasWorker extends AbstractWorker<CanvasAction> {
   previewCtx: CanvasRenderingContext2D | null = null;
 
   protected constructor(worker: DedicatedWorkerGlobalScope) {
@@ -17,5 +16,5 @@ export abstract class AbstractCanvasWorker
 
   abstract draw(image: Message<File|ImageData>): Promise<void>;
 
-  abstract processMessage(message: Message<CanvasAction>): void;
+  abstract onMessage(message: Message<CanvasAction>): void;
 }

@@ -7,6 +7,7 @@ export abstract class AbstractCanvasModule extends AbstractModule<CanvasAction>{
 
   setContext(message: Message<HTMLCanvasElement>):void {
     const canvas = message.data;
+    // TODO investigate willReadFrequently, canvas.getContext("2d", { willReadFrequently: true })
     this.previewCtx = canvas.getContext("2d");
   }
 

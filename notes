@@ -1,21 +1,47 @@
-run validation for staged files
-
 https://vitest.dev/ for tests
 
-fetch data in the background,
-store it,
-process it,
-print it
+Safari workaround
+standalone workers
+fetch data in the BG
+push the image data to the drawer (MT, WT)
+then take the imageData and process in the worker
+push the image data to the drawer (MT, WT)
 
-draw an countdown with decreasing circle line and countdown in the center
-then update main image
-
-
-separate processing from canvas, do the assignment of processor at creation of worker/module
-add possibility to have multiple canvases with their own processing
+Add mobx store
+  store canvas sizes
+  submit changes to workers
+  update performance values from workers messages
 collect the metrics of performance
 pass performance metrics from worker to main thread
 store canvas size in mobx store
 pass canvas size from main thread to worker
+
+Add draggable component to show absence of visualization/interaction delay
+
+Add checks for staged files
+  run validation for staged files
+  run ts, css validation for commited files
+
+Dice module
+  Calculator
+    each frame calculation based on speed
+  Drawer
+    basic background
+    basic shape
+    rotate shape
+
+Add LighthouseReport to prepush checks
+
+Print performance of drawing
+
+fetch data in the background,
+store it,
+process it,
+submit to main thread
+
+draw an countdown with decreasing circle line and countdown in the center
+then update main image
+separate processing from canvas, do the assignment of processor at creation of worker/module
+add possibility to have multiple canvases with their own processing
 
 aggregate data in the background, post it to the main thread

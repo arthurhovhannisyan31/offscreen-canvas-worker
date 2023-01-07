@@ -17,10 +17,10 @@ class MainModuleWorker extends AbstractWorker<PostAction>{
   }
 
   init():void {
-    this.subject.addObserver(new CanvasManagerModule(this.processMessage));
+    this.subject.addObserver(new CanvasManagerModule(this.onMessage));
   }
 
-  processMessage(message: Message<UpdateAction>): void {
+  onMessage(message: Message<UpdateAction>): void {
     this.subject.notify(message.data);
   }
 }

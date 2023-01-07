@@ -20,7 +20,7 @@ class SatelliteOffscreen extends AbstractCanvasWorker {
     this.worker.postMessage(createSimpleAction(SATELLITE_DRAW_DONE));
   }
 
-  processMessage({ data }: Message<CanvasAction>): void {
+  onMessage({ data }: Message<CanvasAction>): void {
     switch (data.type) {
       case SATELLITE_SET_CONTEXT: {
         if (isHTMLCanvasElement(data.payload)){

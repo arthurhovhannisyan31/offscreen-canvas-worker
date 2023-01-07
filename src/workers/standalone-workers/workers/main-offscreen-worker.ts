@@ -25,7 +25,7 @@ class MainOffscreenWorker extends AbstractCanvasWorker {
 
   processImageData(): void {
     if (this.previewCtx){
-      const imageData = this.previewCtx.getImageData(0, 0, 400, 400);
+      const imageData = this.previewCtx.getImageData(0, 0, 300, 150);
       this.worker.postMessage(
         createAction(MAIN_IMAGE_DATA_DONE, {
           data: imageData,
@@ -35,7 +35,7 @@ class MainOffscreenWorker extends AbstractCanvasWorker {
     }
   }
 
-  processMessage({ data }: Message<CanvasAction>): void {
+  onMessage({ data }: Message<CanvasAction>): void {
     switch (data.type) {
       case MAIN_SET_CONTEXT: {
         if (isHTMLCanvasElement(data.payload)){

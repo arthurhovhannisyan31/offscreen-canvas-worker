@@ -27,7 +27,7 @@ class ProcessImageWorker extends AbstractWorker<ProcessImageAction> {
     );
   }
 
-  processMessage({ data }: Message<ProcessImageAction>): void {
+  onMessage({ data }: Message<ProcessImageAction>): void {
     switch (data.type) {
       case PROCESS_IMAGE_DATA_REQUEST: {
         this.processImageData(data.payload);
