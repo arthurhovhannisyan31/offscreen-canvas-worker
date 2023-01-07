@@ -11,7 +11,7 @@ import {
   Subject
 } from "../../common";
 import { isArrayBufferViewMessage } from "../typeGuards";
-import MainCanvasWorker from "../workers/main-offscreen-worker?worker";
+import MainCanvasWorker from "../workers/main-canvas-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";
 import CanvasWorkerManager from "./canvas-worker-manager";
 import ProcessImageWorkerManager from "./process-image-worker-manager";
@@ -77,6 +77,7 @@ export default class CanvasManager {
           if (isSafari(navigator)){
             //
           } else {
+            // send to SatelliteDirectly
             this.processImageWorker.postMessage(
               createAction(PROCESS_IMAGE_DATA_REQUEST, {
                 data: data.payload.data,

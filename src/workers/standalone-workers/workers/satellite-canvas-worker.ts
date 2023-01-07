@@ -5,32 +5,30 @@ import {
   SATELLITE_DRAW_DONE,
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT,
-  putImageData,
+  AbstractWorker,
 } from "../../common";
+import { SatelliteCanvasManager } from "../../common/managers/satellite-canvas-manager";
 import { isHTMLCanvasElement, isImageBitmapSource } from "../../typeGuards";
-import { AbstractCanvasWorker } from "./abstract-canvas-worker";
 
-class SatelliteOffscreen extends AbstractCanvasWorker {
+class SatelliteOffscreen extends AbstractWorker<CanvasAction> {
+  canvasManager = new SatelliteCanvasManager();
+
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
-  }
-
-  async draw(payload: Message<ImageData>): Promise<void> {
-    putImageData(this.previewCtx, payload.data);
-    this.worker.postMessage(createSimpleAction(SATELLITE_DRAW_DONE));
   }
 
   onMessage({ data }: Message<CanvasAction>): void {
     switch (data.type) {
       case SATELLITE_SET_CONTEXT: {
         if (isHTMLCanvasElement(data.payload)){
-          this.setContext(data.payload);
+          this.canvasManager.setContext(data.payload);
         }
         break;
       }
       case SATELLITE_DRAW_REQUEST: {
         if (isImageBitmapSource(data.payload)){
-          this.draw(data.payload);
+          this.canvasManager.processImageData(data.payload);
+          this.worker.postMessage(createSimpleAction(SATELLITE_DRAW_DONE));
         }
         break;
       }

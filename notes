@@ -1,5 +1,7 @@
 https://vitest.dev/ for tests
 
+Check if safari still need nested-workers lib.
+
 Safari workaround
 standalone workers
 fetch data in the BG
