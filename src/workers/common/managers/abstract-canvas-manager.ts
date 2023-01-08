@@ -1,8 +1,4 @@
-import type { CanvasAction } from "../../types";
-
-import { AbstractModule } from "./abstract-module";
-
-export abstract class AbstractCanvasModule extends AbstractModule<CanvasAction>{
+export abstract class AbstractCanvasManager {
   previewCtx: CanvasRenderingContext2D | null = null;
 
   setContext(message: Message<HTMLCanvasElement>):void {

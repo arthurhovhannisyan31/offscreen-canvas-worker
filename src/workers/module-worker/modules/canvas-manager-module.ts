@@ -1,5 +1,3 @@
-import type { CanvasMessage } from "../../types";
-
 import {
   createAction,
   MAIN_DRAW_DONE,
@@ -9,11 +7,13 @@ import {
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT,
 } from "../../common";
+import { createMessage } from "../../common/actions/createMessage";
+import { type CanvasAction } from "../../types";
 import { AbstractSubjectModule } from "../abstract-modules/abstract-subject-module";
-import { MainOffscreenModule } from "./main-offscreen-module";
-import { SatelliteOffscreenModule } from "./satellite-offscreen-module";
+import { MainCanvasModule } from "./main-canvas-module";
+import { SatelliteCanvasModule } from "./satellite-canvas-module";
 
-export type UpdateAction = Action<CanvasMessage>;
+export type UpdateAction = CanvasAction;
 export type PostAction = Action<unknown>;
 
 export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
@@ -29,26 +29,30 @@ export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
     const blob = await response.blob();
     const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });
 
-    this.notifyObservers(createAction(MAIN_DRAW_REQUEST, { data: file }));
+    this.notifyObservers(
+      createMessage(createAction(MAIN_DRAW_REQUEST, { data: file }))
+    );
     setTimeout(() => {
       this.fetchData();
     }, 1000);
   }
 
-  notifyObservers(action: UpdateAction): void {
-    this.subject.notify(createAction(action.type, action.payload));
+  notifyObservers({ data }: Message<UpdateAction>): void {
+    this.subject.notify(
+      createMessage(createAction(data.type, data.payload))
+    );
   }
 
-  update = (action: UpdateAction): void => {
-    switch (action.type){
+  onMessage = (message: Message<UpdateAction>): void => {
+    switch (message.data.type){
       case MAIN_SET_CONTEXT: {
-        this.subject.addObserver(new MainOffscreenModule(this.update));
-        this.notifyObservers(action);
+        this.subject.addObserver(new MainCanvasModule(this.onMessage));
+        this.notifyObservers(message);
         break;
       }
       case SATELLITE_SET_CONTEXT: {
-        this.subject.addObserver(new SatelliteOffscreenModule(this.update));
-        this.notifyObservers(action);
+        this.subject.addObserver(new SatelliteCanvasModule(this.onMessage));
+        this.notifyObservers(message);
         break;
       }
       case MAIN_DRAW_DONE: {
@@ -56,11 +60,13 @@ export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
         break;
       }
       case MAIN_IMAGE_DATA_DONE: {
-        this.subject.notify(createAction(SATELLITE_DRAW_REQUEST, action.payload ));
+        this.subject.notify(
+          createMessage(createAction(SATELLITE_DRAW_REQUEST, message.data.payload ))
+        );
         break;
       }
       default:{
-        this.notifyObservers(action);
+        this.notifyObservers(message);
       }
     }
   };

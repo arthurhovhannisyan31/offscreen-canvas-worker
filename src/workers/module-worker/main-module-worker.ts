@@ -5,11 +5,11 @@ import {
   type PostAction as CanvasManagerPostAction,
 } from "./modules/canvas-manager-module";
 
-type PostAction = Action<CanvasManagerPostAction>;
-type UpdateAction = Action<CanvasManagerUpdateAction>;
+type PostAction = CanvasManagerPostAction;
+type UpdateAction = CanvasManagerUpdateAction;
 
 class MainModuleWorker extends AbstractWorker<PostAction>{
-  subject = new Subject();
+  subject = new Subject<Message<UpdateAction>>();
 
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
@@ -17,11 +17,11 @@ class MainModuleWorker extends AbstractWorker<PostAction>{
   }
 
   init():void {
-    this.subject.addObserver(new CanvasManagerModule(this.processMessage));
+    this.subject.addObserver(new CanvasManagerModule(this.onMessage));
   }
 
-  processMessage(message: Message<UpdateAction>): void {
-    this.subject.notify(message.data);
+  onMessage(message: Message<UpdateAction>): void {
+    this.subject.notify(message);
   }
 }
 

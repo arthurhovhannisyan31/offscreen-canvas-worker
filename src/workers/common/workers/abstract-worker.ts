@@ -6,10 +6,10 @@ export abstract class AbstractWorker<T> {
   protected constructor(worker: DedicatedWorkerGlobalScope) {
     this.worker = worker;
 
-    this.worker.self.onmessage = this.processMessage.bind(this);
+    this.worker.self.onmessage = this.onMessage.bind(this);
   }
 
-  abstract processMessage(_: Message): void;
+  abstract onMessage(_: Message): void;
 
   postMessage(message: T, transfer: Transferable[] = []):void {
     this.worker.postMessage(message, transfer);

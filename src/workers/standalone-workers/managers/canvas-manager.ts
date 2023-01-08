@@ -1,5 +1,6 @@
 import type { CanvasManagerMessageType } from "./canvas-manager-types";
 
+import { isSafari } from "../../../helpers";
 import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
@@ -10,16 +11,16 @@ import {
   Subject
 } from "../../common";
 import { isArrayBufferViewMessage } from "../typeGuards";
-import MainCanvasWorker from "../workers/main-offscreen-worker?worker";
+import MainCanvasWorker from "../workers/main-canvas-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";
 import CanvasWorkerManager from "./canvas-worker-manager";
 import ProcessImageWorkerManager from "./process-image-worker-manager";
 import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
 
 export default class CanvasManager {
-  mainCanvasWorker: CanvasWorkerManager;
-  processImageWorker: ProcessImageWorkerManager;
-  subject = new Subject();
+  protected mainCanvasWorker: CanvasWorkerManager;
+  protected processImageWorker: ProcessImageWorkerManager;
+  protected subject = new Subject();
 
   constructor(
     mainCanvas: HTMLCanvasElement,
@@ -38,7 +39,7 @@ export default class CanvasManager {
       this.#onError
     );
 
-    this.fetchData();
+    this.#fetchData();
   }
 
   addObserver(
@@ -57,7 +58,7 @@ export default class CanvasManager {
     this.subject.addObserver(workerManager);
   }
 
-  async fetchData(): Promise<void> {
+  async #fetchData(): Promise<void> {
     const response = await fetch("https://picsum.photos/300/150");
     const blob = await response.blob();
     const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });
@@ -65,7 +66,7 @@ export default class CanvasManager {
       createAction(MAIN_DRAW_REQUEST, { data: file })
     );
     setTimeout(() => {
-      this.fetchData();
+      this.#fetchData();
     }, 1000);
   }
 
@@ -73,13 +74,18 @@ export default class CanvasManager {
     switch (data.type) {
       case MAIN_IMAGE_DATA_DONE: {
         if (isArrayBufferViewMessage(data)){
-          this.processImageWorker.postMessage(
-            createAction(PROCESS_IMAGE_DATA_REQUEST, {
-              data: data.payload.data,
-              alpha: data.payload.alpha,
-            }),
-            [data.payload.data.data.buffer]
-          );
+          if (isSafari(navigator)){
+            //
+          } else {
+            // send to SatelliteDirectly
+            this.processImageWorker.postMessage(
+              createAction(PROCESS_IMAGE_DATA_REQUEST, {
+                data: data.payload.data,
+                alpha: data.payload.alpha,
+              }),
+              [data.payload.data.data.buffer]
+            );
+          }
         }
         break;
       }

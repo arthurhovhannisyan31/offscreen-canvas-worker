@@ -1,5 +1,6 @@
 import { useEffect, useRef, type MutableRefObject } from "react";
 
+import { isSafari } from "../../../helpers";
 import {
   createAction,
   MAIN_SET_CONTEXT,
@@ -31,6 +32,10 @@ export const useModuleWorker = ():UseModuleWorker => {
   useEffect(() => {
     if (!moduleWorker.current){
       moduleWorker.current = getMainModuleWorker();
+
+      if (isSafari(navigator)){
+        return;
+      }
 
       if (canvas1Ref.current){
         postCanvasTransferControl(
