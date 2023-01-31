@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "yarn eslint --ext .ts,.tsx,.js src/",
     "lint-staged": "bash configs/scripts/lint-staged",
-    "format": "yarn eslint --fix",
+    "format": "yarn lint --fix",
     "postinstall": "node ./configs/install/index.js",
     "jest-base": "node --expose-gc ./node_modules/jest/bin/jest.js",
     "test": "yarn jest-base --silent --coverage --maxWorkers=4 --no-cache --logHeapUsage",

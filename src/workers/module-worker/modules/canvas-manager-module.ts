@@ -1,3 +1,5 @@
+import { MainCanvasModule } from "./main-canvas-module";
+import { SatelliteCanvasModule } from "./satellite-canvas-module";
 import {
   createAction,
   MAIN_DRAW_DONE,
@@ -10,8 +12,6 @@ import {
 import { createMessage } from "../../common/actions/createMessage";
 import { type CanvasAction } from "../../types";
 import { AbstractSubjectModule } from "../abstract-modules/abstract-subject-module";
-import { MainCanvasModule } from "./main-canvas-module";
-import { SatelliteCanvasModule } from "./satellite-canvas-module";
 
 export type UpdateAction = CanvasAction;
 export type PostAction = Action<unknown>;

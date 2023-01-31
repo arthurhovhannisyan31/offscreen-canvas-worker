@@ -1,5 +1,5 @@
-import { SATELLITE_DRAW_REQUEST , createAction } from "../../common";
 import CanvasWorkerManager, { type CanvasWorkerManagerProps } from "./canvas-worker-manager";
+import { SATELLITE_DRAW_REQUEST , createAction } from "../../common";
 
 interface WorkerUpdateMessage {
   data: ArrayBufferView

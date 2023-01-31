@@ -1,5 +1,8 @@
 import type { CanvasManagerMessageType } from "./canvas-manager-types";
 
+import CanvasWorkerManager from "./canvas-worker-manager";
+import ProcessImageWorkerManager from "./process-image-worker-manager";
+import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
 import { isSafari } from "../../../helpers";
 import {
   MAIN_DRAW_REQUEST,
@@ -13,9 +16,6 @@ import {
 import { isArrayBufferViewMessage } from "../typeGuards";
 import MainCanvasWorker from "../workers/main-canvas-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";
-import CanvasWorkerManager from "./canvas-worker-manager";
-import ProcessImageWorkerManager from "./process-image-worker-manager";
-import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
 
 export default class CanvasManager {
   protected mainCanvasWorker: CanvasWorkerManager;

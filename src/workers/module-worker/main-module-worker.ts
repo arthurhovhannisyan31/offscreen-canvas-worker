@@ -1,9 +1,9 @@
-import { Subject , AbstractWorker } from "../common";
 import {
   CanvasManagerModule,
   type UpdateAction as CanvasManagerUpdateAction,
   type PostAction as CanvasManagerPostAction,
 } from "./modules/canvas-manager-module";
+import { Subject , AbstractWorker } from "../common";
 
 type PostAction = CanvasManagerPostAction;
 type UpdateAction = CanvasManagerUpdateAction;
