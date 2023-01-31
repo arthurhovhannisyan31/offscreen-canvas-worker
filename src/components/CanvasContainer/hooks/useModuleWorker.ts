@@ -3,7 +3,10 @@ import { useEffect, useRef, type MutableRefObject } from "react";
 import { isSafari } from "../../../helpers";
 import {
   createAction,
+  createSimpleAction,
   MAIN_SET_CONTEXT,
+  MODULE_WORKER_START,
+  MODULE_WORKER_STOP,
   SATELLITE_SET_CONTEXT,
 } from "../../../workers/common";
 import { getMainModuleWorker } from "../../../workers/module-worker";
@@ -45,7 +48,7 @@ export const useModuleWorker = ():UseModuleWorker => {
         );
       }
 
-      if (canvas2Ref.current) {
+      if (canvas2Ref.current){
         postCanvasTransferControl(
           canvas2Ref.current,
           SATELLITE_SET_CONTEXT,
@@ -53,6 +56,20 @@ export const useModuleWorker = ():UseModuleWorker => {
         );
       }
     }
+
+    if (canvas1Ref.current && canvas2Ref.current && moduleWorker.current){
+      moduleWorker.current?.postMessage(
+        createSimpleAction(MODULE_WORKER_START)
+      );
+    }
+
+    return () => {
+      if (moduleWorker.current){
+        moduleWorker.current?.postMessage(
+          createSimpleAction(MODULE_WORKER_STOP)
+        );
+      }
+    };
   }, []);
 
   return {
