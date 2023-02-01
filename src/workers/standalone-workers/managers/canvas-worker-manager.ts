@@ -2,7 +2,7 @@ import { isSafari } from "../../../helpers";
 import { createAction } from "../../common";
 import WorkerManager from "../managers/worker-manager";
 
-export type CanvasWorkerManagerAction = Action<Message<File>>;
+export type CanvasWorkerManagerAction = Action<Message<File>> | SimpleAction;
 
 export type CanvasWorkerManagerProps = ConstructorParameters<typeof CanvasWorkerManager>
 

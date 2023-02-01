@@ -31,7 +31,7 @@ class MainCanvasWorker extends AbstractWorker<CanvasAction> {
     }
   };
 
-  onMessage({ data }: Message<CanvasAction>): void {
+  async onMessage({ data }: Message<CanvasAction>): Promise<void> {
     switch (data.type) {
       case MAIN_SET_CONTEXT: {
         if (isHTMLCanvasElement(data.payload)){
@@ -41,7 +41,7 @@ class MainCanvasWorker extends AbstractWorker<CanvasAction> {
       }
       case MAIN_DRAW_REQUEST: {
         if (isImageFile(data.payload)){
-          this.canvasManager.draw(data.payload);
+          await this.canvasManager.draw(data.payload);
           this.processData();
         }
         break;

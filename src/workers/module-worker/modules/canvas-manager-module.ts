@@ -19,9 +19,9 @@ export type UpdateAction = CanvasAction;
 export type PostAction = Action<unknown>;
 
 export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
-  runningState = false;
-  timerId: ReturnType<typeof setTimeout> | null = null;
-  debouncedFetch: () => void;
+  protected runningState = false;
+  protected timerId: ReturnType<typeof setTimeout> | null = null;
+  protected debouncedFetch: () => void;
 
   constructor(postMessage: Worker["postMessage"]) {
     super(postMessage);
