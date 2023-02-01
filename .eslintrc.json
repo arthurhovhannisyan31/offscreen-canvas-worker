@@ -100,7 +100,8 @@
     "max-len": ["error", { "code": 120 }],
     "no-underscore-dangle": 0,
     "no-console": "warn",
-    "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0}],
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxBOF": 0, "maxEOF": 0}],
+    "no-trailing-spaces": "error",
     "object-curly-spacing": ["error", "always"],
     "padding-line-between-statements": [
       "error",

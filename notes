@@ -1,40 +1,48 @@
-https://vitest.dev/ for tests
+Features
+- Add mobx store
+  - window size:
+    store canvas sizes
+    calculate canvas sizes in proportion to window size
+    dispatch resize of canvas with throttle 100ms
+    submit changes to workers new canvas size
+    update performance values from workers messages
+  - collect metrics of performance
+    submit all metrics to store
+    show metrics in table view
+- add ability to start/stop workers
+- add ability to control fetch time gap
+- Check if safari still need nested-workers lib.
+- Print the image in the main thread also
+- Add FPS widget
+- Dice module
+- Add draggable component to show absence of visualization/interaction delay
+  component with the js computed positioning or, make draggable object be controled by user
+  and when left alone moved by its trajectory
 
-Check if safari still need nested-workers lib.
+Readme
+- add architecture diagrams to main readme
+- add readme for each worker with explanation of architecture
 
-Safari workaround
-standalone workers
-fetch data in the BG
-push the image data to the drawer (MT, WT)
-then take the imageData and process in the worker
-push the image data to the drawer (MT, WT)
-
-Add mobx store
-  store canvas sizes
-  submit changes to workers
-  update performance values from workers messages
-collect the metrics of performance
-pass performance metrics from worker to main thread
-store canvas size in mobx store
-pass canvas size from main thread to worker
-
-Add draggable component to show absence of visualization/interaction delay
-
-Add checks for staged files
+Pipelines and checks
+- add web-vitals checks as a part of pipelines
+  store latest values at file
+  compare results at every run
+  make logic to update results for decrease and increase
+- github pipelines
+  check merge conflicts, types, linter, tests
+- code validation scripts
+- move tests to vitests https://vitest.dev/ for tests
+- Add checks for staged files
   run validation for staged files
-  run ts, css validation for commited files
+  run ts, css validation for committed files
+------------------------------------------------
+1. Get data turn in to image
+2. Render image to virtual canvas
+3. Get image data and propagate it to all subscribers. Main worker, satellite workers, main thread canvas drawer
 
-Dice module
-  Calculator
-    each frame calculation based on speed
-  Drawer
-    basic background
-    basic shape
-    rotate shape
-
-Add LighthouseReport to prepush checks
-
-Print performance of drawing
+Leave only 1 type of offscreen worker that works with image data
+Each worker should have it own calculator, its own drawer, its own module
+All modules should receive same data and process it
 
 fetch data in the background,
 store it,

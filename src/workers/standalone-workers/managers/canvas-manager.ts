@@ -1,6 +1,9 @@
 import type { CanvasManagerMessageType } from "./canvas-manager-types";
 
-import { isSafari } from "../../../helpers";
+import CanvasWorkerManager from "./canvas-worker-manager";
+import ProcessImageWorkerManager from "./process-image-worker-manager";
+import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
+import { debounce, isSafari } from "../../../helpers";
 import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
@@ -8,19 +11,19 @@ import {
   PROCESS_IMAGE_DATA_DONE,
   PROCESS_IMAGE_DATA_REQUEST,
   createAction,
-  Subject
+  Subject,
 } from "../../common";
 import { isArrayBufferViewMessage } from "../typeGuards";
 import MainCanvasWorker from "../workers/main-canvas-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";
-import CanvasWorkerManager from "./canvas-worker-manager";
-import ProcessImageWorkerManager from "./process-image-worker-manager";
-import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
 
 export default class CanvasManager {
   protected mainCanvasWorker: CanvasWorkerManager;
   protected processImageWorker: ProcessImageWorkerManager;
   protected subject = new Subject();
+  protected runningState = false;
+  protected timerId: ReturnType<typeof setTimeout> | null = null;
+  protected debouncedFetch: () => void;
 
   constructor(
     mainCanvas: HTMLCanvasElement,
@@ -39,7 +42,7 @@ export default class CanvasManager {
       this.#onError
     );
 
-    this.#fetchData();
+    this.debouncedFetch = debounce(this.#fetchData.bind(this), 100);
   }
 
   addObserver(
@@ -59,16 +62,34 @@ export default class CanvasManager {
   }
 
   async #fetchData(): Promise<void> {
+    if (!this.runningState) return;
+
     const response = await fetch("https://picsum.photos/300/150");
     const blob = await response.blob();
     const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });
     this.mainCanvasWorker.postMessage(
       createAction(MAIN_DRAW_REQUEST, { data: file })
     );
-    setTimeout(() => {
+    this.timerId = setTimeout(() => {
       this.#fetchData();
-    }, 1000);
+    }, 2000);
   }
+
+  clearTimers(): void {
+    if (this.timerId){
+      clearTimeout(this.timerId);
+    }
+  }
+
+  public start = (): void => {
+    this.runningState ||= true;
+    this.debouncedFetch();
+  };
+
+  public stop = (): void => {
+    this.runningState = false;
+    this.clearTimers();
+  };
 
   #onMessage = ({ data }: CanvasManagerMessageType): void => {
     switch (data.type) {
@@ -77,7 +98,6 @@ export default class CanvasManager {
           if (isSafari(navigator)){
             //
           } else {
-            // send to SatelliteDirectly
             this.processImageWorker.postMessage(
               createAction(PROCESS_IMAGE_DATA_REQUEST, {
                 data: data.payload.data,

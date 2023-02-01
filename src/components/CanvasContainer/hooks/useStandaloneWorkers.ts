@@ -20,6 +20,16 @@ export const useStandaloneWorkers = (): UseStandaloneWorkers => {
         [canvas2Ref.current]
       );
     }
+
+    if (canvasWorker.current && canvas1Ref.current && canvas2Ref.current){
+      canvasWorker.current.start();
+    }
+
+    return () => {
+      if (canvasWorker.current){
+        canvasWorker.current.stop();
+      }
+    };
   }, []);
 
   return {

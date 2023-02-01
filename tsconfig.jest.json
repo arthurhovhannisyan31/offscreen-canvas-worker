@@ -1,6 +1,7 @@
 {
   "extends": "./configs/ts-config/tsconfig.rules.json",
   "compilerOptions": {
+    "baseUrl": "src",
     "rootDir": ".",
     "types": ["jest"]
   },

@@ -1,6 +1,6 @@
-import { SATELLITE_SET_CONTEXT } from "../common";
 import CanvasManager from "./managers/canvas-manager";
 import SatelliteCanvasWorker from "./workers/satellite-canvas-worker?worker" assert {type: "module"};
+import { SATELLITE_SET_CONTEXT } from "../common";
 
 export const getMainWorker = (
   canvas: HTMLCanvasElement,

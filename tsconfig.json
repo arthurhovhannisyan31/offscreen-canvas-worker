@@ -6,6 +6,6 @@
     "typeRoots": ["./src/typings", "./src/workers/typings"],
     "types": ["jest"],
   },
-  "include": ["src", "configs/**/*", "**/*.config.ts"],
+  "include": ["src", "configs/**/*", "**/*.config.ts", "temp"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
