@@ -1,11 +1,11 @@
-import CanvasWorkerManager, { type CanvasWorkerManagerProps } from "./canvas-worker-manager";
-import { SATELLITE_DRAW_REQUEST , createAction } from "../../common";
+import MainCanvasWorkerManager, { type CanvasWorkerManagerProps } from "./main-canvas-worker-manager";
+import { SATELLITE_DRAW_REQUEST , createAction } from "../../../common";
 
 interface WorkerUpdateMessage {
   data: ArrayBufferView
 }
 
-export default class SatelliteCanvasWorkerManager extends CanvasWorkerManager {
+export default class SatelliteCanvasWorkerManager extends MainCanvasWorkerManager {
   constructor(...args: CanvasWorkerManagerProps) {
     super(...args);
   }

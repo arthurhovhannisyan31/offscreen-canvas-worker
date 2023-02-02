@@ -1,4 +1,4 @@
-import type { CanvasAction } from "../../types";
+import type { CanvasAction } from "../../../types";
 
 import {
   createAction,
@@ -6,9 +6,9 @@ import {
   MAIN_SET_CONTEXT,
   MAIN_IMAGE_DATA_DONE,
   AbstractWorker,
-} from "../../common";
-import { MainCanvasManager } from "../../common/managers";
-import { isHTMLCanvasElement, isImageFile } from "../../typeGuards";
+} from "../../../common";
+import { MainCanvasManager } from "../../../common/managers";
+import { isHTMLCanvasElement, isImageFile } from "../../../typeGuards";
 
 class MainCanvasWorker extends AbstractWorker<CanvasAction> {
   canvasManager: MainCanvasManager;

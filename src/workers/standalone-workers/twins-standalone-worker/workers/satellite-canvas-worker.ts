@@ -1,4 +1,4 @@
-import type { CanvasAction } from "../../types";
+import type { CanvasAction } from "../../../types";
 
 import {
   createSimpleAction,
@@ -6,9 +6,9 @@ import {
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT,
   AbstractWorker,
-} from "../../common";
-import { SatelliteCanvasManager } from "../../common/managers/satellite-canvas-manager";
-import { isHTMLCanvasElement, isImageBitmapSource } from "../../typeGuards";
+} from "../../../common";
+import { SatelliteCanvasManager } from "../../../common/managers/satellite-canvas-manager";
+import { isHTMLCanvasElement, isImageBitmapSource } from "../../../typeGuards";
 
 class SatelliteOffscreen extends AbstractWorker<CanvasAction> {
   canvasManager = new SatelliteCanvasManager();

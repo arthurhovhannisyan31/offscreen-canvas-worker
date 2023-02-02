@@ -2,7 +2,7 @@ import {
   createAction,
   processImageData,
   AbstractWorker
-} from "../../common";
+} from "../../../common";
 import { PROCESS_IMAGE_DATA_DONE, PROCESS_IMAGE_DATA_REQUEST } from "../actions";
 
 export interface ProcessImageMessage extends Message<ImageData> {

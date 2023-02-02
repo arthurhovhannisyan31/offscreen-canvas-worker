@@ -1,12 +1,12 @@
-import { isSafari } from "../../../helpers";
-import { createAction } from "../../common";
-import WorkerManager from "../managers/worker-manager";
+import BaseWorkerManager from "./base-worker-manager";
+import { isSafari } from "../../../../helpers";
+import { createAction } from "../../../common";
 
 export type CanvasWorkerManagerAction = Action<Message<File>> | SimpleAction;
 
-export type CanvasWorkerManagerProps = ConstructorParameters<typeof CanvasWorkerManager>
+export type CanvasWorkerManagerProps = ConstructorParameters<typeof MainCanvasWorkerManager>
 
-export default class CanvasWorkerManager extends WorkerManager<CanvasWorkerManagerAction> {
+export default class MainCanvasWorkerManager extends BaseWorkerManager<CanvasWorkerManagerAction> {
   constructor(
     worker: Worker,
     messageHandler: Worker["onmessage"],

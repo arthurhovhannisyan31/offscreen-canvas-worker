@@ -1,8 +1,8 @@
 import type { ArrayBufferViewMessage } from "../types";
 
-import { createAction } from "../../common";
+import BaseWorkerManager from "./base-worker-manager";
+import { createAction } from "../../../common";
 import { PROCESS_IMAGE_DATA_REQUEST } from "../actions";
-import WorkerManager from "../managers/worker-manager";
 
 export interface ProcessImageMessage extends Message<ImageData>{
   alpha: number
@@ -11,7 +11,7 @@ export interface ProcessImageMessage extends Message<ImageData>{
 export type ProcessImageWorkerManagerAction = Action<ProcessImageMessage>;
 
 export default class ProcessImageWorkerManager
-  extends WorkerManager<ProcessImageWorkerManagerAction> {
+  extends BaseWorkerManager<ProcessImageWorkerManagerAction> {
   constructor(
     worker: Worker,
     messageHandler: Worker["onmessage"],

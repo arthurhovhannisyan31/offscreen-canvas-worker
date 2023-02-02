@@ -1,4 +1,4 @@
-export default class WorkerManager<T> {
+export default class BaseWorkerManager<T> {
   protected worker: Worker;
 
   constructor(

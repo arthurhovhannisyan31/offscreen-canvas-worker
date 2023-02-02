@@ -1,5 +1,5 @@
-import type { CanvasManagerMessageType } from "./managers/canvas-manager-types";
 import type { ProcessImageWorkerManagerAction } from "./managers/process-image-worker-manager";
+import type { CanvasManagerMessageType } from "./managers/twins-canvas-manager-types";
 import type { ArrayBufferViewMessage } from "./types";
 
 export const isArrayBufferViewMessage =

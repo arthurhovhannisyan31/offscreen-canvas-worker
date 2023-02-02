@@ -1,23 +1,23 @@
-import type { CanvasManagerMessageType } from "./canvas-manager-types";
+import type { CanvasManagerMessageType } from "./twins-canvas-manager-types";
 
-import CanvasWorkerManager from "./canvas-worker-manager";
+import MainCanvasWorkerManager from "./main-canvas-worker-manager";
 import ProcessImageWorkerManager from "./process-image-worker-manager";
 import SatelliteCanvasWorkerManager from "./satellite-canvas-worker-manager";
-import { debounce, isSafari } from "../../../helpers";
+import { debounce, isSafari } from "../../../../helpers";
 import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
   createAction,
   Subject,
-} from "../../common";
+} from "../../../common";
 import { PROCESS_IMAGE_DATA_DONE, PROCESS_IMAGE_DATA_REQUEST } from "../actions";
 import { isArrayBufferViewMessage } from "../typeGuards";
 import MainCanvasWorker from "../workers/main-canvas-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";
 
-export default class CanvasManager {
-  protected mainCanvasWorker: CanvasWorkerManager;
+export default class TwinsCanvasManager {
+  protected mainCanvasWorker: MainCanvasWorkerManager;
   protected processImageWorker: ProcessImageWorkerManager;
   protected subject = new Subject();
   protected runningState = false;
@@ -27,7 +27,7 @@ export default class CanvasManager {
   constructor(
     mainCanvas: HTMLCanvasElement,
   ) {
-    this.mainCanvasWorker = new CanvasWorkerManager(
+    this.mainCanvasWorker = new MainCanvasWorkerManager(
       new MainCanvasWorker(),
       this.#onMessage,
       this.#onError,
@@ -63,7 +63,8 @@ export default class CanvasManager {
   async #fetchData(): Promise<void> {
     if (!this.runningState) return;
 
-    const response = await fetch("https://picsum.photos/300/150");
+    // TODO get size from passed canvas reference
+    const response = await fetch("https://picsum.photos/400/250");
     const blob = await response.blob();
     const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });
     this.mainCanvasWorker.postMessage(
