@@ -3,12 +3,16 @@ import ReactDOM from "react-dom/client";
 
 import { App } from "components/App/App";
 
+import { ContextCompose } from "./context";
+
 import "./main.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
-    <Suspense fallback={"Loading"}>
-      <App />
-    </Suspense>
+    <ContextCompose>
+      <Suspense fallback={"Loading"}>
+        <App />
+      </Suspense>
+    </ContextCompose>
   </StrictMode>,
 );
