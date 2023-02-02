@@ -1,12 +1,11 @@
 import {
-  CanvasManagerModule,
-  type UpdateAction as CanvasManagerUpdateAction,
-  type PostAction as CanvasManagerPostAction,
-} from "./modules/canvas-manager-module";
+  FpsCanvasModule,
+} from "./modules/fps-module";
+import {
+  TwinsManagerModule,
+} from "./modules/twins-module";
+import { type PostAction, type UpdateAction } from "./types";
 import { Subject , AbstractWorker } from "../common";
-
-type PostAction = CanvasManagerPostAction;
-type UpdateAction = CanvasManagerUpdateAction;
 
 class MainModuleWorker extends AbstractWorker<PostAction>{
   subject = new Subject<Message<UpdateAction>>();
@@ -17,7 +16,8 @@ class MainModuleWorker extends AbstractWorker<PostAction>{
   }
 
   init():void {
-    this.subject.addObserver(new CanvasManagerModule(this.onMessage));
+    this.subject.addObserver(new TwinsManagerModule(this.onMessage));
+    this.subject.addObserver(new FpsCanvasModule(this.onMessage));
   }
 
   onMessage(message: Message<UpdateAction>): void {

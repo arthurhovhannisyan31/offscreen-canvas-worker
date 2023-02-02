@@ -1,4 +1,4 @@
-import type { CanvasAction } from "../../types";
+import type { CanvasAction } from "../../../types";
 
 import {
   createMessage,
@@ -6,10 +6,10 @@ import {
   SATELLITE_DRAW_DONE,
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT
-} from "../../common";
-import { SatelliteCanvasManager } from "../../common/managers/satellite-canvas-manager";
-import { isHTMLCanvasElement, isImageBitmapSource } from "../../typeGuards";
-import { AbstractModule } from "../abstract-modules/abstract-module";
+} from "../../../common";
+import { SatelliteCanvasManager } from "../../../common/managers/satellite-canvas-manager";
+import { isHTMLCanvasElement, isImageBitmapSource } from "../../../typeGuards";
+import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export class SatelliteCanvasModule extends AbstractModule<CanvasAction> {
   canvasManager = new SatelliteCanvasManager();

@@ -1,6 +1,6 @@
 import { MainCanvasModule } from "./main-canvas-module";
 import { SatelliteCanvasModule } from "./satellite-canvas-module";
-import { debounce } from "../../../helpers";
+import { debounce } from "../../../../helpers";
 import {
   createAction,
   createMessage,
@@ -10,15 +10,15 @@ import {
   MAIN_SET_CONTEXT,
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT,
-} from "../../common";
-import { type CanvasAction } from "../../types";
-import { AbstractSubjectModule } from "../abstract-modules/abstract-subject-module";
-import { MODULE_WORKER_STOP, MODULE_WORKER_START } from "../actions";
+} from "../../../common";
+import { type CanvasAction } from "../../../types";
+import { AbstractSubjectModule } from "../../abstract-modules/abstract-subject-module";
+import { TWINS_WORKER_STOP, TWINS_WORKER_START } from "../../actions";
 
-export type UpdateAction = CanvasAction;
 export type PostAction = Action<unknown>;
+export type UpdateAction = CanvasAction;
 
-export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
+export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction>{
   protected runningState = false;
   protected timerId: ReturnType<typeof setTimeout> | null = null;
   protected debouncedFetch: () => void;
@@ -32,7 +32,7 @@ export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
   async fetchData(): Promise<void> {
     if (!this.runningState) return;
 
-    const response = await fetch("https://picsum.photos/300/150");
+    const response = await fetch("https://picsum.photos/400/250");
     const blob = await response.blob();
     const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });
 
@@ -58,12 +58,12 @@ export class CanvasManagerModule extends AbstractSubjectModule<UpdateAction>{
 
   onMessage = (message: Message<UpdateAction>): void => {
     switch (message.data.type){
-      case MODULE_WORKER_START: {
+      case TWINS_WORKER_START: {
         this.runningState ||= true;
         this.debouncedFetch();
         break;
       }
-      case MODULE_WORKER_STOP: {
+      case TWINS_WORKER_STOP: {
         this.runningState = false;
         this.clearTimers();
         break;

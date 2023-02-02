@@ -1,14 +1,14 @@
-import type { CanvasAction } from "../../types";
+import type { CanvasAction } from "../../../types";
 
 import {
   createAction,
   createMessage,
   MAIN_DRAW_REQUEST, MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
-} from "../../common";
-import { MainCanvasManager } from "../../common/managers";
-import { isHTMLCanvasElement, isImageFile } from "../../typeGuards";
-import { AbstractModule } from "../abstract-modules/abstract-module";
+} from "../../../common";
+import { MainCanvasManager } from "../../../common/managers";
+import { isHTMLCanvasElement, isImageFile } from "../../../typeGuards";
+import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export class MainCanvasModule extends AbstractModule<CanvasAction> {
   canvasManager: MainCanvasManager;

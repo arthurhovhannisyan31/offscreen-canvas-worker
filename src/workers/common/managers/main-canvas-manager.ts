@@ -13,7 +13,7 @@ export class MainCanvasManager extends AbstractCanvasManager {
 
   getImageData(): ImageData | void{
     if (this.previewCtx){
-      return this.previewCtx.getImageData(0, 0, 300, 150);
+      return this.previewCtx.getImageData(0, 0, this.previewCtx.canvas.width, this.previewCtx.canvas.height);
     }
   }
 }
