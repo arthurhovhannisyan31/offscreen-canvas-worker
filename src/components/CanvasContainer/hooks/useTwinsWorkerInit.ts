@@ -3,10 +3,10 @@ import { useContext, useEffect } from "react";
 import { ModuleWorkerContext } from "../../../context";
 import { isSafari } from "../../../helpers";
 import { createSimpleAction, MAIN_SET_CONTEXT, SATELLITE_SET_CONTEXT } from "../../../workers/common";
-import { MODULE_WORKER_START, MODULE_WORKER_STOP } from "../../../workers/module-worker/actions";
+import { TWINS_WORKER_START, TWINS_WORKER_STOP } from "../../../workers/module-worker/actions";
 import { postCanvasTransferControl } from "../helpers";
 
-export const useModuleWorkerStartStop = (
+export const useTwinsWorkerInit = (
   canvas1Ref: HTMLCanvasElement | null,
   canvas2Ref: HTMLCanvasElement | null
 ):void => {
@@ -37,14 +37,14 @@ export const useModuleWorkerStartStop = (
 
     if (canvas1Ref && canvas2Ref && moduleWorker){
       moduleWorker.postMessage(
-        createSimpleAction(MODULE_WORKER_START)
+        createSimpleAction(TWINS_WORKER_START)
       );
     }
 
     return () => {
       if (moduleWorker){
         moduleWorker.postMessage(
-          createSimpleAction(MODULE_WORKER_STOP)
+          createSimpleAction(TWINS_WORKER_STOP)
         );
       }
     };

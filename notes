@@ -1,5 +1,25 @@
 Features
 - Add FPS widget
+
+Readme
+- add architecture diagrams to main readme
+- add readme for each worker with explanation of architecture
+- describe used tech stack
+
+Pipelines and checks
+- add web-vitals checks as a part of pipelines
+  store latest values at file
+  compare results at every run
+  make logic to update results for decrease and increase
+- github pipelines
+  check merge conflicts, types, linter, tests
+- code validation scripts
+- move tests to vitests https://vitest.dev/ for tests
+- Add checks for staged files
+  run validation for staged files
+  run ts, css validation for committed files
+
+Features
 - workers controls
   - start/stop workers by start stop buttons
   - change fetch time period
@@ -21,24 +41,6 @@ Features
 - Add draggable component to show absence of visualization/interaction delay
   component with the js computed positioning or, make draggable object be controled by user
   and when left alone moved by its trajectory
-
-Readme
-- add architecture diagrams to main readme
-- add readme for each worker with explanation of architecture
-- describe used tech stack
-
-Pipelines and checks
-- add web-vitals checks as a part of pipelines
-  store latest values at file
-  compare results at every run
-  make logic to update results for decrease and increase
-- github pipelines
-  check merge conflicts, types, linter, tests
-- code validation scripts
-- move tests to vitests https://vitest.dev/ for tests
-- Add checks for staged files
-  run validation for staged files
-  run ts, css validation for committed files
 ------------------------------------------------
 1. Get data turn in to image
 2. Render image to virtual canvas
@@ -52,10 +54,3 @@ fetch data in the background,
 store it,
 process it,
 submit to main thread
-
-draw an countdown with decreasing circle line and countdown in the center
-then update main image
-separate processing from canvas, do the assignment of processor at creation of worker/module
-add possibility to have multiple canvases with their own processing
-
-aggregate data in the background, post it to the main thread

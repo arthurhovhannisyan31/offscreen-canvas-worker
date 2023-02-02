@@ -1,17 +1,20 @@
 import { type FC, memo } from "react";
 
-import { CanvasContainer } from "components/CanvasContainer/CanvasContainer";
-import { Dices } from "components/Dices/Dices";
-import { Layout } from "components/Layout/Layout";
+import { FPSMonitor, Layout, Dices, CanvasContainer } from "components";
+
+import { useModuleWorkerInit } from "./hooks";
 
 import "./App.css";
 
 export const App: FC = memo(() => {
+  useModuleWorkerInit();
+
   return (
     <div className="App">
       <Layout>
         <Dices />
         <CanvasContainer />
+        <FPSMonitor />
       </Layout>
     </div>
   );
