@@ -1,12 +1,12 @@
 import type { CanvasAction } from "../../types";
 
 import {
+  createMessage,
   createSimpleAction,
   SATELLITE_DRAW_DONE,
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT
 } from "../../common";
-import { createMessage } from "../../common/actions/createMessage";
 import { SatelliteCanvasManager } from "../../common/managers/satellite-canvas-manager";
 import { isHTMLCanvasElement, isImageBitmapSource } from "../../typeGuards";
 import { AbstractModule } from "../abstract-modules/abstract-module";

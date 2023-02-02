@@ -1,10 +1,9 @@
 import {
   createAction,
-  PROCESS_IMAGE_DATA_DONE,
-  PROCESS_IMAGE_DATA_REQUEST,
   processImageData,
   AbstractWorker
 } from "../../common";
+import { PROCESS_IMAGE_DATA_DONE, PROCESS_IMAGE_DATA_REQUEST } from "../actions";
 
 export interface ProcessImageMessage extends Message<ImageData> {
   alpha: number;

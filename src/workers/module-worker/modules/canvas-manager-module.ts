@@ -3,17 +3,17 @@ import { SatelliteCanvasModule } from "./satellite-canvas-module";
 import { debounce } from "../../../helpers";
 import {
   createAction,
+  createMessage,
   MAIN_DRAW_DONE,
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
-  MAIN_SET_CONTEXT, MODULE_WORKER_START,
-  MODULE_WORKER_STOP,
+  MAIN_SET_CONTEXT,
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT,
 } from "../../common";
-import { createMessage } from "../../common/actions/createMessage";
 import { type CanvasAction } from "../../types";
 import { AbstractSubjectModule } from "../abstract-modules/abstract-subject-module";
+import { MODULE_WORKER_STOP, MODULE_WORKER_START } from "../actions";
 
 export type UpdateAction = CanvasAction;
 export type PostAction = Action<unknown>;

@@ -2,10 +2,10 @@ import type { CanvasAction } from "../../types";
 
 import {
   createAction,
+  createMessage,
   MAIN_DRAW_REQUEST, MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
 } from "../../common";
-import { createMessage } from "../../common/actions/createMessage";
 import { MainCanvasManager } from "../../common/managers";
 import { isHTMLCanvasElement, isImageFile } from "../../typeGuards";
 import { AbstractModule } from "../abstract-modules/abstract-module";

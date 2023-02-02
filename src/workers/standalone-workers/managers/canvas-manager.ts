@@ -8,11 +8,10 @@ import {
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
-  PROCESS_IMAGE_DATA_DONE,
-  PROCESS_IMAGE_DATA_REQUEST,
   createAction,
   Subject,
 } from "../../common";
+import { PROCESS_IMAGE_DATA_DONE, PROCESS_IMAGE_DATA_REQUEST } from "../actions";
 import { isArrayBufferViewMessage } from "../typeGuards";
 import MainCanvasWorker from "../workers/main-canvas-worker?worker";
 import ProcessImageWorker from "../workers/process-image-worker?worker";

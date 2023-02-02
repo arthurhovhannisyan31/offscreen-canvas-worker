@@ -1,9 +1,11 @@
 import type { CanvasAction } from "../../types";
 
 import {
+  createAction,
   MAIN_DRAW_REQUEST,
   MAIN_SET_CONTEXT,
-  AbstractWorker, createAction, MAIN_IMAGE_DATA_DONE,
+  MAIN_IMAGE_DATA_DONE,
+  AbstractWorker,
 } from "../../common";
 import { MainCanvasManager } from "../../common/managers";
 import { isHTMLCanvasElement, isImageFile } from "../../typeGuards";
