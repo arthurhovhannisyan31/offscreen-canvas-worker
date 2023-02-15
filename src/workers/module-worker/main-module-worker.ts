@@ -5,7 +5,7 @@ import {
   TwinsManagerModule,
 } from "./modules/twins-module";
 import { type PostAction, type UpdateAction } from "./types";
-import { Subject , AbstractWorker } from "../common";
+import { Subject, AbstractWorker, createMessage, WORKER_STOP, createSimpleAction } from "../common";
 
 class MainModuleWorker extends AbstractWorker<PostAction>{
   subject = new Subject<Message<UpdateAction>>();
@@ -22,6 +22,11 @@ class MainModuleWorker extends AbstractWorker<PostAction>{
 
   onMessage(message: Message<UpdateAction>): void {
     this.subject.notify(message);
+  }
+
+  terminate():void {
+    this.subject.notify(createMessage(createSimpleAction(WORKER_STOP)));
+    super.terminate();
   }
 }
 

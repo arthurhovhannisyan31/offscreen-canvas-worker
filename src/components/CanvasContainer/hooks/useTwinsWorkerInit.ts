@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { ModuleWorkerContext } from "../../../context";
 import { isSafari } from "../../../helpers";
 import { createSimpleAction, MAIN_SET_CONTEXT, SATELLITE_SET_CONTEXT } from "../../../workers/common";
-import { TWINS_WORKER_START, TWINS_WORKER_STOP } from "../../../workers/module-worker/actions";
+import { TWINS_WORKER_START } from "../../../workers/module-worker/actions";
 import { postCanvasTransferControl } from "../helpers";
 
 export const useTwinsWorkerInit = (
@@ -43,9 +43,7 @@ export const useTwinsWorkerInit = (
 
     return () => {
       if (moduleWorker){
-        moduleWorker.postMessage(
-          createSimpleAction(TWINS_WORKER_STOP)
-        );
+        moduleWorker.terminate();
       }
     };
 

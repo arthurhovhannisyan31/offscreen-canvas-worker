@@ -10,3 +10,5 @@ export const SATELLITE_DRAW_REQUEST = `${SATELLITE}_DRAW_REQUEST`;
 export const SATELLITE_DRAW_DONE = `${SATELLITE}_DRAW_DONE`;
 
 export const ERROR = "ERROR";
+
+export const WORKER_STOP = "WORKER_STOP";

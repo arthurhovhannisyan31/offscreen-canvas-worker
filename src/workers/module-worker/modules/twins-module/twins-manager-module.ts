@@ -9,7 +9,7 @@ import {
   MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
   SATELLITE_DRAW_REQUEST,
-  SATELLITE_SET_CONTEXT,
+  SATELLITE_SET_CONTEXT, WORKER_STOP,
 } from "../../../common";
 import { type CanvasAction } from "../../../types";
 import { AbstractSubjectModule } from "../../abstract-modules/abstract-subject-module";
@@ -63,6 +63,7 @@ export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction>{
         this.debouncedFetch();
         break;
       }
+      case WORKER_STOP:
       case TWINS_WORKER_STOP: {
         this.runningState = false;
         this.clearTimers();

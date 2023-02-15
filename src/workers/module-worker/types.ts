@@ -10,6 +10,8 @@ import {
 export type PostAction =
   | TwinsManagerPostAction
   | FPSPostAction;
+
 export type UpdateAction =
   | TwinsManagerUpdateAction
-  | FPSUpdateAction;
+  | FPSUpdateAction
+  | SimpleAction;
