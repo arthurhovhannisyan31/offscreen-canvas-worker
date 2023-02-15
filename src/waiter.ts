@@ -15,7 +15,8 @@ class Waiter extends AbstractWorker<any>{
 // Wait for workers to terminate.
     wg.wait();
 // The following lines will always execute last.
-    console.log("final value:", count[0], performance.now());
+    const wgCount = new Int32Array(wg._sab)[0];
+    console.log("final value:", `count ${count[0]}`, `${wgCount}`, performance.now());
     console.log("waiter done", performance.now());
   }
 }
