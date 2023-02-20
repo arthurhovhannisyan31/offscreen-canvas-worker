@@ -1,7 +1,7 @@
-import { AbstractCanvasManager } from "./abstract-canvas-manager";
+import { AbstractCanvasDrawer } from "./abstract-canvas-drawer";
 import { processImageData, putImageData } from "../helpers";
 
-export class SatelliteCanvasManager extends AbstractCanvasManager {
+export class SatelliteCanvasDrawer extends AbstractCanvasDrawer {
   async draw(payload: Message<ImageData>): Promise<void> {
     putImageData(this.previewCtx, payload.data);
   }

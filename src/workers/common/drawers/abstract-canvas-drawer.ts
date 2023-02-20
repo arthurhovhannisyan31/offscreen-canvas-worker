@@ -1,5 +1,8 @@
-export abstract class AbstractCanvasManager {
+import { type AbstractCanvasCalculator } from "../calculators";
+
+export abstract class AbstractCanvasDrawer {
   previewCtx: CanvasRenderingContext2D | null = null;
+  calculator: AbstractCanvasCalculator | null = null;
 
   setContext(message: Message<HTMLCanvasElement>):void {
     const canvas = message.data;

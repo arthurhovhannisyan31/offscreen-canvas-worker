@@ -7,11 +7,11 @@ import {
   SATELLITE_SET_CONTEXT,
   AbstractWorker,
 } from "../../../common";
-import { SatelliteCanvasManager } from "../../../common/managers/satellite-canvas-manager";
+import { SatelliteCanvasDrawer } from "../../../common/drawers";
 import { isHTMLCanvasElement, isImageBitmapSource } from "../../../typeGuards";
 
 class SatelliteOffscreen extends AbstractWorker<CanvasAction> {
-  canvasManager = new SatelliteCanvasManager();
+  canvasManager = new SatelliteCanvasDrawer();
 
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);

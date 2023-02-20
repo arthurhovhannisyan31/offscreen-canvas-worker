@@ -2,7 +2,8 @@ import { useContext, useEffect } from "react";
 
 import { ModuleWorkerContext } from "context";
 
-import { FPS_MODULE_SET_CONTEXT } from "../../../workers/module-worker/actions";
+import { createSimpleAction } from "../../../workers/common";
+import { FPS_MODULE_SET_CONTEXT, FPS_MODULE_START } from "../../../workers/module-worker/actions";
 import { postCanvasTransferControl } from "../../CanvasContainer/helpers";
 
 export const useFPSMonitorInit = (canvasRef: HTMLCanvasElement | null): void => {
@@ -14,6 +15,11 @@ export const useFPSMonitorInit = (canvasRef: HTMLCanvasElement | null): void => 
         canvasRef,
         FPS_MODULE_SET_CONTEXT,
         worker
+      );
+      worker.postMessage(
+        createSimpleAction(
+          FPS_MODULE_START
+        )
       );
     }
   }, [worker, canvasRef]);

@@ -1,7 +1,7 @@
-import { AbstractCanvasManager } from "./abstract-canvas-manager";
+import { AbstractCanvasDrawer } from "./abstract-canvas-drawer";
 import { drawImage } from "../helpers";
 
-export class MainCanvasManager extends AbstractCanvasManager {
+export class MainCanvasDrawer extends AbstractCanvasDrawer {
   constructor() {
     super();
   }

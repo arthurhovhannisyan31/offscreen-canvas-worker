@@ -6,17 +6,17 @@ import {
   MAIN_DRAW_REQUEST, MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
 } from "../../../common";
-import { MainCanvasManager } from "../../../common/managers";
+import { MainCanvasDrawer } from "../../../common/drawers";
 import { isHTMLCanvasElement, isImageFile } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export class MainCanvasModule extends AbstractModule<CanvasAction> {
-  canvasManager: MainCanvasManager;
+  canvasManager: MainCanvasDrawer;
 
   constructor(postMessage: Worker["postMessage"]) {
     super(postMessage);
 
-    this.canvasManager = new MainCanvasManager();
+    this.canvasManager = new MainCanvasDrawer();
   }
 
   processData = (): void => {

@@ -7,12 +7,12 @@ import {
   SATELLITE_DRAW_REQUEST,
   SATELLITE_SET_CONTEXT
 } from "../../../common";
-import { SatelliteCanvasManager } from "../../../common/managers/satellite-canvas-manager";
+import { SatelliteCanvasDrawer } from "../../../common/drawers";
 import { isHTMLCanvasElement, isImageBitmapSource } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export class SatelliteCanvasModule extends AbstractModule<CanvasAction> {
-  canvasManager = new SatelliteCanvasManager();
+  canvasManager = new SatelliteCanvasDrawer();
 
   constructor(postMessage: Worker["postMessage"]) {
     super(postMessage);

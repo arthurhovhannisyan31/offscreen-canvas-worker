@@ -7,21 +7,21 @@ import {
   MAIN_IMAGE_DATA_DONE,
   AbstractWorker,
 } from "../../../common";
-import { MainCanvasManager } from "../../../common/managers";
+import { MainCanvasDrawer } from "../../../common/drawers";
 import { isHTMLCanvasElement, isImageFile } from "../../../typeGuards";
 
 class MainCanvasWorker extends AbstractWorker<CanvasAction> {
-  canvasManager: MainCanvasManager;
+  canvasDrawer: MainCanvasDrawer;
 
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
 
-    this.canvasManager = new MainCanvasManager();
+    this.canvasDrawer = new MainCanvasDrawer();
   }
 
   processData = (): void => {
-    if (this.canvasManager.previewCtx){
-      const imageData = this.canvasManager.getImageData();
+    if (this.canvasDrawer.previewCtx){
+      const imageData = this.canvasDrawer.getImageData();
       if (imageData){
         this.worker.postMessage(
           createAction(MAIN_IMAGE_DATA_DONE, {
@@ -37,13 +37,13 @@ class MainCanvasWorker extends AbstractWorker<CanvasAction> {
     switch (data.type) {
       case MAIN_SET_CONTEXT: {
         if (isHTMLCanvasElement(data.payload)){
-          this.canvasManager.setContext(data.payload);
+          this.canvasDrawer.setContext(data.payload);
         }
         break;
       }
       case MAIN_DRAW_REQUEST: {
         if (isImageFile(data.payload)){
-          await this.canvasManager.draw(data.payload);
+          await this.canvasDrawer.draw(data.payload);
           this.processData();
         }
         break;
