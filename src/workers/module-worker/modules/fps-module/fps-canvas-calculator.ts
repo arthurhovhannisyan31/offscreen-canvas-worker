@@ -10,20 +10,22 @@ export class FpsCanvasCalculator extends AbstractCanvasCalculator {
     // reassign splice array by first entry, cut first elements out of 1 sec range
     // show count of measures
     const cur = performance.now();
-    const lenght = this.DOMHighResTimeStamps.length;
+    const length = this.DOMHighResTimeStamps.length;
     let idx = -1;
 
-    for (let i = lenght-1; i >= 0 ; i--) {
+    for (let i = length-1; i >= 0 ; i--) {
       if (cur -  this.DOMHighResTimeStamps[i] > 1000){
-        idx = i;
+        idx = i - 1;
         break;
       }
     }
 
-    this.DOMHighResTimeStamps = this.DOMHighResTimeStamps.slice(idx);
+    this.DOMHighResTimeStamps.splice(0, idx);
+
+    const framesCount = this.DOMHighResTimeStamps.length;
 
     this.DOMHighResTimeStamps.push(cur);
 
-    return this.DOMHighResTimeStamps.length;
+    return framesCount;
   }
 }

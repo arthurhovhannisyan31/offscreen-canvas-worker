@@ -1,6 +1,3 @@
-Features
-- Add FPS widget
-
 Performance:
 - Remove all listeners when unmounted, call terminate on workers
 
@@ -46,6 +43,12 @@ Features
 - Add draggable component to show absence of visualization/interaction delay
   component with the js computed positioning or, make draggable object be controled by user
   and when left alone moved by its trajectory
+
+- Performance
+  PerformanceLongTaskTiming
+  PerformanceNavigationTiming
+  PerformanceServerTiming
+  PerformancePaintTiming
 ------------------------------------------------
 Data Worker: Fetch, Store
 App Module: Process

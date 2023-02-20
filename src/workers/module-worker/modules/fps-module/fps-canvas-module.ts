@@ -9,22 +9,22 @@ export type PostAction = Action<unknown>;
 export type UpdateAction = CanvasAction; // Action<unknown> |
 
 export class FpsCanvasModule extends AbstractModule<UpdateAction> {
-  canvasManager: FpsCanvasDrawer;
+  canvasDrawer: FpsCanvasDrawer;
   active = false;
 
   constructor(postMessage: Worker["postMessage"]) {
     super(postMessage);
 
-    this.canvasManager = new FpsCanvasDrawer(
+    this.canvasDrawer = new FpsCanvasDrawer(
       new FpsCanvasCalculator()
     );
   }
 
-  raf = (): void => {
+  rafLoop = (): void => {
     requestAnimationFrame(() => {
       if (this.active){
-        this.canvasManager.draw();
-        this.raf();
+        this.canvasDrawer.draw();
+        this.rafLoop();
       }
     });
   };
@@ -33,13 +33,13 @@ export class FpsCanvasModule extends AbstractModule<UpdateAction> {
     switch (data.type){
       case FPS_MODULE_SET_CONTEXT: {
         if (isHTMLCanvasElement(data.payload)){
-          this.canvasManager.setContext(data.payload);
+          this.canvasDrawer.setContext(data.payload);
         }
         break;
       }
       case FPS_MODULE_START: {
         this.active = true;
-        this.raf();
+        this.rafLoop();
         break;
       }
       case FPS_MODULE_STOP: {
