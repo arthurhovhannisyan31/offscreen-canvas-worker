@@ -21,8 +21,8 @@ export class SatelliteCanvasModule extends AbstractModule<CanvasAction> {
   onMessage({ data }: Message<CanvasAction>): void {
     switch (data.type) {
       case SATELLITE_SET_CONTEXT: {
-        if (isHTMLCanvasElement(data.payload)){
-          this.canvasManager.setContext(data.payload);
+        if (isHTMLCanvasElement(data.payload.data)){
+          this.canvasManager.setContext(data.payload.data);
         }
         break;
       }

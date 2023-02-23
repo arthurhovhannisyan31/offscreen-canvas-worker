@@ -1,26 +1,42 @@
 import { useContext, useEffect } from "react";
 
 import { ModuleWorkerContext } from "context";
+import { createAction, createSimpleAction } from "workers/common";
+import { FPS_MODULE_SET_DATA, FPS_MODULE_START } from "workers/module-worker/actions";
 
-import { createSimpleAction } from "../../../workers/common";
-import { FPS_MODULE_SET_CONTEXT, FPS_MODULE_START } from "../../../workers/module-worker/actions";
-import { postCanvasTransferControl } from "../../CanvasContainer/helpers";
+import type { SetDataMessage } from "workers/module-worker/modules/fps-module/types";
+
+import { updateFpsSAB } from "../helpers/updateFpsSAB";
+
+const animationFrameId: {id: number} = { id: 0 };
+const fpsSAB = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 1024);
+const fpsMarksInt32Arr = new Int32Array(fpsSAB);
 
 export const useFPSMonitorInit = (canvasRef: HTMLCanvasElement | null): void => {
   const { worker } = useContext(ModuleWorkerContext);
+  updateFpsSAB(fpsMarksInt32Arr, animationFrameId);
 
   useEffect(() => {
-    if (worker && canvasRef){
-      postCanvasTransferControl(
-        canvasRef,
-        FPS_MODULE_SET_CONTEXT,
-        worker
+    if (worker && canvasRef) {
+      const canvasControl = canvasRef.transferControlToOffscreen();
+      const setDataPayload: SetDataMessage = {
+        data: {
+          canvas: canvasControl as never as HTMLCanvasElement,
+          fpsSAB
+        }
+      };
+
+      worker.postMessage(
+        createAction(FPS_MODULE_SET_DATA, setDataPayload),
+        [canvasControl]
       );
       worker.postMessage(
-        createSimpleAction(
-          FPS_MODULE_START
-        )
+        createSimpleAction(FPS_MODULE_START)
       );
     }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId.id);
+    };
   }, [worker, canvasRef]);
 };

@@ -1,9 +1,8 @@
 import type { CanvasMessage } from "./types";
 
 export const isHTMLCanvasElement =
-  (canvas: CanvasMessage):
-    canvas is Message<HTMLCanvasElement> => {
-  return (canvas.data as HTMLCanvasElement).getContext !== undefined;
+  (canvas: unknown): canvas is HTMLCanvasElement => {
+  return (canvas as HTMLCanvasElement).getContext !== undefined;
 };
 
 export const isImageFile =

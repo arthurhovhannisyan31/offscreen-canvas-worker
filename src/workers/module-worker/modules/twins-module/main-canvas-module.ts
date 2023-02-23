@@ -31,8 +31,8 @@ export class MainCanvasModule extends AbstractModule<CanvasAction> {
   async onMessage({ data }: Message<CanvasAction>): Promise<void> {
     switch (data.type) {
       case MAIN_SET_CONTEXT: {
-        if (isHTMLCanvasElement(data.payload)){
-          this.canvasManager.setContext(data.payload);
+        if (isHTMLCanvasElement(data.payload.data)){
+          this.canvasManager.setContext(data.payload.data);
         }
         break;
       }

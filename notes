@@ -2,6 +2,9 @@ Security:
 - Add crossOriginIsolated check https://developer.mozilla.org/en-US/docs/Web/API/crossOriginIsolated
 - Add measureUserAgentSpecificMemory drawing to canvas https://developer.mozilla.org/en-US/docs/Web/API/Performance/measureUserAgentSpecificMemory
 
+Refactor:
+- Remove twins standalone worker, simplify messages format, remove extra message wrapper
+
 Performance:
 - Remove all listeners when unmounted, call terminate on workers
   PerformanceLongTaskTiming

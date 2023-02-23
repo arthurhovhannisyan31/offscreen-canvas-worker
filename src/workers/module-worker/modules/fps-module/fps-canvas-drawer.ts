@@ -3,6 +3,7 @@ import { AbstractCanvasDrawer } from "../../../common/drawers";
 
 export class FpsCanvasDrawer extends AbstractCanvasDrawer {
   fpsValue = 0;
+  time = performance.now();
 
   constructor(calculator: FpsCanvasCalculator) {
     super();
@@ -15,6 +16,13 @@ export class FpsCanvasDrawer extends AbstractCanvasDrawer {
     if (this.fpsValue === data) return;
 
     this.fpsValue = data;
+
+    const curTime = performance.now();
+
+    if (curTime - this.time <= 100) return;
+
+    this.time = curTime;
+
     const ctx = this.previewCtx;
 
     if (ctx){

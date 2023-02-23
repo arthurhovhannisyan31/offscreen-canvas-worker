@@ -4,8 +4,7 @@ export abstract class AbstractCanvasDrawer {
   previewCtx: CanvasRenderingContext2D | null = null;
   calculator: AbstractCanvasCalculator | null = null;
 
-  setContext(message: Message<HTMLCanvasElement>):void {
-    const canvas = message.data;
+  setContext(canvas: HTMLCanvasElement):void {
     this.previewCtx = canvas.getContext("2d");
   }
 
