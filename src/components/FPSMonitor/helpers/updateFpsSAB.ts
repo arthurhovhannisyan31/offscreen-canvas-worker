@@ -5,7 +5,10 @@
 let pointerStart = 0;
 let pointerEnd = 0;
 
-export const updateFpsSAB = (fpsSAB: Int32Array, animationFrameId:{ id: number }) :void => {
+/*
+* Time complexity: O(n), Space complexity: O(1)
+* */
+export const updateFpsSAB = (fpsI32Arr: Int32Array, animationFrameId:{ id: number }) :void => {
   /*
   * mutate id prop of animationFrameId object to cancel animation loop on component unmount
   * */
@@ -13,10 +16,10 @@ export const updateFpsSAB = (fpsSAB: Int32Array, animationFrameId:{ id: number }
     /*
     * if by any reason we have too much of records and overflow array we reset pointers and start over
     * */
-    if (pointerEnd + 1 > fpsSAB.length-1) {
+    if (pointerEnd + 1 > fpsI32Arr.length-1) {
       pointerStart= 0;
       pointerEnd = 0;
-      updateFpsSAB(fpsSAB, animationFrameId);
+      updateFpsSAB(fpsI32Arr, animationFrameId);
     }
     /*
     * performance.now returns float value, need to floor to it store as i32
@@ -28,7 +31,7 @@ export const updateFpsSAB = (fpsSAB: Int32Array, animationFrameId:{ id: number }
       * lookup for first element in 1000 ms range from current timestamp
       * */
       for (let i = 0; i < pointerEnd; i++) {
-        if (fpsSAB[i] >= cur - 1000){
+        if (fpsI32Arr[i] >= cur - 1000){
           pointerStart = i;
           break;
         }
@@ -38,16 +41,16 @@ export const updateFpsSAB = (fpsSAB: Int32Array, animationFrameId:{ id: number }
     /*
     * write current timestamp to end pointer next section
     * */
-    fpsSAB[pointerEnd++]= cur;
+    fpsI32Arr[pointerEnd++]= cur;
     if (pointerStart > 0){
-      fpsSAB.copyWithin(0, pointerStart, pointerEnd);
+      fpsI32Arr.copyWithin(0, pointerStart, pointerEnd);
 
-      fillWithZeros(fpsSAB, pointerEnd-pointerStart, pointerEnd);
+      fillWithZeros(fpsI32Arr, pointerEnd-pointerStart, pointerEnd);
 
       pointerEnd = pointerEnd - pointerStart ;
     }
 
-    updateFpsSAB(fpsSAB, animationFrameId);
+    updateFpsSAB(fpsI32Arr, animationFrameId);
   });
 };
 

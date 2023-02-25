@@ -1,3 +1,6 @@
+FPS Widget:
+- Add drawing for main thread fps count
+
 Security:
 - Add crossOriginIsolated check https://developer.mozilla.org/en-US/docs/Web/API/crossOriginIsolated
 - Add measureUserAgentSpecificMemory drawing to canvas https://developer.mozilla.org/en-US/docs/Web/API/Performance/measureUserAgentSpecificMemory
@@ -33,6 +36,7 @@ Features
 - workers controls
   - start/stop workers by start stop buttons
   - change fetch time period
+  - heavy task runner by input, stop main thread for number of milliseconds
 
 - Add mobx store
   - window size:

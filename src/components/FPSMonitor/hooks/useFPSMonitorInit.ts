@@ -6,7 +6,7 @@ import { FPS_MODULE_SET_DATA, FPS_MODULE_START } from "workers/module-worker/act
 
 import type { SetDataMessage } from "workers/module-worker/modules/fps-module/types";
 
-import { updateFpsSAB } from "../helpers/updateFpsSAB";
+import { updateFpsSAB } from "../helpers";
 
 const animationFrameId: {id: number} = { id: 0 };
 const fpsSAB = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 1024);
