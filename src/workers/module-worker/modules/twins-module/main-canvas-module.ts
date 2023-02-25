@@ -2,7 +2,6 @@ import type { CanvasAction } from "../../../types";
 
 import {
   createAction,
-  createMessage,
   MAIN_DRAW_REQUEST, MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
 } from "../../../common";
@@ -10,10 +9,13 @@ import { MainCanvasDrawer } from "../../../common/drawers";
 import { isHTMLCanvasElement, isImageFile } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 
-export class MainCanvasModule extends AbstractModule<CanvasAction> {
+export type UpdateAction = CanvasAction;
+export type PostAction = CanvasAction;
+
+export class MainCanvasModule extends AbstractModule<UpdateAction, PostAction> {
   canvasManager: MainCanvasDrawer;
 
-  constructor(postMessage: Worker["postMessage"]) {
+  constructor(postMessage: PostMessage<PostAction>) {
     super(postMessage);
 
     this.canvasManager = new MainCanvasDrawer();
@@ -22,17 +24,15 @@ export class MainCanvasModule extends AbstractModule<CanvasAction> {
   processData = (): void => {
     if (this.canvasManager.previewCtx){
       const imageData = this.canvasManager.getImageData();
-      this.postMessage(createMessage(
-        createAction(MAIN_IMAGE_DATA_DONE, { data: imageData })
-      ));
+      this.postMessage(createAction(MAIN_IMAGE_DATA_DONE, imageData as ImageData));
     }
   };
 
-  async onMessage({ data }: Message<CanvasAction>): Promise<void> {
+  async onMessage(data: UpdateAction): Promise<void> {
     switch (data.type) {
       case MAIN_SET_CONTEXT: {
-        if (isHTMLCanvasElement(data.payload.data)){
-          this.canvasManager.setContext(data.payload.data);
+        if (isHTMLCanvasElement(data.payload)){
+          this.canvasManager.setContext(data.payload);
         }
         break;
       }

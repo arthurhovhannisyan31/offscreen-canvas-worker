@@ -8,5 +8,5 @@ export abstract class AbstractCanvasDrawer {
     this.previewCtx = canvas.getContext("2d");
   }
 
-  abstract draw(image: Message<File|ImageData>): Promise<void>;
+  abstract draw(image: File|ImageData): Promise<void>;
 }

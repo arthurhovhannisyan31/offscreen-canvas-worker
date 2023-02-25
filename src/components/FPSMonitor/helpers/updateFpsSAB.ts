@@ -45,7 +45,7 @@ export const updateFpsSAB = (fpsI32Arr: Int32Array, animationFrameId:{ id: numbe
     if (pointerStart > 0){
       fpsI32Arr.copyWithin(0, pointerStart, pointerEnd);
 
-      fillWithZeros(fpsI32Arr, pointerEnd-pointerStart, pointerEnd);
+      fillWithZeros(fpsI32Arr, pointerEnd - pointerStart, pointerEnd);
 
       pointerEnd = pointerEnd - pointerStart ;
     }

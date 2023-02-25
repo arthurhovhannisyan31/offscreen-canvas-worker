@@ -7,7 +7,7 @@ export const postCanvasTransferControl = (
 ): void => {
   const canvasControl = canvas.transferControlToOffscreen();
   worker.postMessage(
-    createAction(action, { data: canvasControl }),
+    createAction(action, canvasControl),
     [canvasControl]
   );
 };

@@ -6,8 +6,8 @@ export class MainCanvasDrawer extends AbstractCanvasDrawer {
     super();
   }
 
-  async draw(payload: Message<File>): Promise<void> {
-    const bitMap = await createImageBitmap(payload.data);
+  async draw(payload: File): Promise<void> {
+    const bitMap = await createImageBitmap(payload);
     drawImage(this.previewCtx, bitMap);
   }
 

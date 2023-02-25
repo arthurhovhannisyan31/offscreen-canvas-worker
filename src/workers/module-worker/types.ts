@@ -5,11 +5,12 @@ import {
 import {
   type UpdateAction as TwinsManagerUpdateAction,
   type PostAction as TwinsManagerPostAction,
-} from "./modules/twins-module";
+} from "./modules/twins-module/types";
 
 export type PostAction =
   | TwinsManagerPostAction
-  | FPSPostAction;
+  | FPSPostAction
+  | SimpleAction;
 
 export type UpdateAction =
   | TwinsManagerUpdateAction

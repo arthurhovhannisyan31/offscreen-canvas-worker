@@ -3,5 +3,4 @@ export interface SetDataPayload {
   fpsSAB: SharedArrayBuffer;
 }
 
-export type SetDataMessage = Message<SetDataPayload>;
-export type SetDataAction = Action<SetDataMessage>;
+export type SetDataAction = Action<SetDataPayload>;

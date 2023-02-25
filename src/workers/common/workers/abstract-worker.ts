@@ -1,7 +1,7 @@
 import { ERROR } from "../actions";
 import { createAction } from "../helpers";
 
-export abstract class AbstractWorker<T> {
+export abstract class AbstractWorker<P> {
   protected worker: DedicatedWorkerGlobalScope;
 
   protected constructor(worker: DedicatedWorkerGlobalScope) {
@@ -12,7 +12,7 @@ export abstract class AbstractWorker<T> {
 
   abstract onMessage(_: Message): void;
 
-  postMessage(message: T, transfer: Transferable[] = []):void {
+  postMessage(message: P, transfer: Transferable[] = []):void {
     this.worker.postMessage(message, transfer);
   }
 

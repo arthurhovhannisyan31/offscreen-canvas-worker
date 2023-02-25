@@ -1,16 +1,24 @@
-import type { CanvasMessage } from "./types";
+import type { CanvasPayload } from "./types";
 
 export const isHTMLCanvasElement =
-  (canvas: unknown): canvas is HTMLCanvasElement => {
+  (canvas: CanvasPayload): canvas is HTMLCanvasElement => {
   return (canvas as HTMLCanvasElement).getContext !== undefined;
 };
 
 export const isImageFile =
-  (message: CanvasMessage): message is Message<File> => {
-  return /^image\/.+/.test((message.data as File).type);
+  (message: CanvasPayload): message is File => {
+  return /^image\/.+/.test((message as File).type);
 };
 
 export const isImageBitmapSource =
-  (message: CanvasMessage): message is Message<ImageData> => {
-    return (message.data as ImageData).data.byteLength > 0;
+  (message: CanvasPayload): message is ImageData => {
+    return (message as ImageData).data.byteLength > 0;
+};
+
+export const isSimpleAction = (action: any): action is SimpleAction => {
+  return (action as Action<any>).payload === undefined;
+};
+
+export const isAction = <T>(action: Action<T>): action is Action<T>=> {
+  return action.payload !== undefined;
 };
