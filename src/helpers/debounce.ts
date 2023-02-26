@@ -1,4 +1,4 @@
-export const debounce = <T extends any[]>(
+export const debounce = <T extends never[]>(
   cb: (...args: T) => void,
   ms = 500,
 ): ((...args: T) => void) => {

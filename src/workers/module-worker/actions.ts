@@ -1,0 +1,8 @@
+export const TWINS_WORKER = "TWINS_WORKER";
+export const TWINS_WORKER_START = `${TWINS_WORKER}_START`;
+export const TWINS_WORKER_STOP = `${TWINS_WORKER}_STOP`;
+
+export const FPS_MODULE = "FPS_MODULE";
+export const FPS_MODULE_SET_DATA = `${FPS_MODULE}_SET_DATA`;
+export const FPS_MODULE_START = `${FPS_MODULE}_START`;
+export const FPS_MODULE_STOP = `${FPS_MODULE}_STOP`;

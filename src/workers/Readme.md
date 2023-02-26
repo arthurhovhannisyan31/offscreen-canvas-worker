@@ -1,7 +1,7 @@
 Hierarchy
 
 MainCanvasWorker -> AbstractWorker
-- canvasManager -> MainCanvasManager -> AbstractCanvasManager
+- canvasManager -> MainCanvasDrawer -> AbstractCanvasDrawer
 
 MainCanvasModule -> AbstractModule
-- canvasManager -> SatelliteCanvasManager -> AbstractCanvasManager
+- canvasManager -> SatelliteCanvasManager -> AbstractCanvasDrawer

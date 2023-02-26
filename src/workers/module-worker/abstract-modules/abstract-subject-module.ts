@@ -1,10 +1,10 @@
 import { AbstractModule } from "./abstract-module";
 import { Subject } from "../../common";
 
-export abstract class AbstractSubjectModule<T> extends AbstractModule<T>{
-  subject = new Subject<Message<T>>();
+export abstract class AbstractSubjectModule<T, P> extends AbstractModule<T, P>{
+  subject = new Subject<T>();
 
-  protected constructor(postMessage: Worker["postMessage"]) {
+  protected constructor(postMessage: PostMessage<P>) {
     super(postMessage);
   }
 }
