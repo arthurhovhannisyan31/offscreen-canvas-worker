@@ -1,6 +1,6 @@
 import { type FC, memo } from "react";
 
-import { FPSMonitor, Layout, CanvasContainer } from "components";
+import { PerformanceMonitor, Layout, CanvasContainer } from "components";
 
 import { useModuleWorkerInit } from "./hooks";
 
@@ -13,7 +13,7 @@ export const App: FC = memo(() => {
     <div className="App">
       <Layout>
         <CanvasContainer />
-        <FPSMonitor />
+        <PerformanceMonitor />
       </Layout>
     </div>
   );

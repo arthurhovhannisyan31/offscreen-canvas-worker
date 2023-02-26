@@ -42,6 +42,7 @@ export const updateFpsSAB = (fpsI32Arr: Int32Array, animationFrameId:{ id: numbe
     * write current timestamp to end pointer next section
     * */
     fpsI32Arr[pointerEnd++]= cur;
+
     if (pointerStart > 0){
       fpsI32Arr.copyWithin(0, pointerStart, pointerEnd);
 

@@ -15,10 +15,6 @@ export const isImageBitmapSource =
     return (message as ImageData).data.byteLength > 0;
 };
 
-export const isSimpleAction = (action: any): action is SimpleAction => {
-  return (action as Action<any>).payload === undefined;
-};
-
-export const isAction = <T>(action: Action<T>): action is Action<T>=> {
-  return action.payload !== undefined;
+export const isSAB = (sab: any) : sab is SharedArrayBuffer=> {
+  return (sab as SharedArrayBuffer)[Symbol.toStringTag] === "SharedArrayBuffer";
 };

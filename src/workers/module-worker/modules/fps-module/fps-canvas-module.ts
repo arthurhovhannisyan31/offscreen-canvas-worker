@@ -1,7 +1,7 @@
 import { FpsCanvasCalculator } from "./fps-canvas-calculator";
 import { FpsCanvasDrawer } from "./fps-canvas-drawer";
 import { type SetDataAction } from "./types";
-import { isHTMLCanvasElement } from "../../../typeGuards";
+import { isHTMLCanvasElement, isSAB } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 import { FPS_MODULE_SET_DATA, FPS_MODULE_START, FPS_MODULE_STOP } from "../../actions";
 
@@ -29,13 +29,14 @@ export class FpsCanvasModule extends AbstractModule<UpdateAction, Message<PostAc
     });
   };
 
-  async onMessage(data: UpdateAction): Promise<void> {
-    switch (data.type){
+  async onMessage(action: UpdateAction): Promise<void> {
+    switch (action.type){
       case FPS_MODULE_SET_DATA: {
-        if (isHTMLCanvasElement(data.payload.canvas)){
-          this.canvasDrawer.setContext(data.payload.canvas);
-          const arr = new Int32Array(data.payload.fpsSAB);
-          console.log(arr);
+        if (isHTMLCanvasElement(action.payload.canvas)){
+          this.canvasDrawer.setContext(action.payload.canvas);
+        }
+        if (isSAB(action.payload.fpsSAB)){
+          this.canvasDrawer.calculator?.init(action.payload.fpsSAB);
         }
         break;
       }

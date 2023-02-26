@@ -8,15 +8,14 @@ import { type SetDataPayload } from "workers/module-worker/modules/fps-module/ty
 import { updateFpsSAB } from "../helpers";
 
 const animationFrameId: { id: number } = { id: 0 };
-const fpsSAB = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 1024);
+const fpsSAB = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 256);
 const fpsMarksInt32Arr = new Int32Array(fpsSAB);
 
 export const useFPSMonitorInit = (canvasRef: HTMLCanvasElement | null): void => {
   const { worker } = useContext(ModuleWorkerContext);
 
-  updateFpsSAB(fpsMarksInt32Arr, animationFrameId);
-
   useEffect(() => {
+
     if (worker && canvasRef) {
       const canvasControl = canvasRef.transferControlToOffscreen();
       const setDataPayload: SetDataPayload = {
@@ -31,6 +30,8 @@ export const useFPSMonitorInit = (canvasRef: HTMLCanvasElement | null): void => 
       worker.postMessage(
         createSimpleAction(FPS_MODULE_START)
       );
+
+      updateFpsSAB(fpsMarksInt32Arr, animationFrameId);
     }
 
     return () => {

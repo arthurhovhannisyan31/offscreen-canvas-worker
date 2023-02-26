@@ -1,24 +1,18 @@
 import { AbstractCanvasCalculator } from "../../../common/calculators";
 
-export class FpsCanvasCalculator extends AbstractCanvasCalculator {
+export class FpsCanvasCalculator extends AbstractCanvasCalculator<never, void, SharedArrayBuffer> {
+  sab?: SharedArrayBuffer;
   times: number[] = [];
 
+  init(sab: SharedArrayBuffer): void{
+    this.sab = sab;
+  }
+
   calculate(): number {
-    const cur = performance.now();
-    const length = this.times.length;
-    let idx = -1;
+    if (!this.sab) return 0;
 
-    for (let i = length-1; i >= 0 ; i--) {
-      if (this.times[i] < cur - 1000){
-        idx = i;
-        break;
-      }
-    }
+    const arr = new Int32Array(this.sab);
 
-    this.times.push(cur);
-
-    this.times.splice(0, idx);
-
-    return this.times.length;
+    return arr.findIndex((val) => val === 0);
   }
 }

@@ -3,19 +3,8 @@ Readme
 - add readme for each worker with explanation of architecture
 - describe used tech stack
 
-FPS Widget:
-- Add drawing for main thread fps count
-
-Security:
-- Add crossOriginIsolated check https://developer.mozilla.org/en-US/docs/Web/API/crossOriginIsolated
-- Add measureUserAgentSpecificMemory drawing to canvas https://developer.mozilla.org/en-US/docs/Web/API/Performance/measureUserAgentSpecificMemory
-
 Performance:
 - Remove all listeners when unmounted, call terminate on workers
-  PerformanceLongTaskTiming
-  PerformanceNavigationTiming
-  PerformanceServerTiming
-  PerformancePaintTiming
 
 Pipelines and checks
 - add web-vitals checks as a part of pipelines
@@ -29,6 +18,14 @@ Pipelines and checks
 - Add checks for staged files
   run validation for staged files
   run ts, css validation for committed files
+
+Feature:
+- add charts for:
+  PerformanceLongTaskTiming
+  PerformanceNavigationTiming
+  PerformanceServerTiming
+  PerformancePaintTiming
+- Add measureUserAgentSpecificMemory drawing to canvas https://developer.mozilla.org/en-US/docs/Web/API/Performance/measureUserAgentSpecificMemory
 
 Features
 - workers controls

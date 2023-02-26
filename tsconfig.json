@@ -2,7 +2,12 @@
   "extends": "./configs/ts-config/tsconfig.rules.json",
   "compilerOptions": {
     "baseUrl": "src",
+    "jsx": "react-jsx",
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "rootDir": ".",
+    "target": "ESNext",
     "typeRoots": ["./src/typings", "./src/workers/typings"],
     "types": ["jest"],
   },
