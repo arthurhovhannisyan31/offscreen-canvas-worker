@@ -1,5 +1,5 @@
-import { FpsCanvasCalculator } from "./fps-canvas-calculator";
-import { FpsCanvasDrawer } from "./fps-canvas-drawer";
+import { PerformanceCanvasCalculator } from "./fps-canvas-calculator";
+import { PerformanceCanvasDrawer } from "./fps-canvas-drawer";
 import { type SetDataAction } from "./types";
 import { isHTMLCanvasElement, isSAB } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
@@ -8,15 +8,15 @@ import { FPS_MODULE_SET_DATA, FPS_MODULE_START, FPS_MODULE_STOP } from "../../ac
 export type PostAction = never;
 export type UpdateAction = SetDataAction; // Action<unknown> |
 
-export class FpsCanvasModule extends AbstractModule<UpdateAction, Message<PostAction>> {
-  canvasDrawer: FpsCanvasDrawer;
+export class PerformanceCanvasModule extends AbstractModule<UpdateAction, Message<PostAction>> {
+  canvasDrawer: PerformanceCanvasDrawer;
   active = false;
 
   constructor(postMessage: PostMessage<Message<PostAction>>) {
     super(postMessage);
 
-    this.canvasDrawer = new FpsCanvasDrawer(
-      new FpsCanvasCalculator()
+    this.canvasDrawer = new PerformanceCanvasDrawer(
+      new PerformanceCanvasCalculator()
     );
   }
 

@@ -1,6 +1,6 @@
 import { AbstractCanvasCalculator } from "../../../common/calculators";
 
-export class FpsCanvasCalculator extends AbstractCanvasCalculator<never, void, SharedArrayBuffer> {
+export class PerformanceCanvasCalculator extends AbstractCanvasCalculator<never, void, SharedArrayBuffer> {
   sab?: SharedArrayBuffer;
   times: number[] = [];
 

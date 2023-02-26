@@ -36,3 +36,9 @@ structure:
 
 Step 1 build canvas and workers 
 Step 2 use transferable objects to pass data between threads.
+
+Used tech stask:
+- Web Workers
+- SharedArrayBuffer
+- OffscreenCanvas
+- RequestAnimationFrame

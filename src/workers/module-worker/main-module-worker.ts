@@ -1,6 +1,6 @@
 import type { PostAction, UpdateAction } from "./types";
 
-import { FpsCanvasModule } from "./modules/fps-module";
+import { PerformanceCanvasModule } from "./modules/fps-module";
 import { TwinsManagerModule } from "./modules/twins-module";
 import { Subject, AbstractWorker,  WORKER_STOP, createSimpleAction } from "../common";
 
@@ -16,7 +16,7 @@ class MainModuleWorker extends AbstractWorker<PostAction>{
 
   init():void {
     this.subject.addObserver(new TwinsManagerModule(this.onMessage));
-    this.subject.addObserver(new FpsCanvasModule(this.onMessage));
+    this.subject.addObserver(new PerformanceCanvasModule(this.onMessage));
   }
 
   override onMessage(message: Message<UpdateAction>): void {

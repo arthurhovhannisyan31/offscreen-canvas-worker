@@ -1,11 +1,11 @@
-import { type FpsCanvasCalculator } from "./fps-canvas-calculator";
+import { type PerformanceCanvasCalculator } from "./fps-canvas-calculator";
 import { AbstractCanvasDrawer } from "../../../common/drawers";
 
-export class FpsCanvasDrawer extends AbstractCanvasDrawer {
+export class PerformanceCanvasDrawer extends AbstractCanvasDrawer {
   fpsValue = 0;
   time = performance.now();
 
-  constructor(calculator: FpsCanvasCalculator) {
+  constructor(calculator: PerformanceCanvasCalculator) {
     super();
     this.calculator = calculator;
   }
