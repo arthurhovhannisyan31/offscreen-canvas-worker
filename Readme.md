@@ -6,6 +6,10 @@
 
 After cloning the project run following command `git config core.hooksPath .git-hooks` to enable git hooks.
 
+## Description
+
+### Application architecture
+![img.png](docs/image/application-architecture.png)
 
 ### Absolut path resolution
 
@@ -37,7 +41,7 @@ structure:
 Step 1 build canvas and workers 
 Step 2 use transferable objects to pass data between threads.
 
-Used tech stask:
+## Used tech stack:
 - Web Workers
 - SharedArrayBuffer
 - OffscreenCanvas
