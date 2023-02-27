@@ -27,6 +27,7 @@ export const useCanvasDrag = ({
         setIsCaptured(true);
         if (!document.pointerLockElement){
           canvasRef.current.requestPointerLock();
+          // setPointerCapture as an alternative
         }
       }
     }
