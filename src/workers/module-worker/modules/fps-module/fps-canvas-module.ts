@@ -1,6 +1,7 @@
 import { PerformanceCanvasCalculator } from "./fps-canvas-calculator";
 import { PerformanceCanvasDrawer } from "./fps-canvas-drawer";
 import { type SetDataAction } from "./types";
+import { WORKER_STOP } from "../../../common";
 import { isHTMLCanvasElement, isSAB } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 import { FPS_MODULE_SET_DATA, FPS_MODULE_START, FPS_MODULE_STOP } from "../../actions";
@@ -45,10 +46,12 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, Messag
         this.rafLoop();
         break;
       }
-      case FPS_MODULE_STOP: {
+      case FPS_MODULE_STOP:
+      case WORKER_STOP:{
         this.active = false;
         break;
       }
+      default: break;
     }
   }
 }

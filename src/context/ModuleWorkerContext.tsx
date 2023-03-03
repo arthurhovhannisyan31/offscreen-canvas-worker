@@ -4,8 +4,10 @@ import {
   useCallback,
   useMemo,
   type PropsWithChildren,
-  type FC
+  type FC, useEffect,
 } from "react";
+
+import { createSimpleAction, WORKER_TERMINATE } from "../workers/common";
 
 interface ModuleWorkerState {
   worker?: Worker;
@@ -30,6 +32,14 @@ export const ModuleWorkerContextContainer: FC<PropsWithChildren> = ({ children }
     worker: workerRef,
     setWorker
   }), [workerRef, setWorker]);
+
+  useEffect(() => {
+    return () => {
+      if (workerRef){
+        workerRef.postMessage(createSimpleAction(WORKER_TERMINATE));
+      }
+    };
+  }, [workerRef]);
 
   return (
     <ModuleWorkerContext.Provider value={contextValue}>

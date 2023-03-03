@@ -2,7 +2,7 @@ import type { PostAction, UpdateAction } from "./types";
 
 import { PerformanceCanvasModule } from "./modules/fps-module";
 import { TwinsManagerModule } from "./modules/twins-module";
-import { Subject, AbstractWorker,  WORKER_STOP, createSimpleAction } from "../common";
+import { Subject, AbstractWorker, WORKER_STOP, createSimpleAction, WORKER_TERMINATE } from "../common";
 
 class MainModuleWorker extends AbstractWorker<PostAction>{
   subject = new Subject<UpdateAction>();
@@ -20,6 +20,11 @@ class MainModuleWorker extends AbstractWorker<PostAction>{
   }
 
   override onMessage(message: Message<UpdateAction>): void {
+    if (message.data.type === WORKER_TERMINATE){
+      this.terminate();
+
+      return;
+    }
     this.subject.notify(message.data);
   }
 

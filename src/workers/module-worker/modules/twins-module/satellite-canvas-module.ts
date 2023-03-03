@@ -35,6 +35,7 @@ export class SatelliteCanvasModule extends AbstractModule<UpdateAction, PostActi
         }
         break;
       }
+      default: break;
     }
   }
 }

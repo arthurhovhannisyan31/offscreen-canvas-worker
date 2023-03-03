@@ -43,6 +43,7 @@ export class MainCanvasModule extends AbstractModule<UpdateAction, PostAction> {
         }
         break;
       }
+      default: break;
     }
   }
 }

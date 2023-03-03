@@ -40,12 +40,5 @@ export const useTwinsWorkerInit = (
         createSimpleAction(TWINS_WORKER_START)
       );
     }
-
-    return () => {
-      if (moduleWorker){
-        moduleWorker.terminate();
-      }
-    };
-
   }, [canvas1Ref, canvas2Ref, moduleWorker]);
 };

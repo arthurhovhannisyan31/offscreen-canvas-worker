@@ -29,3 +29,7 @@ interface Performance extends Performance {
     breakdown: MemoryBreakdown[]
   };
 }
+
+interface HTMLCanvasElement {
+  transferControlToOffscreen(): OffscreenCanvas & Transferable;
+}
