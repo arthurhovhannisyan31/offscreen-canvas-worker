@@ -1,44 +1,32 @@
 # Offscreen canvas with worker
 
-### This applications does data fetching and processing in the background with submission of final result to main app.
+### Description
+This application has splited core. Main thread is responsible for hosting DOM elemtns and UI interactions. Worker thread(s) responsible for data fetching, processing and submission to the main thread.
 
-## Setup for development
-
-After cloning the project run following command `git config core.hooksPath .git-hooks` to enable git hooks.
-
-
-### Absolut path resolution
-
-Please keep in mind that workers are loaded as separate modules and absolut path resolution is not supported.
-All relevant path imports will be added to module bundle. 
-Please check source files in preview mode.
-
-This approach might be useful for apps with complex data processing whether it long arrays or complex object merging.
-Using processing of data in the background it is possible to save main application as interactive and responsive as possible.
-
-The idea and implementation should stay simple
-
-application should have only 2 canvases for the main page
-
-main worker is responsible for hosting other workers
-
-data-fetch-worker responsible for fetching and storing data
-
-image-process-worker responsible for image drawing and processing
-
-structure:
-
-| main-app  | main-worker          |
-|-----------|----------------------|
-|           | data-fetch-worker    |
-|           | image-process-worker |
+### How it works.
+Main thread contains DOM element, including canvases, references to which are transferred to worker thread using [transferControlToOffscreen](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/transferControlToOffscreen).
+Worker thread uses `modules` to host several classes, communication between which provided with message dispatcher (Publisher).
+Worker modules implement logic specific to the unit and can do data fetching, data calculation, data visualization (using reference to canvas) and read/write operations on SharedArrayBuffer.
 
 
-Step 1 build canvas and workers 
-Step 2 use transferable objects to pass data between threads.
+### Application architecture
+![img.png](docs/image/application-architecture.png)
 
-Used tech stask:
+### Preview
+Please run `yarn build && yarn preview` to run app in preview mode.
+
+### Used tech stack:
+- TypeScript
+- Vite
+- React
+- Jest
+
+### Used browser API:
 - Web Workers
 - SharedArrayBuffer
 - OffscreenCanvas
 - RequestAnimationFrame
+
+### Setup for development
+
+After cloning the project run following command `git config core.hooksPath .git-hooks` to enable git hooks.
