@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+.controlContainer {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  margin: 0 10px;
+}
+.controlContainer > button:hover {
+  filter: drop-shadow(0 0 10px #646cffaa);
+}
+
