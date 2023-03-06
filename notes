@@ -5,8 +5,6 @@ Readme
 Features
 - workers controls
   - start/stop workers by start stop buttons
-  - change fetch time period
-  - heavy task runner by input, stop main thread for number of milliseconds
   - add post message throttling in abstract worker to synchronize workload
 
 Performance:

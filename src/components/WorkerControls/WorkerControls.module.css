@@ -3,6 +3,7 @@
   width: 100%;
   justify-content: center;
   margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 .controlContainer {
   display: flex;
@@ -13,4 +14,6 @@
 .controlContainer > button:hover {
   filter: drop-shadow(0 0 10px #646cffaa);
 }
-
+.counterButton {
+  width: 30px;
+}

@@ -2,11 +2,10 @@ import type { PostAction, UpdateAction } from "./types";
 
 import { PerformanceCanvasModule } from "./modules/fps-module";
 import { TwinsManagerModule } from "./modules/twins-module";
-import { Subject, AbstractWorker, WORKER_STOP, createSimpleAction, WORKER_TERMINATE } from "../common";
+import { WORKER_STOP, createSimpleAction, WORKER_TERMINATE } from "../common";
+import { AbstractSubjectWorker } from "../common/workers/abstract-subject-worker";
 
-class MainModuleWorker extends AbstractWorker<PostAction>{
-  subject = new Subject<UpdateAction>();
-
+class MainModuleWorker extends AbstractSubjectWorker<PostAction, UpdateAction>{
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
     this.init();
@@ -25,7 +24,7 @@ class MainModuleWorker extends AbstractWorker<PostAction>{
 
       return;
     }
-    this.subject.notify(message.data);
+    super.onMessage(message);
   }
 
   terminate():void {

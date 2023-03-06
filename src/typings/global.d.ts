@@ -33,3 +33,5 @@ interface Performance extends Performance {
 interface HTMLCanvasElement {
   transferControlToOffscreen(): OffscreenCanvas & Transferable;
 }
+
+type AnyArgsFunction = (...args: any) => void;
