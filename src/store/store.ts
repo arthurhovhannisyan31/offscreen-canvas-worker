@@ -1,6 +1,6 @@
 import { ModuleWorkerStore } from "./moduleWorkerStore";
 
-interface RootStore {
+export interface RootStore {
   moduleWorker: ModuleWorkerStore
 }
 

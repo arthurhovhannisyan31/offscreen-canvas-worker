@@ -4,7 +4,8 @@ import {
   useCallback,
   useMemo,
   type PropsWithChildren,
-  type FC, useEffect,
+  useEffect,
+  memo,
 } from "react";
 
 import { createSimpleAction, WORKER_TERMINATE } from "../workers/common";
@@ -21,7 +22,7 @@ const moduleWorkerState: ModuleWorkerState = {
 
 export const ModuleWorkerContext = createContext<ModuleWorkerState>(moduleWorkerState);
 
-export const ModuleWorkerContextContainer: FC<PropsWithChildren> = ({ children }) => {
+export const ModuleWorkerContextContainer = memo<PropsWithChildren>(({ children }) => {
   const [workerRef, setWorkerRef] = useState<Worker>();
 
   const setWorker = useCallback((worker: Worker) => {
@@ -46,4 +47,6 @@ export const ModuleWorkerContextContainer: FC<PropsWithChildren> = ({ children }
       {children}
     </ModuleWorkerContext.Provider>
   );
-};
+});
+
+ModuleWorkerContextContainer.displayName = "ModuleWorkerContextContainer";

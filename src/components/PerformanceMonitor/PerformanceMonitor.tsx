@@ -30,3 +30,5 @@ export const PerformanceMonitor = memo(() => {
       />
   );
 });
+
+PerformanceMonitor.displayName = "PerformanceMonitor";
