@@ -6,6 +6,7 @@
   flex-wrap: wrap;
 }
 .controlContainer {
+  width: 150px;
   display: flex;
   flex-flow: column;
   justify-content: space-between;

@@ -11,8 +11,9 @@ export abstract class AbstractWorker<P, A = Action<any>> implements Observer<A> 
 
   protected constructor(worker: DedicatedWorkerGlobalScope) {
     this.worker = worker;
-    this.worker.self.onmessage = this.onMessage.bind(this);
     this.messageBatcher = new MessageBatcher();
+    this.worker.self.onmessage = this.onMessage.bind(this);
+    this.postMessage = this.postMessage.bind(this);
   }
 
   abstract onMessage(message: Message): void;

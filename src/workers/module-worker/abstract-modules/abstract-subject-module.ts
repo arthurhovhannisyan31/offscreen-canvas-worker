@@ -1,12 +1,12 @@
 import { AbstractModule } from "./abstract-module";
 import { Subject } from "../../common";
 
-export abstract class AbstractSubjectModule<U, A, M> extends AbstractModule<U, A, M>{
-  subject = new Subject<A>();
+export abstract class AbstractSubjectModule<U, P> extends AbstractModule<U, P>{
+  subject = new Subject<P>();
 
   protected constructor(
-    postAction: PostAction<A>,
-    postMessage: PostMessage<M>
+    postAction: PostAction<P>,
+    postMessage: PostMessage<P>
   ) {
     super(postAction, postMessage);
   }

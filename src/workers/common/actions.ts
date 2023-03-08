@@ -13,4 +13,5 @@ export const ERROR = "ERROR";
 
 export const WORKER = "WORKER";
 export const WORKER_STOP = `${WORKER}_STOP`;
+export const WORKER_START = `${WORKER}_START`;
 export const WORKER_TERMINATE = `${WORKER}_TERMINATE`;

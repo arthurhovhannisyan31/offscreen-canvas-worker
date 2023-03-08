@@ -1,11 +1,11 @@
-import type { UpdateAction, SendAction, PostMessage } from "./types";
+import type { UpdateAction, SendAction } from "./types";
 
 import { PerformanceCanvasModule } from "./modules/fps-module";
 import { TwinsManagerModule } from "./modules/twins-module";
 import { WORKER_STOP, createSimpleAction, WORKER_TERMINATE } from "../common";
 import { AbstractSubjectWorker } from "../common/workers/abstract-subject-worker";
 
-class MainModuleWorker extends AbstractSubjectWorker<Message<UpdateAction>, SendAction, PostMessage>{
+class MainModuleWorker extends AbstractSubjectWorker<Message<UpdateAction>, SendAction>{
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
     this.init();

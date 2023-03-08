@@ -1,11 +1,9 @@
+Add eventbus for worker messages propagation accross all stores and subscibers
+Finish abstract worker test
+
 Readme
 - add classes to diagram
 - system proper system design
-
-Features
-- workers controls
-  - start/stop workers by start stop buttons
-  - add post message throttling in abstract worker to synchronize workload
 
 Pipelines and checks
 - add web-vitals checks as a part of pipelines

@@ -1,7 +1,7 @@
 import { AbstractWorker } from "./abstract-worker";
 import { Subject } from "../observer";
 
-export abstract class AbstractSubjectWorker<U extends Message, A, M> extends AbstractWorker<M> {
+export abstract class AbstractSubjectWorker<U extends Message, A> extends AbstractWorker<A> {
   subject = new Subject<A>();
 
   constructor(worker: DedicatedWorkerGlobalScope) {

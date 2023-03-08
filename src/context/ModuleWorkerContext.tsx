@@ -23,24 +23,24 @@ const moduleWorkerState: ModuleWorkerState = {
 export const ModuleWorkerContext = createContext<ModuleWorkerState>(moduleWorkerState);
 
 export const ModuleWorkerContextContainer = memo<PropsWithChildren>(({ children }) => {
-  const [workerRef, setWorkerRef] = useState<Worker>();
+  const [worker, setWorkerRef] = useState<Worker>();
 
   const setWorker = useCallback((worker: Worker) => {
     setWorkerRef(worker);
   }, []);
 
   const contextValue = useMemo<ModuleWorkerState>(() => ({
-    worker: workerRef,
+    worker,
     setWorker
-  }), [workerRef, setWorker]);
+  }), [worker, setWorker]);
 
   useEffect(() => {
     return () => {
-      if (workerRef){
-        workerRef.postMessage(createSimpleAction(WORKER_TERMINATE));
+      if (worker){
+        worker.postMessage(createSimpleAction(WORKER_TERMINATE));
       }
     };
-  }, [workerRef]);
+  }, [worker]);
 
   return (
     <ModuleWorkerContext.Provider value={contextValue}>

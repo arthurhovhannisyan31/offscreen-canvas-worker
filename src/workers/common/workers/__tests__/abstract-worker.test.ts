@@ -6,7 +6,7 @@ import { AbstractWorker } from "../abstract-worker";
 
 const mockFn = jest.fn();
 
-class SomeModule extends AbstractModule<any, any, any>{
+class SomeModule extends AbstractModule<any, any>{
   constructor(postAction: any, postMessage: any) {
     super(postAction, postMessage);
   }

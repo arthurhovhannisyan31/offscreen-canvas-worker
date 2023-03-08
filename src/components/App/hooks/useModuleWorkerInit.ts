@@ -10,7 +10,11 @@ export const useModuleWorkerInit = (): void => {
   useEffect(() => {
     if (!workerRef.current){
       workerRef.current = getMainModuleWorker();
-
+      if (workerRef.current){
+        workerRef.current.onmessage = (message) => {
+          console.log("message", message.data);
+        };
+      }
       setWorker(workerRef.current);
     }
   }, [setWorker]);

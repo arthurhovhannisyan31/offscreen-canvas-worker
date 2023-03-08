@@ -1,9 +1,9 @@
 import type { Observer } from "../../common";
 
-export abstract class AbstractModule<U, A, M> implements Observer<U>{
+export abstract class AbstractModule<U, P> implements Observer<U>{
   protected constructor(
-    protected postAction: PostAction<A>,
-    protected postMessage: PostMessage<M>
+    protected postAction: PostAction<P>,
+    protected postMessage: PostMessage<P>
   ) {}
 
   update = (message: U): void => {

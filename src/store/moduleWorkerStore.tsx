@@ -1,14 +1,8 @@
 import { makeObservable, observable, action, computed } from "mobx";
 
-export enum ModuleStatus {
-  Off,
-  On
-}
-
 export enum ModuleWorkerEntries {
   Fps = "Fps",
   Twins = "Twins",
-  All = "All"
 }
 
 export type ModuleWorkerProperty = `${ModuleWorkerEntries}ModuleActive`;
@@ -16,31 +10,37 @@ export type ModuleWorkerProperty = `${ModuleWorkerEntries}ModuleActive`;
 type ModuleWorkerStoreFields = Record<ModuleWorkerProperty, boolean>;
 
 export class ModuleWorkerStore {
-  FpsModuleActive = ModuleStatus.Off;
-  TwinsModuleActive = ModuleStatus.Off;
-  AllModuleActive = ModuleStatus.Off;
+  FpsModuleActive = false;
+  TwinsModuleActive = false;
 
   constructor() {
     makeObservable(this, {
-      // fields
       FpsModuleActive: observable,
       TwinsModuleActive: observable,
-      AllModuleActive: observable,
-      // methods
       setModuleStatus: action,
+      toggleAllWorkers: action,
       modulesStatus: computed,
     });
   }
 
   get modulesStatus(): ModuleWorkerStoreFields {
     return {
-      FpsModuleActive: !!this.FpsModuleActive,
-      TwinsModuleActive: !!this.TwinsModuleActive,
-      AllModuleActive: !!this.AllModuleActive,
+      FpsModuleActive: this.FpsModuleActive,
+      TwinsModuleActive: this.TwinsModuleActive,
     };
   }
 
-  setModuleStatus = (moduleName: ModuleWorkerProperty, status: ModuleStatus): void => {
+  setModuleStatus = (moduleName: ModuleWorkerProperty, status: boolean): void => {
     this[moduleName] = status;
+  };
+
+  toggleAllWorkers = (): void => {
+    if (this.FpsModuleActive && this.TwinsModuleActive){
+      this.FpsModuleActive = false;
+      this.TwinsModuleActive = false;
+    } else if (!this.FpsModuleActive || !this.TwinsModuleActive){
+      this.FpsModuleActive = true;
+      this.TwinsModuleActive = true;
+    }
   };
 }

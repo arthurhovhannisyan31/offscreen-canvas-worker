@@ -1,3 +1,8 @@
+import type { ModuleWorkerStore } from "../../store/moduleWorkerStore";
+
 export interface WorkerControlsProps {
-  some?: boolean;
+  fpsModuleActive: boolean;
+  twinsModuleActive: boolean;
+  setModuleWorkerStatus: ModuleWorkerStore["setModuleStatus"];
+  toggleAllWorkers: ModuleWorkerStore["toggleAllWorkers"];
 }

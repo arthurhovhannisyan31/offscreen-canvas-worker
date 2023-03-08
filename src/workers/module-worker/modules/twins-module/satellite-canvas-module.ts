@@ -12,14 +12,13 @@ import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export type UpdateAction = CanvasAction;
 export type SendAction = SimpleAction;
-export type SendMessage = Message<any>;
 
-export class SatelliteCanvasModule extends AbstractModule<UpdateAction, SendAction, SendMessage> {
+export class SatelliteCanvasModule extends AbstractModule<UpdateAction, SendAction> {
   canvasManager = new SatelliteCanvasDrawer();
 
   constructor(
     postAction: PostAction<SendAction>,
-    postMessage: PostMessage<SendMessage>
+    postMessage: PostMessage<SendAction>
   ) {
     super(postAction, postMessage);
   }

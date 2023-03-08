@@ -11,14 +11,13 @@ import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export type UpdateAction = CanvasAction;
 export type SendAction = CanvasAction;
-export type SendMessage = Message<any>;
 
-export class MainCanvasModule extends AbstractModule<UpdateAction, SendAction, SendMessage> {
+export class MainCanvasModule extends AbstractModule<UpdateAction, SendAction> {
   canvasManager: MainCanvasDrawer;
 
   constructor(
     postAction: PostAction<SendAction>,
-    postMessage: PostMessage<SendMessage>
+    postMessage: PostMessage<SendAction>
   ) {
     super(postAction, postMessage);
 

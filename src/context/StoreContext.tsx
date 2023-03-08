@@ -1,33 +1,13 @@
-import { createContext, memo, type PropsWithChildren, useState, useCallback } from "react";
+import { createContext, memo, type PropsWithChildren } from "react";
 
 import { rootStore, type RootStore } from "../store/store";
 
-interface StoreContextState {
-  store: RootStore;
-  setStore: (store: RootStore) => void;
-}
-
-const storeContextStateInitValue: StoreContextState = {
-  store: rootStore,
-  setStore: () => null
-};
-
-export const StoreContext = createContext<StoreContextState>(storeContextStateInitValue);
+export const StoreContext = createContext<RootStore>(rootStore);
 
 export const StoreContextContainer = memo<PropsWithChildren>(({ children }) => {
-  const [store, setStore] = useState(rootStore);
-
-  const handleSetStore = useCallback((store: RootStore) => {
-    setStore(store);
-  }, []);
-
-  const storeContextStateValue: StoreContextState = {
-    store: store,
-    setStore: handleSetStore
-  };
 
   return (
-    <StoreContext.Provider value={storeContextStateValue}>
+    <StoreContext.Provider value={rootStore}>
       {children}
     </StoreContext.Provider>
   );
