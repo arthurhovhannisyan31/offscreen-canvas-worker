@@ -1,18 +1,17 @@
 import { AbstractWorker } from "./abstract-worker";
 import { Subject } from "../observer";
 
-export abstract class AbstractSubjectWorker<P, U> extends AbstractWorker<P> {
-  subject = new Subject<U>();
+export abstract class AbstractSubjectWorker<U extends Message, A, M> extends AbstractWorker<M> {
+  subject = new Subject<A>();
 
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
-    this.init();
   }
 
   abstract init(): void;
 
-  onMessage(message: Message): void {
-    this.messageBatcher.batchMessage(message, (message: Message) => {
+  onMessage(message: U): void {
+    this.messageBatcher.batchMessage(message, (message: U) => {
       this.subject.notify(message.data);
     });
   }

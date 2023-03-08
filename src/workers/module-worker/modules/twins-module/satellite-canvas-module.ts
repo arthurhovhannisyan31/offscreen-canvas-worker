@@ -11,13 +11,17 @@ import { isHTMLCanvasElement, isImageBitmapSource } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export type UpdateAction = CanvasAction;
-export type PostAction = SimpleAction;
+export type SendAction = SimpleAction;
+export type SendMessage = Message<any>;
 
-export class SatelliteCanvasModule extends AbstractModule<UpdateAction, PostAction> {
+export class SatelliteCanvasModule extends AbstractModule<UpdateAction, SendAction, SendMessage> {
   canvasManager = new SatelliteCanvasDrawer();
 
-  constructor(postMessage: PostMessage<PostAction>) {
-    super(postMessage);
+  constructor(
+    postAction: PostAction<SendAction>,
+    postMessage: PostMessage<SendMessage>
+  ) {
+    super(postAction, postMessage);
   }
 
   onMessage(data: CanvasAction): void {
@@ -31,7 +35,7 @@ export class SatelliteCanvasModule extends AbstractModule<UpdateAction, PostActi
       case SATELLITE_DRAW_REQUEST: {
         if (isImageBitmapSource(data.payload)){
           this.canvasManager.processImageData(data.payload);
-          this.postMessage(createSimpleAction(SATELLITE_DRAW_DONE));
+          this.postAction(createSimpleAction(SATELLITE_DRAW_DONE));
         }
         break;
       }

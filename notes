@@ -7,10 +7,6 @@ Features
   - start/stop workers by start stop buttons
   - add post message throttling in abstract worker to synchronize workload
 
-Performance:
-- Remove all listeners when unmounted, call terminate on workers
-end of development for 1qt 2023
-
 Pipelines and checks
 - add web-vitals checks as a part of pipelines
   store latest values at file
@@ -34,12 +30,6 @@ Feature:
 - Add measureUserAgentSpecificMemory drawing to canvas https://developer.mozilla.org/en-US/docs/Web/API/Performance/measureUserAgentSpecificMemory
 
 - Add mobx store
-  - window size:
-    store canvas sizes
-    calculate canvas sizes in proportion to window size
-    dispatch resize of canvas with throttle 100ms
-    submit changes to workers new canvas size
-    update performance values from workers messages
   - collect metrics of performance
     submit all metrics to store
     show metrics in table view

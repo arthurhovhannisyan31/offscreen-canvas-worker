@@ -1,11 +1,11 @@
-import type { PostAction, UpdateAction } from "./types";
+import type { UpdateAction, SendAction, PostMessage } from "./types";
 
 import { PerformanceCanvasModule } from "./modules/fps-module";
 import { TwinsManagerModule } from "./modules/twins-module";
 import { WORKER_STOP, createSimpleAction, WORKER_TERMINATE } from "../common";
 import { AbstractSubjectWorker } from "../common/workers/abstract-subject-worker";
 
-class MainModuleWorker extends AbstractSubjectWorker<PostAction, UpdateAction>{
+class MainModuleWorker extends AbstractSubjectWorker<Message<UpdateAction>, SendAction, PostMessage>{
   constructor(worker: DedicatedWorkerGlobalScope) {
     super(worker);
     this.init();
@@ -14,8 +14,8 @@ class MainModuleWorker extends AbstractSubjectWorker<PostAction, UpdateAction>{
   }
 
   init():void {
-    this.subject.addObserver(new TwinsManagerModule(this.onMessage));
-    this.subject.addObserver(new PerformanceCanvasModule(this.onMessage));
+    this.subject.addObserver(new TwinsManagerModule(this.update, this.postMessage));
+    this.subject.addObserver(new PerformanceCanvasModule(this.update, this.postMessage));
   }
 
   override onMessage(message: Message<UpdateAction>): void {

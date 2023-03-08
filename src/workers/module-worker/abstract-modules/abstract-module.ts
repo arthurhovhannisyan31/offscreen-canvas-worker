@@ -1,11 +1,14 @@
-import { type Observer } from "../../common";
+import type { Observer } from "../../common";
 
-export abstract class AbstractModule<T, P> implements Observer<T>{
-  constructor(protected postMessage: PostMessage<P>) {}
+export abstract class AbstractModule<U, A, M> implements Observer<U>{
+  protected constructor(
+    protected postAction: PostAction<A>,
+    protected postMessage: PostMessage<M>
+  ) {}
 
-  update = (message: T): void => {
+  update = (message: U): void => {
     this.onMessage(message);
   };
 
-  abstract onMessage(message: T): void;
+  abstract onMessage(message: U): void;
 }

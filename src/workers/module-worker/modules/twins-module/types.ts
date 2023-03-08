@@ -1,9 +1,12 @@
-import { type PostAction as MainCanvasModulePostAction } from "./main-canvas-module";
-import { type PostAction as SatelliteCanvasModulePostAction } from "./satellite-canvas-module";
+import { type SendAction as MainCanvasModulePostAction } from "./main-canvas-module";
+import { type SendAction as SatelliteCanvasModulePostAction } from "./satellite-canvas-module";
 import { type CanvasAction } from "../../../types";
 
-export type PostAction =
+export type SendAction =
   | MainCanvasModulePostAction
-  | SatelliteCanvasModulePostAction;
+  | SatelliteCanvasModulePostAction
+  | SimpleAction;
 
-export type UpdateAction = CanvasAction | PostAction;
+export type UpdateAction = CanvasAction | SendAction;
+
+export type SendMessage<T = any> = Message<T>;

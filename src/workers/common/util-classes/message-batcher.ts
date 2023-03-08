@@ -2,7 +2,7 @@ export class MessageBatcher {
   messagesList: Message[] = [];
   timeoutID?: ReturnType<typeof setTimeout>;
 
-  constructor(protected interval = 50) {}
+  constructor(protected interval = 10) {}
 
   batchMessage(message: Message, cb: AnyArgsFunction): void {
     this.messagesList.push(message);

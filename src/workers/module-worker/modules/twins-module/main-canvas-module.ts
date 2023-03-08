@@ -10,13 +10,17 @@ import { isHTMLCanvasElement, isImageFile } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 
 export type UpdateAction = CanvasAction;
-export type PostAction = CanvasAction;
+export type SendAction = CanvasAction;
+export type SendMessage = Message<any>;
 
-export class MainCanvasModule extends AbstractModule<UpdateAction, PostAction> {
+export class MainCanvasModule extends AbstractModule<UpdateAction, SendAction, SendMessage> {
   canvasManager: MainCanvasDrawer;
 
-  constructor(postMessage: PostMessage<PostAction>) {
-    super(postMessage);
+  constructor(
+    postAction: PostAction<SendAction>,
+    postMessage: PostMessage<SendMessage>
+  ) {
+    super(postAction, postMessage);
 
     this.canvasManager = new MainCanvasDrawer();
   }
@@ -24,7 +28,7 @@ export class MainCanvasModule extends AbstractModule<UpdateAction, PostAction> {
   processData = (): void => {
     if (this.canvasManager.previewCtx){
       const imageData = this.canvasManager.getImageData();
-      this.postMessage(createAction(MAIN_IMAGE_DATA_DONE, imageData as ImageData));
+      this.postAction(createAction(MAIN_IMAGE_DATA_DONE, imageData as ImageData));
     }
   };
 

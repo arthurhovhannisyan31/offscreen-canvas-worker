@@ -1,13 +1,15 @@
 import {
   type UpdateAction as FPSUpdateAction,
-  type PostAction as FPSPostAction
+  type SendAction as FPSPostAction
 } from "./modules/fps-module";
 import {
   type UpdateAction as TwinsManagerUpdateAction,
-  type PostAction as TwinsManagerPostAction,
+  type SendAction as TwinsManagerPostAction,
 } from "./modules/twins-module/types";
 
-export type PostAction =
+export type PostMessage = Message<any>;
+
+export type SendAction =
   | TwinsManagerPostAction
   | FPSPostAction
   | SimpleAction;

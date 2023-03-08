@@ -15,6 +15,8 @@ type DedicatedWorker = Worker & (new () => Worker)
 
 type PostMessage<P> = (message: P, transfer?: Transferable[]) => void;
 
+type PostAction<A> = (message: A) => void;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface Message<T = any> {
   data: T

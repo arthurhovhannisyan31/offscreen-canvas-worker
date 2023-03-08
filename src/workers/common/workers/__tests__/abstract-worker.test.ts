@@ -6,9 +6,9 @@ import { AbstractWorker } from "../abstract-worker";
 
 const mockFn = jest.fn();
 
-class SomeModule extends AbstractModule<any, any>{
-  constructor(props: any) {
-    super(props);
+class SomeModule extends AbstractModule<any, any, any>{
+  constructor(postAction: any, postMessage: any) {
+    super(postAction, postMessage);
   }
 
   onMessage(action: any): void{
@@ -32,7 +32,7 @@ class SomeWorker extends AbstractWorker<any>{
     });
   }
   init(): void{
-    this.subject.addObserver(new SomeModule(this.onMessage));
+    this.subject.addObserver(new SomeModule(this.onMessage, this.postMessage));
   }
 }
 

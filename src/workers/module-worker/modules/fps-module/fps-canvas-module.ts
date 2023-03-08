@@ -6,15 +6,19 @@ import { isHTMLCanvasElement, isSAB } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
 import { FPS_MODULE_SET_DATA, FPS_MODULE_START, FPS_MODULE_STOP } from "../../actions";
 
-export type PostAction = never;
-export type UpdateAction = SetDataAction; // Action<unknown> |
+export type UpdateAction = SetDataAction;
+export type SendAction = Action<any>;
+export type SendMessage = Message<any>;
 
-export class PerformanceCanvasModule extends AbstractModule<UpdateAction, Message<PostAction>> {
+export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAction, SendMessage> {
   canvasDrawer: PerformanceCanvasDrawer;
   active = false;
 
-  constructor(postMessage: PostMessage<Message<PostAction>>) {
-    super(postMessage);
+  constructor(
+    postAction: PostAction<SendAction>,
+    postMessage: PostMessage<SendMessage>
+  ) {
+    super(postAction, postMessage);
 
     this.canvasDrawer = new PerformanceCanvasDrawer(
       new PerformanceCanvasCalculator()
