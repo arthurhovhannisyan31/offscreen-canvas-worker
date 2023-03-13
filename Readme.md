@@ -1,20 +1,20 @@
 # Offscreen canvas with worker
 
 ### Description
-This application has splited core. Main thread is responsible for hosting DOM elemtns and UI interactions. Worker thread(s) responsible for data fetching, processing and submission to the main thread.
+This application has splitted core logic. Main thread is responsible for hosting DOM elements and UI interactions. Worker thread(s) responsible for data fetching, processing and submission to the main thread.
 
 ### Application logic and data flow.
 Main thread contains DOM element, including canvases, references to which are transferred to worker thread using [transferControlToOffscreen](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/transferControlToOffscreen).
-Worker thread uses `modules` to host several classes, communication between which provided with message dispatcher (Publisher).
+Worker thread uses `modules` to host several classes, communication between which is provided with message dispatcher (Publisher).
 Worker modules implement logic specific to the unit and can do data fetching, data calculation, data visualization (using reference to canvas) and read/write operations on SharedArrayBuffer.
-Worker submits message to main thread, and notifies all store observers with new message data.
+Worker submits a message to the main thread, and notifies all store observers with new message data.
 
 
 ### Application architecture
 ![img.png](docs/image/application-architecture.png)
 
 ### Preview
-Please run `yarn build && yarn preview` to run app in preview mode.
+Please run `yarn build && yarn preview` to run the app in preview mode.
 
 ### Used tech stack:
 - TypeScript
