@@ -10,7 +10,8 @@
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:css-modules/recommended"
   ],
   "globals": {
     "module": true,
@@ -23,14 +24,6 @@
     "navigator": true,
     "process": true
   },
-  "overrides": [
-    {
-      "files": ["*.ts"],
-      "rules": {
-        "no-undef": "off"
-      }
-    }
-  ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -39,7 +32,8 @@
     "@typescript-eslint",
     "import",
     "react",
-    "react-hooks"
+    "react-hooks",
+    "css-modules"
   ],
   "rules": {
     "@typescript-eslint/semi": 0,
@@ -125,8 +119,24 @@
     ],
     "react/react-in-jsx-scope": "off",
     "semi": ["warn", "always"],
-    "quotes": ["error", "double"]
+    "quotes": ["error", "double"],
+    "css-modules/no-unused-class": [2, { "camelCase": true }],
+    "css-modules/no-undef-class": [2, { "camelCase": true }]
   },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off" // TODO revise rule config
+      }
+    },
+    {
+      "files": ["src/typings/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/triple-slash-reference": 0
+      }
+    }
+  ],
   "settings": {
     "import/ignore:": [
       "node_modules"
