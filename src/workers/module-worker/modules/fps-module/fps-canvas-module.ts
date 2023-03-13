@@ -1,10 +1,16 @@
 import { PerformanceCanvasCalculator } from "./fps-canvas-calculator";
 import { PerformanceCanvasDrawer } from "./fps-canvas-drawer";
 import { type SetDataAction } from "./types";
-import { createSimpleAction, WORKER_START, WORKER_STOP } from "../../../common";
+import { createAction, WORKER_START, WORKER_STOP } from "../../../common";
+import { type WorkerActivityStatus } from "../../../common/types";
 import { isHTMLCanvasElement, isSAB } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
-import { FPS_MODULE_SET_DATA, FPS_MODULE_START, FPS_MODULE_STOP } from "../../actions";
+import {
+  FPS_MODULE_SET_DATA,
+  FPS_MODULE_START,
+  FPS_MODULE_STOP,
+  WORKER_LOG_FPS_STATUS,
+} from "../../actions";
 
 export type UpdateAction = SetDataAction;
 export type SendAction = Action<any>;
@@ -34,8 +40,14 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAc
   };
 
   postActiveStatus(): void{
-    this.postMessage(createSimpleAction(
-      `fps worker status: ${this.active}`
+    const statusPayload: WorkerActivityStatus = {
+      status: this.active,
+      timestamp: performance.now(),
+      message: `FPS worker status: ${this.active}`
+    };
+    this.postMessage(createAction(
+      WORKER_LOG_FPS_STATUS,
+      statusPayload
     ));
   }
 
@@ -52,6 +64,8 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAc
       }
       case WORKER_START:
       case FPS_MODULE_START: {
+        if (this.active) return;
+
         this.active = true;
         this.rafLoop();
         this.postActiveStatus();
@@ -59,6 +73,8 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAc
       }
       case WORKER_STOP:
       case FPS_MODULE_STOP:{
+        if (!this.active) return;
+
         this.active = false;
         this.postActiveStatus();
         break;

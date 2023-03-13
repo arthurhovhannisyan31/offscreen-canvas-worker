@@ -1,8 +1,15 @@
-import { memo, useCallback, useState, type ChangeEvent } from "react";
+import { useCallback, useState, type ChangeEvent, type FC } from "react";
 
 import type { WorkerControlsProps } from "./types";
 
 import { heavyTaskRun } from "../../helpers";
+import { createSimpleAction } from "../../workers/common";
+import {
+  FPS_MODULE_START,
+  FPS_MODULE_STOP,
+  TWINS_MODULE_START,
+  TWINS_MODULE_STOP,
+} from "../../workers/module-worker/actions";
 
 import styles from "./WorkerControls.module.css";
 
@@ -11,11 +18,11 @@ const DEFAULT_TIMEOUT = 100000000;
 const getToggleLabel = (val: boolean): string => val ? "Stop": "Start";
 const getStatusLabel = (val: boolean): string => val ? "Active": "Passive";
 
-export const WorkerControlsComponent = memo<WorkerControlsProps>(({
+export const WorkerControlsComponent: FC<WorkerControlsProps> = ({
   twinsModuleActive,
   fpsModuleActive,
-  setModuleWorkerStatus,
-  toggleAllWorkers
+  statusLog,
+  worker
 }) => {
   const [heavyTaskValue, setHeavyTaskValue] = useState(DEFAULT_TIMEOUT);
 
@@ -44,67 +51,91 @@ export const WorkerControlsComponent = memo<WorkerControlsProps>(({
   }, []);
 
   const setFpsWorkerStatus = useCallback(() => {
-    setModuleWorkerStatus("FpsModuleActive", !fpsModuleActive);
-  }, [setModuleWorkerStatus, fpsModuleActive]);
+    worker?.postMessage(createSimpleAction(fpsModuleActive ? FPS_MODULE_STOP : FPS_MODULE_START));
+  }, [fpsModuleActive, worker]);
 
   const setTwinsWorkerStatus = useCallback(() => {
-    setModuleWorkerStatus("TwinsModuleActive", !twinsModuleActive);
-  }, [setModuleWorkerStatus, twinsModuleActive]);
+    worker?.postMessage(createSimpleAction(twinsModuleActive ? TWINS_MODULE_STOP : TWINS_MODULE_START));
+  }, [twinsModuleActive, worker]);
 
-  return(
-      <div className={styles.container}>
-        <div className={styles.controlContainer}>
-          <button onClick={setFpsWorkerStatus}>
-            {getToggleLabel(fpsModuleActive)} fps module
-          </button>
-          <span>Fps module status: {getStatusLabel(fpsModuleActive)}</span>
-        </div>
-        <div className={styles.controlContainer}>
-          <button onClick={setTwinsWorkerStatus}>
-            {getToggleLabel(twinsModuleActive)} twins module
-          </button>
-          <span>Twins module status: {getStatusLabel(twinsModuleActive)}</span>
-        </div>
-        <div className={styles.controlContainer}>
-          <button onClick={toggleAllWorkers}>
-            {
-              (fpsModuleActive !== twinsModuleActive) ? "Start" :
-              getToggleLabel(fpsModuleActive)
-            } all modules
-          </button>
-          <span>All modules status: {
-            (fpsModuleActive !== twinsModuleActive) ? "Partially active" :
-            getStatusLabel(fpsModuleActive && twinsModuleActive)
-          }</span>
-        </div>
-        <div className={styles.controlContainer}>
-          <div className={styles.container}>
-            <button
-              onClick={handleSetCounter("inc")}
-              className={styles.counterButton}
-            >+</button>
-            <button
-              onClick={handleSetCounter("dec")}
-              className={styles.counterButton}
-              disabled={counter <= 0}
-            >-</button>
+  const toggleAllWorkers = useCallback(() => {
+    if (fpsModuleActive && twinsModuleActive){
+      worker?.postMessage(createSimpleAction(TWINS_MODULE_STOP));
+      worker?.postMessage(createSimpleAction(FPS_MODULE_STOP));
+    } else if (!fpsModuleActive || !twinsModuleActive){
+      worker?.postMessage(createSimpleAction(TWINS_MODULE_START));
+      worker?.postMessage(createSimpleAction(FPS_MODULE_START));
+    }
+  }, [fpsModuleActive, twinsModuleActive, worker]);
+
+  const statusLogContent = statusLog.map(({ message, timestamp }) => (
+    <li key={timestamp}>
+      {message}
+    </li>
+  )).reverse();
+
+  return <div className={styles.container}>
+        <div className={styles.block}>
+          <div className={styles.controlContainer}>
+            <button onClick={setFpsWorkerStatus}>
+              {getToggleLabel(fpsModuleActive)} fps module
+            </button>
+            <span>Fps module status: {getStatusLabel(fpsModuleActive)}</span>
           </div>
-          <span>Counter: {counter}</span>
+          <div className={styles.controlContainer}>
+            <button onClick={setTwinsWorkerStatus}>
+              {getToggleLabel(twinsModuleActive)} twins module
+            </button>
+            <span>Twins module status: {getStatusLabel(twinsModuleActive)}</span>
+          </div>
+          <div className={styles.controlContainer}>
+            <button onClick={toggleAllWorkers}>
+              {
+                (fpsModuleActive !== twinsModuleActive) ? "Start" :
+                  getToggleLabel(fpsModuleActive)
+              } all modules
+            </button>
+            <span>All modules status: {
+              (fpsModuleActive !== twinsModuleActive) ? "Partially active" :
+                getStatusLabel(fpsModuleActive && twinsModuleActive)
+            }</span>
+          </div>
+          <div>
+            Worker status log:
+            <ul className={styles.statusLog}>
+              {statusLogContent}
+            </ul>
+          </div>
         </div>
-        <div className={styles.controlContainer}>
-          <button onClick={startHeavyTask}>
-            Start heavy task
-          </button>
-          <input
-            type="number"
-            min={0}
-            max={DEFAULT_TIMEOUT}
-            value={heavyTaskValue}
-            onChange={handleInputChange}
-          />
+        <div className={styles.block}>
+          <div className={styles.controlContainer}>
+            <div>
+              <button
+                onClick={handleSetCounter("inc")}
+                className={styles.counterButton}
+              >+</button>
+              <button
+                onClick={handleSetCounter("dec")}
+                className={styles.counterButton}
+                disabled={counter <= 0}
+              >-</button>
+            </div>
+            <span>Counter: {counter}</span>
+          </div>
+          <div className={styles.controlContainer}>
+            <button onClick={startHeavyTask}>
+              Start heavy task
+            </button>
+            <input
+              type="number"
+              min={0}
+              max={DEFAULT_TIMEOUT}
+              value={heavyTaskValue}
+              onChange={handleInputChange}
+            />
+          </div>
         </div>
-      </div>
-  );
-});
+      </div>;
+};
 
 WorkerControlsComponent.displayName = "WorkerControlsComponent";

@@ -3,7 +3,7 @@ import type { UpdateAction, SendAction } from "./types";
 import { MainCanvasModule  } from "./main-canvas-module";
 import { SatelliteCanvasModule } from "./satellite-canvas-module";
 import {
-  createAction, createSimpleAction,
+  createAction,
   MAIN_DRAW_DONE,
   MAIN_DRAW_REQUEST,
   MAIN_IMAGE_DATA_DONE,
@@ -12,8 +12,9 @@ import {
   SATELLITE_SET_CONTEXT, WORKER_START,
   WORKER_STOP,
 } from "../../../common";
+import { type WorkerActivityStatus } from "../../../common/types";
 import { AbstractSubjectModule } from "../../abstract-modules/abstract-subject-module";
-import { TWINS_WORKER_STOP, TWINS_WORKER_START } from "../../actions";
+import { TWINS_MODULE_STOP, TWINS_MODULE_START, WORKER_LOG_TWINS_STATUS } from "../../actions";
 
 export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction, SendAction>{
   protected active = false;
@@ -55,23 +56,33 @@ export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction, Send
   }
 
   postActiveStatus(): void{
-    this.postMessage(createSimpleAction(
-      `twin worker status: ${this.active}`
+    const statusPayload: WorkerActivityStatus = {
+      status: this.active,
+      timestamp: performance.now(),
+      message: `Twins worker status: ${this.active}`
+    };
+    this.postMessage(createAction(
+      WORKER_LOG_TWINS_STATUS,
+      statusPayload
     ));
   }
 
   onMessage = (message: UpdateAction): void => {
     switch (message.type){
       case WORKER_START:
-      case TWINS_WORKER_START: {
+      case TWINS_MODULE_START: {
+        if (this.active) return;
+
         this.active = true;
         this.fetchData();
         this.postActiveStatus();
         break;
       }
       case WORKER_STOP:
-      case TWINS_WORKER_STOP: {
-        this.active = true;
+      case TWINS_MODULE_STOP: {
+        if (!this.active) return;
+
+        this.active = false;
         this.clearTimers();
         this.postActiveStatus();
         break;

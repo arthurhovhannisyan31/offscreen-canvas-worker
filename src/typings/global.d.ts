@@ -1,37 +1,25 @@
-interface AttributionContainer {
-  id: string;
-  src: string;
-}
-
-interface BreakdownAttribution {
-  url: string;
-  scope: string;
-  container?: AttributionContainer;
-}
-
-interface MemoryBreakdown {
-  bytes: number;
-  attribution: BreakdownAttribution[];
-  types: string[];
-}
-
-interface Performance extends Performance {
-  memory?: {
-    /** The maximum size of the heap, in bytes, that is available to the context. */
-    jsHeapSizeLimit: number;
-    /** The total allocated heap size, in bytes. */
-    totalJSHeapSize: number;
-    /** The currently active segment of JS heap, in bytes. */
-    usedJSHeapSize: number;
-  };
-  measureUserAgentSpecificMemory(): {
-    bytes: number;
-    breakdown: MemoryBreakdown[]
-  };
-}
-
-interface HTMLCanvasElement {
-  transferControlToOffscreen(): OffscreenCanvas & Transferable;
-}
-
 type AnyArgsFunction = (...args: any) => void;
+
+interface Action<T> {
+  type: string;
+  payload: T
+}
+
+type SimpleAction = Action<unknown>;
+
+type CreateAction = <T>(type: string, payload: T) => Action<T>
+
+type CreateMessage = <T>(payload: T) => Message<T>
+
+type CreateSimpleAction = (type: string) => SimpleAction
+
+type DedicatedWorker = Worker & (new () => Worker)
+
+type PostMessage<P> = (message: P, transfer?: Transferable[]) => void;
+
+type PostAction<A> = (message: A) => void;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface Message<T = any> {
+  data: T
+}

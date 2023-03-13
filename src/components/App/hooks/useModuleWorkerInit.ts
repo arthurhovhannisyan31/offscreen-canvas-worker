@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 
 import { ModuleWorkerContext } from "../../../context";
+import { storeSubject } from "../../../store/storeSubject";
 import { getMainModuleWorker } from "../../../workers/module-worker";
 
 export const useModuleWorkerInit = (): void => {
@@ -12,7 +13,7 @@ export const useModuleWorkerInit = (): void => {
       workerRef.current = getMainModuleWorker();
       if (workerRef.current){
         workerRef.current.onmessage = (message) => {
-          console.log("message", message.data);
+          storeSubject.notify(message.data);
         };
       }
       setWorker(workerRef.current);

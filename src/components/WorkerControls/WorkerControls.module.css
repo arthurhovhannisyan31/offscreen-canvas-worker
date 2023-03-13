@@ -1,15 +1,20 @@
 .container {
   display: flex;
   width: 100%;
-  justify-content: center;
   margin-bottom: 30px;
-  flex-wrap: wrap;
+  flex-flow: column;
+}
+.block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 10px 0;
 }
 .controlContainer {
   width: 150px;
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   margin: 0 10px;
 }
 .controlContainer > button:hover {
@@ -17,4 +22,8 @@
 }
 .counterButton {
   width: 30px;
+}
+.statusLog {
+  height: 150px;
+  overflow-y: auto;
 }
