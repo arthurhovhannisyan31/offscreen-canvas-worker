@@ -1,9 +1,7 @@
-Add eventbus for worker messages propagation accross all stores and subscibers
 Finish abstract worker test
 
 Readme
 - add classes to diagram
-- system proper system design
 
 Pipelines and checks
 - add web-vitals checks as a part of pipelines
