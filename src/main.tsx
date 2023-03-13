@@ -7,7 +7,9 @@ import { ContextCompose } from "./context";
 
 import "./main.css";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+
+root.render(
   <StrictMode>
     <ContextCompose>
       <Suspense fallback={"Loading"}>

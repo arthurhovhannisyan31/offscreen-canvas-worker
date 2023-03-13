@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 30px;
+  flex-flow: column;
+}
+.block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin: 10px 0;
+}
+.controlContainer {
+  width: 150px;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  margin: 0 10px;
+}
+.controlContainer > button:hover {
+  filter: drop-shadow(0 0 10px #646cffaa);
+}
+.counterButton {
+  width: 30px;
+}
+.statusLog {
+  height: 150px;
+  overflow-y: auto;
+}

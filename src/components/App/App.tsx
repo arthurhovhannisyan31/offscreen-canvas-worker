@@ -1,21 +1,29 @@
 import { type FC, memo } from "react";
 
-import { PerformanceMonitor, Layout, CanvasContainer } from "components";
+import { PerformanceMonitor, Layout, CanvasContainer, WorkerControls } from "components";
 
 import { useModuleWorkerInit } from "./hooks";
+import { isCrossOriginIsolated } from "../../helpers";
 
-import "./App.css";
+import styles from "./App.module.css";
 
 export const App: FC = memo(() => {
   useModuleWorkerInit();
 
+  const crossOriginIsolated = isCrossOriginIsolated();
+
+  if (!crossOriginIsolated){
+    console.info("Shared array buffers are not supported. Cannot start fps widget");
+  }
+
   return (
-    <div className="App">
       <Layout>
-        <CanvasContainer />
-        <PerformanceMonitor />
+        <div className={styles.content}>
+          <WorkerControls />
+          <CanvasContainer />
+          {crossOriginIsolated && <PerformanceMonitor />}
+        </div>
       </Layout>
-    </div>
   );
 });
 

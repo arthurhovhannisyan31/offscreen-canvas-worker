@@ -3,7 +3,6 @@ import { useRef, memo, useState } from "react";
 import { useFPSMonitorInit } from "./hooks";
 import { useCanvasDrag } from "./hooks/useCanvasDrag";
 import { type PointerPosition } from "./types";
-import { isCrossOriginIsolated } from "../../helpers";
 
 import styles from "./FPSMonitor.module.css";
 
@@ -15,13 +14,8 @@ export const PerformanceMonitor = memo(() => {
   const { onPointerDown, onPointerUp, onPointerMove } = useCanvasDrag({
     canvasRef, isCaptured, setIsCaptured, setPosition
   });
+
   useFPSMonitorInit(canvasRef.current);
-
-  if (!isCrossOriginIsolated()) {
-    console.info("Shared array buffers are not supported. Cannot start fps widget");
-
-    return null;
-  }
 
   return (
       <canvas
@@ -36,3 +30,5 @@ export const PerformanceMonitor = memo(() => {
       />
   );
 });
+
+PerformanceMonitor.displayName = "PerformanceMonitor";

@@ -73,6 +73,20 @@ export const useCanvasDrag = ({
     }
   },[canvasRef, setIsCaptured]);
 
+  const handlePointerLockChange = useCallback(() => {
+    if (document.pointerLockElement !== canvasRef.current && isCaptured){
+      onPointerUp();
+    }
+  }, [canvasRef, isCaptured, onPointerUp]);
+
+  useEffect(() => {
+    document.addEventListener("pointerlockchange", handlePointerLockChange);
+
+    return () => {
+      document.removeEventListener("pointerlockchange", handlePointerLockChange);
+    };
+  }, [handlePointerLockChange]);
+
   useEffect(() => {
     return () => {
       document.exitPointerLock();

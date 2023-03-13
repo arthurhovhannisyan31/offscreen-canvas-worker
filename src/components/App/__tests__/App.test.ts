@@ -9,6 +9,11 @@ jest.mock("../../../workers/common", () => ({
   putImageData: jest.fn(),
   drawImage: jest.fn(),
   processImageData: jest.fn(),
+  Subject: function() {
+    return {
+      addObserver: jest.fn()
+    };
+  }
 }));
 
 describe("<App />", () => {

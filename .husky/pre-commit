@@ -2,10 +2,10 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-yarn typecheck &
+yarn check-ts &
 P1=$!
-yarn lint-staged &
+yarn check-lint-staged &
 P2=$!
 wait $P1 $P2
 
-yarn test-staged
+yarn check-test-staged

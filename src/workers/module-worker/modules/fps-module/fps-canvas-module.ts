@@ -1,19 +1,29 @@
 import { PerformanceCanvasCalculator } from "./fps-canvas-calculator";
 import { PerformanceCanvasDrawer } from "./fps-canvas-drawer";
 import { type SetDataAction } from "./types";
+import { createAction, WORKER_START, WORKER_STOP } from "../../../common";
+import { type WorkerActivityStatus } from "../../../common/types";
 import { isHTMLCanvasElement, isSAB } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
-import { FPS_MODULE_SET_DATA, FPS_MODULE_START, FPS_MODULE_STOP } from "../../actions";
+import {
+  FPS_MODULE_SET_DATA,
+  FPS_MODULE_START,
+  FPS_MODULE_STOP,
+  WORKER_LOG_FPS_STATUS,
+} from "../../actions";
 
-export type PostAction = never;
-export type UpdateAction = SetDataAction; // Action<unknown> |
+export type UpdateAction = SetDataAction;
+export type SendAction = Action<any>;
 
-export class PerformanceCanvasModule extends AbstractModule<UpdateAction, Message<PostAction>> {
+export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAction> {
   canvasDrawer: PerformanceCanvasDrawer;
   active = false;
 
-  constructor(postMessage: PostMessage<Message<PostAction>>) {
-    super(postMessage);
+  constructor(
+    postAction: PostAction<SendAction>,
+    postMessage: PostMessage<SendAction>
+  ) {
+    super(postAction, postMessage);
 
     this.canvasDrawer = new PerformanceCanvasDrawer(
       new PerformanceCanvasCalculator()
@@ -29,6 +39,18 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, Messag
     });
   };
 
+  postActiveStatus(): void{
+    const statusPayload: WorkerActivityStatus = {
+      status: this.active,
+      timestamp: performance.now(),
+      message: `FPS worker status: ${this.active}`
+    };
+    this.postMessage(createAction(
+      WORKER_LOG_FPS_STATUS,
+      statusPayload
+    ));
+  }
+
   async onMessage(action: UpdateAction): Promise<void> {
     switch (action.type){
       case FPS_MODULE_SET_DATA: {
@@ -40,15 +62,24 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, Messag
         }
         break;
       }
+      case WORKER_START:
       case FPS_MODULE_START: {
+        if (this.active) return;
+
         this.active = true;
         this.rafLoop();
+        this.postActiveStatus();
         break;
       }
-      case FPS_MODULE_STOP: {
+      case WORKER_STOP:
+      case FPS_MODULE_STOP:{
+        if (!this.active) return;
+
         this.active = false;
+        this.postActiveStatus();
         break;
       }
+      default: break;
     }
   }
 }

@@ -8,7 +8,7 @@
     "moduleResolution": "Node",
     "rootDir": ".",
     "target": "ESNext",
-    "typeRoots": ["./src/typings", "./src/workers/typings"],
+    "typeRoots": ["./src/typings"],
     "types": ["jest"],
   },
   "include": ["src", "configs/**/*", "**/*.config.ts", "temp"],
