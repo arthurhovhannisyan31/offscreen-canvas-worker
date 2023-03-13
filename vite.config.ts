@@ -1,3 +1,4 @@
+import basicSsl from "@vitejs/plugin-basic-ssl";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import htmlPlugin from "vite-plugin-html-config";
@@ -8,11 +9,6 @@ const htmlPluginOpt = {
 };
 
 export default defineConfig({
-  plugins: [
-    tsconfigPaths(),
-    htmlPlugin(htmlPluginOpt),
-    react(),
-  ],
   build: {
     sourcemap: true
   },
@@ -20,6 +16,13 @@ export default defineConfig({
     headers:{
       "Cross-Origin-Opener-Policy": "same-origin",
       "Cross-Origin-Embedder-Policy": "require-corp",
-    }
+    },
+    https: true
   },
+  plugins: [
+    tsconfigPaths(),
+    htmlPlugin(htmlPluginOpt),
+    react(),
+    basicSsl()
+  ],
 });

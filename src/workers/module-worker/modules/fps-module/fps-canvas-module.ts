@@ -2,22 +2,17 @@ import { PerformanceCanvasCalculator } from "./fps-canvas-calculator";
 import { PerformanceCanvasDrawer } from "./fps-canvas-drawer";
 import { type SetDataAction } from "./types";
 import { createAction, WORKER_START, WORKER_STOP } from "../../../common";
-import { type WorkerActivityStatus } from "../../../common/types";
+import { ModuleStatus, type WorkerActivityStatus } from "../../../common/types";
 import { isHTMLCanvasElement, isSAB } from "../../../typeGuards";
 import { AbstractModule } from "../../abstract-modules/abstract-module";
-import {
-  FPS_MODULE_SET_DATA,
-  FPS_MODULE_START,
-  FPS_MODULE_STOP,
-  WORKER_LOG_FPS_STATUS,
-} from "../../actions";
+import { FPS_MODULE_SET_DATA, FPS_MODULE_START, FPS_MODULE_STOP, WORKER_LOG_FPS_STATUS } from "../../actions";
 
 export type UpdateAction = SetDataAction;
 export type SendAction = Action<any>;
 
 export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAction> {
-  canvasDrawer: PerformanceCanvasDrawer;
-  active = false;
+  protected canvasDrawer: PerformanceCanvasDrawer;
+  protected status = ModuleStatus.DISABLED;
 
   constructor(
     postAction: PostAction<SendAction>,
@@ -32,18 +27,18 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAc
 
   rafLoop = (): void => {
     requestAnimationFrame(() => {
-      if (this.active){
-        this.canvasDrawer.draw();
-        this.rafLoop();
-      }
+      if (this.status !== ModuleStatus.ACTIVE) return;
+
+      this.canvasDrawer.draw();
+      this.rafLoop();
     });
   };
 
   postActiveStatus(): void{
     const statusPayload: WorkerActivityStatus = {
-      status: this.active,
+      status: this.status,
       timestamp: performance.now(),
-      message: `FPS worker status: ${this.active}`
+      message: `FPS worker status: ${this.status}`
     };
     this.postMessage(createAction(
       WORKER_LOG_FPS_STATUS,
@@ -64,18 +59,18 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAc
       }
       case WORKER_START:
       case FPS_MODULE_START: {
-        if (this.active) return;
+        if (this.status === ModuleStatus.ACTIVE) return;
 
-        this.active = true;
+        this.status = ModuleStatus.ACTIVE;
         this.rafLoop();
         this.postActiveStatus();
         break;
       }
       case WORKER_STOP:
       case FPS_MODULE_STOP:{
-        if (!this.active) return;
+        if (this.status === ModuleStatus.DISABLED) return;
 
-        this.active = false;
+        this.status = ModuleStatus.DISABLED;
         this.postActiveStatus();
         break;
       }
