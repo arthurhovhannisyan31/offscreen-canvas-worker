@@ -1,8 +1,11 @@
-import type { WorkerActivityStatus } from "../../workers/common/types";
+import type { WorkerActivityStatus, ModuleStatus } from "../../workers/common/types";
+
+import { type ModuleWorkerProperty } from "../../store/moduleWorkerStore";
 
 export interface WorkerControlsProps {
-  fpsModuleActive: boolean;
-  twinsModuleActive: boolean;
+  fpsModuleStatus: ModuleStatus;
+  twinsModuleStatus: ModuleStatus;
   statusLog: WorkerActivityStatus[];
+  setModuleStatus: (moduleName: ModuleWorkerProperty, status: ModuleStatus) => void;
   worker: Worker | undefined;
 }

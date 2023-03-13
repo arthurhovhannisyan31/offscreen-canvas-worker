@@ -1,8 +1,12 @@
-import { useCallback, useState, type ChangeEvent, type FC } from "react";
+import { type ChangeEvent, type FC, useCallback, useMemo, useState } from "react";
+
+import { ModuleStatus } from "workers/common/types";
 
 import type { WorkerControlsProps } from "./types";
 
 import { heavyTaskRun } from "../../helpers";
+import { throttle } from "../../helpers/throttle";
+import { useEvent } from "../../hooks/useEvent";
 import { createSimpleAction } from "../../workers/common";
 import {
   FPS_MODULE_START,
@@ -13,15 +17,16 @@ import {
 
 import styles from "./WorkerControls.module.css";
 
-const DEFAULT_TIMEOUT = 100000000;
+const DEFAULT_TIMEOUT = 100000;
 
 const getToggleLabel = (val: boolean): string => val ? "Stop": "Start";
 const getStatusLabel = (val: boolean): string => val ? "Active": "Passive";
 
 export const WorkerControlsComponent: FC<WorkerControlsProps> = ({
-  twinsModuleActive,
-  fpsModuleActive,
+  twinsModuleStatus,
+  fpsModuleStatus,
   statusLog,
+  setModuleStatus,
   worker
 }) => {
   const [heavyTaskValue, setHeavyTaskValue] = useState(DEFAULT_TIMEOUT);
@@ -50,15 +55,40 @@ export const WorkerControlsComponent: FC<WorkerControlsProps> = ({
     });
   }, []);
 
-  const setFpsWorkerStatus = useCallback(() => {
-    worker?.postMessage(createSimpleAction(fpsModuleActive ? FPS_MODULE_STOP : FPS_MODULE_START));
-  }, [fpsModuleActive, worker]);
+  const fpsModuleActive = fpsModuleStatus === ModuleStatus.ACTIVE;
+  const twinsModuleActive = twinsModuleStatus === ModuleStatus.ACTIVE;
+  const fpsModuleDisabled = fpsModuleStatus === ModuleStatus.PENDING;
+  const twinsModuleDisabled = twinsModuleStatus === ModuleStatus.PENDING;
 
-  const setTwinsWorkerStatus = useCallback(() => {
-    worker?.postMessage(createSimpleAction(twinsModuleActive ? TWINS_MODULE_STOP : TWINS_MODULE_START));
-  }, [twinsModuleActive, worker]);
+  const setFpsWorkerStatus = useMemo(() => throttle((fpsModuleActive: boolean) => {
+    setModuleStatus("FpsModuleStatus", ModuleStatus.PENDING);
+    worker?.postMessage(
+      createSimpleAction(
+        fpsModuleActive ? FPS_MODULE_STOP : FPS_MODULE_START
+      )
+    );
+  }), [setModuleStatus, worker]);
 
-  const toggleAllWorkers = useCallback(() => {
+  const debouncedSetFpsWorkerStatus = useEvent(
+    () => setFpsWorkerStatus(fpsModuleActive)
+  );
+
+  const setTwinsWorkerStatus = useMemo(() => throttle((twinsModuleActive: boolean) => {
+    setModuleStatus("TwinsModuleStatus", ModuleStatus.PENDING);
+    worker?.postMessage(
+      createSimpleAction(
+        twinsModuleActive ? TWINS_MODULE_STOP : TWINS_MODULE_START
+      )
+    );
+  }), [setModuleStatus, worker]);
+
+  const debouncedSetTwinsWorkerStatus = useEvent(
+    () => setTwinsWorkerStatus(twinsModuleActive)
+  );
+
+  const toggleAllWorkers = useMemo(() => throttle((
+    fpsModuleActive: boolean, twinsModuleActive: boolean
+  ) => {
     if (fpsModuleActive && twinsModuleActive){
       worker?.postMessage(createSimpleAction(TWINS_MODULE_STOP));
       worker?.postMessage(createSimpleAction(FPS_MODULE_STOP));
@@ -66,7 +96,11 @@ export const WorkerControlsComponent: FC<WorkerControlsProps> = ({
       worker?.postMessage(createSimpleAction(TWINS_MODULE_START));
       worker?.postMessage(createSimpleAction(FPS_MODULE_START));
     }
-  }, [fpsModuleActive, twinsModuleActive, worker]);
+  }), [worker]);
+
+  const throttledToggleAllWorkers = useEvent(
+    () => toggleAllWorkers(fpsModuleActive, twinsModuleActive)
+  );
 
   const statusLogContent = statusLog.map(({ message, timestamp }) => (
     <li key={timestamp}>
@@ -77,19 +111,28 @@ export const WorkerControlsComponent: FC<WorkerControlsProps> = ({
   return <div className={styles.container}>
         <div className={styles.block}>
           <div className={styles.controlContainer}>
-            <button onClick={setFpsWorkerStatus}>
+            <button
+              disabled={fpsModuleDisabled}
+              onClick={debouncedSetFpsWorkerStatus}
+            >
               {getToggleLabel(fpsModuleActive)} fps module
             </button>
             <span>Fps module status: {getStatusLabel(fpsModuleActive)}</span>
           </div>
           <div className={styles.controlContainer}>
-            <button onClick={setTwinsWorkerStatus}>
+            <button
+              disabled={twinsModuleDisabled}
+              onClick={debouncedSetTwinsWorkerStatus}
+            >
               {getToggleLabel(twinsModuleActive)} twins module
             </button>
             <span>Twins module status: {getStatusLabel(twinsModuleActive)}</span>
           </div>
           <div className={styles.controlContainer}>
-            <button onClick={toggleAllWorkers}>
+            <button
+              disabled={fpsModuleDisabled || twinsModuleDisabled}
+              onClick={throttledToggleAllWorkers}
+            >
               {
                 (fpsModuleActive !== twinsModuleActive) ? "Start" :
                   getToggleLabel(fpsModuleActive)

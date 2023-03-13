@@ -2,7 +2,7 @@ import { makeObservable, observable, action, computed } from "mobx";
 
 import type { Observer } from "workers/common";
 
-import { type WorkerActivityStatus } from "../workers/common/types";
+import { ModuleStatus, type WorkerActivityStatus } from "../workers/common/types";
 import { WORKER_LOG_FPS_STATUS, WORKER_LOG_TWINS_STATUS } from "../workers/module-worker/actions";
 
 export enum ModuleWorkerEntries {
@@ -10,56 +10,45 @@ export enum ModuleWorkerEntries {
   Twins = "Twins",
 }
 
-export type ModuleWorkerProperty = `${ModuleWorkerEntries}ModuleActive`;
+export type ModuleWorkerProperty = `${ModuleWorkerEntries}ModuleStatus`;
 
-type ModuleWorkerStoreFields = Record<ModuleWorkerProperty, boolean>;
+type ModuleWorkerStoreFields = Record<ModuleWorkerProperty, ModuleStatus>;
 
 export class ModuleWorkerStore implements Observer<Action<any>> {
-  FpsModuleActive = false;
-  TwinsModuleActive = false;
+  FpsModuleStatus = ModuleStatus.DISABLED;
+  TwinsModuleStatus = ModuleStatus.DISABLED;
   statusLog: WorkerActivityStatus[] = [];
 
   constructor() {
     makeObservable(this, {
-      FpsModuleActive: observable,
-      TwinsModuleActive: observable,
+      FpsModuleStatus: observable,
+      TwinsModuleStatus: observable,
       statusLog: observable,
       setModuleStatus: action,
-      toggleAllWorkers: action,
       modulesStatus: computed,
     });
   }
 
   get modulesStatus(): ModuleWorkerStoreFields {
     return {
-      FpsModuleActive: this.FpsModuleActive,
-      TwinsModuleActive: this.TwinsModuleActive,
+      FpsModuleStatus: this.FpsModuleStatus,
+      TwinsModuleStatus: this.TwinsModuleStatus,
     };
   }
 
-  setModuleStatus = (moduleName: ModuleWorkerProperty, status: boolean): void => {
+  setModuleStatus = (moduleName: ModuleWorkerProperty, status: ModuleStatus): void => {
     this[moduleName] = status;
-  };
-
-  toggleAllWorkers = (): void => {
-    if (this.FpsModuleActive && this.TwinsModuleActive){
-      this.FpsModuleActive = false;
-      this.TwinsModuleActive = false;
-    } else if (!this.FpsModuleActive || !this.TwinsModuleActive){
-      this.FpsModuleActive = true;
-      this.TwinsModuleActive = true;
-    }
   };
 
   update(action: Action<WorkerActivityStatus>): void {
     switch (action.type) {
       case WORKER_LOG_TWINS_STATUS: {
-        this.setModuleStatus("TwinsModuleActive", action.payload.status);
+        this.setModuleStatus("TwinsModuleStatus", action.payload.status);
         this.statusLog.push(action.payload);
         break;
       }
       case WORKER_LOG_FPS_STATUS: {
-        this.setModuleStatus("FpsModuleActive", action.payload.status);
+        this.setModuleStatus("FpsModuleStatus", action.payload.status);
         this.statusLog.push(action.payload);
         break;
       }

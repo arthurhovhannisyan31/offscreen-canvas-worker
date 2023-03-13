@@ -11,9 +11,10 @@ export const WorkerControls = observer(() => {
 
   return(
     <WorkerControlsComponent
-      fpsModuleActive={moduleWorker.FpsModuleActive}
-      twinsModuleActive={moduleWorker.TwinsModuleActive}
+      fpsModuleStatus={moduleWorker.FpsModuleStatus}
+      twinsModuleStatus={moduleWorker.TwinsModuleStatus}
       statusLog={moduleWorker.statusLog}
+      setModuleStatus={moduleWorker.setModuleStatus}
       worker={worker}
     />
   );

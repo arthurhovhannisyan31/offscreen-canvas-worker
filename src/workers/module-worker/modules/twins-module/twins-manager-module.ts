@@ -1,6 +1,6 @@
-import type { UpdateAction, SendAction } from "./types";
+import type { SendAction, UpdateAction } from "./types";
 
-import { MainCanvasModule  } from "./main-canvas-module";
+import { MainCanvasModule } from "./main-canvas-module";
 import { SatelliteCanvasModule } from "./satellite-canvas-module";
 import {
   createAction,
@@ -9,16 +9,17 @@ import {
   MAIN_IMAGE_DATA_DONE,
   MAIN_SET_CONTEXT,
   SATELLITE_DRAW_REQUEST,
-  SATELLITE_SET_CONTEXT, WORKER_START,
+  SATELLITE_SET_CONTEXT,
+  WORKER_START,
   WORKER_STOP,
 } from "../../../common";
-import { type WorkerActivityStatus } from "../../../common/types";
+import { ModuleStatus, type WorkerActivityStatus } from "../../../common/types";
 import { AbstractSubjectModule } from "../../abstract-modules/abstract-subject-module";
-import { TWINS_MODULE_STOP, TWINS_MODULE_START, WORKER_LOG_TWINS_STATUS } from "../../actions";
+import { TWINS_MODULE_START, TWINS_MODULE_STOP, WORKER_LOG_TWINS_STATUS } from "../../actions";
 
 export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction, SendAction>{
-  protected active = false;
   protected timerId: ReturnType<typeof setTimeout> | null = null;
+  protected status = ModuleStatus.DISABLED;
 
   constructor(
     postAction: PostAction<SendAction>,
@@ -28,7 +29,7 @@ export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction, Send
   }
 
   fetchData = async (): Promise<void> => {
-    if (!this.active) return;
+    if (this.status !== ModuleStatus.ACTIVE) return;
 
     const response = await fetch("https://picsum.photos/320/200");
     const blob = await response.blob();
@@ -57,9 +58,9 @@ export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction, Send
 
   postActiveStatus(): void{
     const statusPayload: WorkerActivityStatus = {
-      status: this.active,
+      status: this.status,
       timestamp: performance.now(),
-      message: `Twins worker status: ${this.active}`
+      message: `Twins worker status: ${this.status}`
     };
     this.postMessage(createAction(
       WORKER_LOG_TWINS_STATUS,
@@ -71,18 +72,18 @@ export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction, Send
     switch (message.type){
       case WORKER_START:
       case TWINS_MODULE_START: {
-        if (this.active) return;
+        if (this.status === ModuleStatus.ACTIVE) return;
 
-        this.active = true;
+        this.status = ModuleStatus.ACTIVE;
         this.fetchData();
         this.postActiveStatus();
         break;
       }
       case WORKER_STOP:
       case TWINS_MODULE_STOP: {
-        if (!this.active) return;
+        if (this.status === ModuleStatus.DISABLED) return;
 
-        this.active = false;
+        this.status = ModuleStatus.DISABLED;
         this.clearTimers();
         this.postActiveStatus();
         break;
