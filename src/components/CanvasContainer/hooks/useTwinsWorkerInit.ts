@@ -14,6 +14,8 @@ export const useTwinsWorkerInit = (
 
   useEffect(() => {
     if (isSafari(navigator)){
+      console.info("Sorry, transferControlToOffscreen is not supported yet, please use modern browser ;)");
+
       return;
     }
 

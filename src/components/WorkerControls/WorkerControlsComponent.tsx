@@ -17,7 +17,7 @@ import {
 
 import styles from "./WorkerControls.module.css";
 
-const DEFAULT_TIMEOUT = 100000;
+const DEFAULT_TIMEOUT = 10000;
 
 const getToggleLabel = (val: boolean): string => val ? "Stop": "Start";
 const getStatusLabel = (val: boolean): string => val ? "Active": "Passive";
@@ -34,13 +34,13 @@ export const WorkerControlsComponent: FC<WorkerControlsProps> = ({
   const [counter, setCounter] = useState(0);
   const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = +event.target.value;
-    if (!Number.isNaN(value) && value >= 0 && value <= DEFAULT_TIMEOUT * 100){
+    if (!Number.isNaN(value) && value >= 0 && value <= DEFAULT_TIMEOUT * 1000){
       setHeavyTaskValue(value);
     }
   }, []);
 
   const startHeavyTask = useCallback(() => {
-    heavyTaskRun(heavyTaskValue);
+    console.log(heavyTaskRun(heavyTaskValue));
   }, [heavyTaskValue]);
 
   const handleSetCounter = useCallback((type: string) => () => {
