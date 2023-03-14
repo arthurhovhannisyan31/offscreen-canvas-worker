@@ -9,6 +9,11 @@ Worker thread uses `modules` to host several classes, communication between whic
 Worker modules implement logic specific to the unit and can do data fetching, data calculation, data visualization (using reference to canvas) and read/write operations on SharedArrayBuffer.
 Worker submits a message to the main thread, and notifies all store observers with new message data.
 
+### How to use
+This app allows browser to print current dom state to screen despite the blocking of main thread, hence you can run heavy task in the main thread and see how canvas data updated from the worker thread.
+Please play around with "Start heavy task" button and iterations number input to see the difference.
+
+Also, you can control which module should be running, you can control state of the worker modules with respective buttons: FPS module, Twins module, all modules. 
 
 ### Application architecture
 ![img.png](docs/image/application-architecture.png)
