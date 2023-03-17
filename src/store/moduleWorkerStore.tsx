@@ -2,6 +2,7 @@ import { makeObservable, observable, action, computed } from "mobx";
 
 import type { Observer } from "workers/common";
 
+import { type RootStore } from "./store";
 import { ModuleStatus, type WorkerActivityStatus } from "../workers/common/types";
 import { WORKER_LOG_FPS_STATUS, WORKER_LOG_TWINS_STATUS } from "../workers/module-worker/actions";
 
@@ -18,8 +19,9 @@ export class ModuleWorkerStore implements Observer<Action<any>> {
   FpsModuleStatus = ModuleStatus.DISABLED;
   TwinsModuleStatus = ModuleStatus.DISABLED;
   statusLog: WorkerActivityStatus[] = [];
+  rootStore: RootStore;
 
-  constructor() {
+  constructor(rootStore: RootStore) {
     makeObservable(this, {
       FpsModuleStatus: observable,
       TwinsModuleStatus: observable,
@@ -27,6 +29,7 @@ export class ModuleWorkerStore implements Observer<Action<any>> {
       setModuleStatus: action,
       modulesStatus: computed,
     });
+    this.rootStore = rootStore;
   }
 
   get modulesStatus(): ModuleWorkerStoreFields {

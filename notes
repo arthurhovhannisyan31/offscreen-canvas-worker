@@ -39,3 +39,7 @@ Build and bundle:
 ------------------------------------------------
 Data Worker: Fetch, Store
 App Module: Process
+
+
+update root store definition
+https://mobx.js.org/defining-data-stores.html#combining-multiple-stores
