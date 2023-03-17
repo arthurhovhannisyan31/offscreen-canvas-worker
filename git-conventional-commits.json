@@ -4,6 +4,7 @@
       "feat",
       "fix",
       "perf",
+      "config",
       "refactor",
       "style",
       "test",
