@@ -9,7 +9,7 @@ import { isSafari } from "../../../helpers";
 import { updateFpsSAB } from "../helpers";
 
 const animationFrameId: { id: number } = { id: 0 };
-const fpsSAB = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 256);
+const fpsSAB = new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT * 2);
 const fpsMarksInt32Arr = new Int32Array(fpsSAB);
 
 export const useFPSMonitorInit = (canvasRef: HTMLCanvasElement | null): void => {
@@ -26,7 +26,8 @@ export const useFPSMonitorInit = (canvasRef: HTMLCanvasElement | null): void => 
       const canvasControl = canvasRef.transferControlToOffscreen();
       const setDataPayload: SetDataPayload = {
         canvas: canvasControl as never as HTMLCanvasElement,
-        fpsSAB
+        fpsSAB,
+        timeOrigin: performance.timeOrigin
       };
 
       worker.postMessage(

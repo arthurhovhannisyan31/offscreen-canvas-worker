@@ -1,7 +1,7 @@
 import { type PerformanceCanvasCalculator } from "./fps-canvas-calculator";
 import { AbstractCanvasDrawer } from "../../../common/drawers";
 
-export class PerformanceCanvasDrawer extends AbstractCanvasDrawer {
+export class PerformanceCanvasDrawer extends AbstractCanvasDrawer<PerformanceCanvasCalculator> {
   fpsValue = 0;
   time = performance.now();
 
@@ -15,10 +15,9 @@ export class PerformanceCanvasDrawer extends AbstractCanvasDrawer {
     if (!ctx) return;
 
     const data = this.calculator?.calculate();
+    if (!Number.isFinite(data) && this.fpsValue === data) return;
 
-    if (this.fpsValue === data) return;
-
-    this.fpsValue = data;
+    this.fpsValue = data as number;
 
     const curTime = performance.now();
 

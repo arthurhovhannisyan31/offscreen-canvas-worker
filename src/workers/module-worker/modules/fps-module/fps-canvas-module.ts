@@ -53,7 +53,10 @@ export class PerformanceCanvasModule extends AbstractModule<UpdateAction, SendAc
           this.canvasDrawer.setContext(action.payload.canvas);
         }
         if (isSAB(action.payload.fpsSAB)){
-          this.canvasDrawer.calculator?.init(action.payload.fpsSAB);
+          this.canvasDrawer.calculator?.init({
+            timeOrigin: action.payload.timeOrigin,
+            fpsSAB: action.payload.fpsSAB
+          });
         }
         break;
       }
