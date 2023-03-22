@@ -2,10 +2,6 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-yarn check-ts &
-P1=$!
-yarn check-lint &
-P2=$!
-wait $P1 $P2
-
+yarn check-ts
+yarn check-lint
 yarn check-test
