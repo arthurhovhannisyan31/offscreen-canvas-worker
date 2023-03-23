@@ -36,4 +36,5 @@ Please run `yarn build && yarn preview` to run the app in preview mode.
 
 ### Setup for development
 
-After cloning the project run following command `git config core.hooksPath .git-hooks` to enable git hooks.
+Make sure to run `yarn prepare` to enable all git hooks.
+Good luck, son!
