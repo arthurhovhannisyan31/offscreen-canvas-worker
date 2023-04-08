@@ -1,12 +1,14 @@
 import { ModuleWorkerStore } from "./moduleWorkerStore";
-import { storeSubject } from "./storeSubject";
-import { type Observer } from "../workers/common";
+import { type Observer, Subject } from "../workers/common";
 
 export class RootStore {
-  moduleWorker: ModuleWorkerStore;
+  public subject = new Subject();
+  public moduleWorker: ModuleWorkerStore;
 
   constructor() {
     this.moduleWorker = new ModuleWorkerStore(this);
+
+    this.subject.addObserver(this.moduleWorker);
   }
 
   get items(): Observer<Action<any>>[]  {
@@ -15,7 +17,3 @@ export class RootStore {
 }
 
 export const rootStore = new RootStore();
-
-rootStore.items.forEach((storeEntry: Observer<Action<any>>) => {
-  storeSubject.addObserver(storeEntry);
-});
