@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef } from "react";
 
-import { ModuleWorkerContext } from "../../../context";
-import { storeSubject } from "../../../store/storeSubject";
-import { getMainModuleWorker } from "../../../workers/module-worker";
+import { ModuleWorkerContext } from "context";
+import { rootStore } from "store/store";
+import { getMainModuleWorker } from "workers/module-worker";
 
 export const useModuleWorkerInit = (): void => {
   const workerRef = useRef<Worker | null>(null);
@@ -13,7 +13,7 @@ export const useModuleWorkerInit = (): void => {
       workerRef.current = getMainModuleWorker();
       if (workerRef.current){
         workerRef.current.onmessage = (message) => {
-          storeSubject.notify(message.data);
+          rootStore.subject.notify(message.data);
         };
       }
       setWorker(workerRef.current);
