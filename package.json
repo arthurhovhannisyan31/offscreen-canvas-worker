@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "mobx": "^6.8.0",
-    "mobx-react-lite": "^3.4.0",
+    "mobx-react-lite": "^3.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -55,7 +55,7 @@
     "typescript": "^5.0.2",
     "vite": "^4.0.4",
     "vite-plugin-html-config": "^1.0.11",
-    "vite-tsconfig-paths": "^4.0.5"
+    "vite-tsconfig-paths": "^4.0.7"
   },
   "packageManager": "yarn@3.2.4"
 }
