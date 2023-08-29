@@ -10,7 +10,8 @@ const htmlPluginOpt = {
 
 export default defineConfig({
   build: {
-    sourcemap: true
+    sourcemap: true,
+    manifest: true,
   },
   server:{
     headers:{

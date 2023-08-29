@@ -26,7 +26,7 @@ jobs:
         run: yarn check-ts
 
       - name: run all tests
-        run: yarn check-test
+        run: yarn test
 
       - name: always
         if: always()

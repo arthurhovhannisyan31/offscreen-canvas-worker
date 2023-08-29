@@ -4,4 +4,4 @@
 
 yarn check-ts
 yarn check-lint
-yarn check-test
+yarn test

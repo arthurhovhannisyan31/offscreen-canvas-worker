@@ -4,4 +4,4 @@
 
 yarn check-ts
 yarn check-lint-staged
-yarn check-test-staged
+yarn test-staged

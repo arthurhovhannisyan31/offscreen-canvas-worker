@@ -4,20 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
+    "dev": "yarn vite-base",
+    "build": "yarn check-ts && yarn vite-base build",
+    "preview": "yarn vite-base preview",
     "check-lint": "yarn eslint --ext .ts,.tsx,.js src/",
     "check-lint-staged": "bash configs/scripts/lint-staged",
     "format": "yarn lint --fix",
     "jest-base": "node --expose-gc ./node_modules/jest/bin/jest.js",
-    "check-test": "yarn jest-base --silent --coverage --maxWorkers=4 --no-cache --logHeapUsage",
-    "check-test-staged": "yarn jest-base --notify --onlyChanged",
+    "test": "yarn jest-base --silent --coverage --maxWorkers=4 --no-cache --logHeapUsage",
+    "test-staged": "yarn jest-base --notify --onlyChanged",
     "check-ts": "yarn tsc -p tsconfig.json --noEmit",
     "prepare": "./configs/scripts/setup",
     "setup": "git config core.hooksPath .git-hooks",
     "postinstall": "yarn prepare",
-    "check-all": "yarn check-ts && yarn check-lint && yarn check-test"
+    "vite-base": "vite --config ./configs/vite/vite.config.ts"
   },
   "dependencies": {
     "mobx": "^6.8.0",
@@ -26,10 +26,10 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@jest/globals": "^29.6.4",
     "@testing-library/dom": "^9.0.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
-    "@types/jest": "^29.5.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
