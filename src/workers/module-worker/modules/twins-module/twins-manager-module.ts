@@ -31,6 +31,8 @@ export class TwinsManagerModule extends AbstractSubjectModule<UpdateAction, Send
   fetchData = async (): Promise<void> => {
     if (this.status !== ModuleStatus.ACTIVE) return;
 
+    console.log(self);
+
     const response = await fetch("https://picsum.photos/320/200");
     const blob = await response.blob();
     const file = new File([blob], "my_image.png",{ type:"image/jpeg", lastModified:new Date().getTime() });

@@ -6,9 +6,11 @@ import { useModuleWorkerInit } from "./hooks";
 import { isCrossOriginIsolated } from "../../helpers";
 
 import styles from "./App.module.css";
+import { useSWRegistration } from "./hooks/useSWRegistration";
 
 export const App: FC = memo(() => {
   useModuleWorkerInit();
+  useSWRegistration();
 
   const crossOriginIsolated = isCrossOriginIsolated();
 
