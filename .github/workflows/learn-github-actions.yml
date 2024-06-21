@@ -16,25 +16,18 @@ on:
   push
 
 jobs:
-  check-bats-version:
-    if: ${{ false }}
+  print-files:
+    if: ${{ github.ref == 'refs/heads/main' }}
     env:
       MY_ENV_234: 234
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: List files in the repository
         run: |
           ls -la ${{ github.workspace }}
-
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      - run: yarn add bats
-
-      - run: yarn bats -v
 
   main_branch_only:
     if: ${{ github.ref == 'refs/heads/main' }}

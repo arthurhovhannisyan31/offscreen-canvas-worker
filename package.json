@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "packageManager": "yarn@4.3.1",
+  "engines": {
+    "node": "^20.12.2"
+  },
   "scripts": {
     "dev": "yarn vite-base",
     "build": "yarn check-ts && yarn vite-base build",
@@ -56,6 +60,5 @@
     "vite": "^4.0.4",
     "vite-plugin-html-config": "^1.0.11",
     "vite-tsconfig-paths": "^4.0.7"
-  },
-  "packageManager": "yarn@3.2.4"
+  }
 }

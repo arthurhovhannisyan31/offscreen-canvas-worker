@@ -8,7 +8,17 @@ jobs:
   validation:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.12.2
+
+      - name: Enable yarn
+        run: |
+          corepack enable
 
       - name: install dependencies
         run: yarn
@@ -50,7 +60,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: validation
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.12.2
+
+      - name: Enable yarn
+        run: |
+          corepack enable
 
       - name: install dependencies
         run: yarn
