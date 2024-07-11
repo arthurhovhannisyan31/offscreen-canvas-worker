@@ -1,0 +1,23 @@
+name: Issues handler
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+
+jobs:
+  label_issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log issue information
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE: ${{ toJSON(github.event.issue) }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+#          ISSUE_TITLE: ${{ github.event.issue.title }}
+#          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          echo An issue $ISSUE_NUMBER $ISSUE_ID was assigned to $ISSUE_ASSIGNEE
+          echo Title: $ISSUE_TITLE
+          echo Details: $ISSUE_BODY
+          echo Issue: $ISSUE
