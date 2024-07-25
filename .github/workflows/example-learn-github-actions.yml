@@ -8,9 +8,9 @@ env:
   STRING: some string
   STRING_IN_BRACES: ${{ 'some string' }}
 
-name: learn-github-actions
+name: Example learn-github-actions
 
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: Example ${{ github.actor }} is learning GitHub Actions
 
 on:
   push

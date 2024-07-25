@@ -1,4 +1,4 @@
-name: Issues handler
+name: Example Issues handler
 on:
   issues:
     types:

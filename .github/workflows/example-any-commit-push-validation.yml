@@ -1,5 +1,5 @@
-name: any commit push validation
-run-name: pushed ${{ github.actor }}
+name: Example any commit push validation
+run-name: Example pushed ${{ github.actor }}
 
 on:
   push
