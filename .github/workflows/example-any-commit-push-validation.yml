@@ -1,79 +1,79 @@
-name: Example any commit push validation
-run-name: Example pushed ${{ github.actor }}
-
-on:
-  push
-
-jobs:
-  validation:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.12.2
-
-      - name: Enable yarn
-        run: |
-          corepack enable
-
-      - name: install dependencies
-        run: yarn
-
-      - name: success
-        if: success()
-        run: |
-          echo all previous steps were successful
-          echo save node_modules by hash: ${{ hashFiles('**/yarn.lock') }}
-
-      - name: run linter on all files
-        run: yarn check-lint
-
-      - name: run type-check on all files
-        run: yarn check-ts
-
-      - name: run all tests
-        run: yarn test
-
-      - name: always
-        if: always()
-        run: |
-          echo always run the job
-          echo write some useful logs like errors, metrics, stats
-
-      - name: cancelled
-        if: cancelled()
-        run: |
-          echo job was cancelled
-          echo do some cleanup if job was cancelled
-
-      - name: failure
-        if: failure()
-        run: |
-          echo job failed
-          echo save some stats on failed causes
-
-  build:
-    runs-on: ubuntu-latest
-    needs: validation
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Install NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.12.2
-
-      - name: Enable yarn
-        run: |
-          corepack enable
-
-      - name: install dependencies
-        run: yarn
-
-      - name: build
-        run: yarn build
+#name: Example any commit push validation
+#run-name: Example pushed ${{ github.actor }}
+#
+#on:
+#  push
+#
+#jobs:
+#  validation:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Install NodeJS
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20.12.2
+#
+#      - name: Enable yarn
+#        run: |
+#          corepack enable
+#
+#      - name: install dependencies
+#        run: yarn
+#
+#      - name: success
+#        if: success()
+#        run: |
+#          echo all previous steps were successful
+#          echo save node_modules by hash: ${{ hashFiles('**/yarn.lock') }}
+#
+#      - name: run linter on all files
+#        run: yarn check-lint
+#
+#      - name: run type-check on all files
+#        run: yarn check-ts
+#
+#      - name: run all tests
+#        run: yarn test
+#
+#      - name: always
+#        if: always()
+#        run: |
+#          echo always run the job
+#          echo write some useful logs like errors, metrics, stats
+#
+#      - name: cancelled
+#        if: cancelled()
+#        run: |
+#          echo job was cancelled
+#          echo do some cleanup if job was cancelled
+#
+#      - name: failure
+#        if: failure()
+#        run: |
+#          echo job failed
+#          echo save some stats on failed causes
+#
+#  build:
+#    runs-on: ubuntu-latest
+#    needs: validation
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Install NodeJS
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: 20.12.2
+#
+#      - name: Enable yarn
+#        run: |
+#          corepack enable
+#
+#      - name: install dependencies
+#        run: yarn
+#
+#      - name: build
+#        run: yarn build
