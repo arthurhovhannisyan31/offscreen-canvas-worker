@@ -1,115 +1,115 @@
-env:
-  MY_ENV_123: 123
-  THE_ACTOR: ${{ github.actor }}
-  TRUE: ${{ true }}
-  FALSE: ${{ false }}
-  MY_NULL: ${{ null }}
-  NUMBER: ${{ 123.4 }}
-  STRING: some string
-  STRING_IN_BRACES: ${{ 'some string' }}
-
-name: Example learn-github-actions
-
-run-name: Example ${{ github.actor }} is learning GitHub Actions
-
-on:
-  push
-
-jobs:
-  print-files:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    env:
-      MY_ENV_234: 234
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: List files in the repository
-        run: |
-          ls -la ${{ github.workspace }}
-
-  main_branch_only:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Main branch job"
-
-  not_main_branch:
-    if: ${{ github.ref != 'refs/heads/main' }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "any branch job, but main"
-
-  print_env_variables:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: List all env variables
-        run: env
-
-      - name: List all issues labels
-        run: |
-          echo ${{ toJSON(github.event.issue) }}
-          echo ${{ toJSON(github.event.issue.labels) }}
-
-      - name: Log package.json hash
-        run: |
-          echo ${{ hashFiles('**/yarn.lock') }}
-
-      - name: Log functions result
-        run: |
-          echo ${{ github.event.issue.labels.*.name }}
-
-      - name: List configuration variables
-        run: |
-          echo ${{ vars.FIRST_ACTION_VARIABLE }}
-
-      - name: Log int sum to file
-        shell: bash
-        run: |
-          expr 1 + 1 > output.log
-
-      - name: Log env variables
-        env:
-          MY_ENV_345: 345
-        run: |
-          echo $MY_ENV_123
-          echo $MY_ENV_234
-          echo $MY_ENV_345
-          echo $THE_ACTOR
-          echo $TRUE
-          echo $FALSE
-          echo $NULL
-          echo $MY_NULL
-          echo $NUMBER
-          echo $STRING
-          echo $STRING_IN_BRACES
-
-      - name: List only 123 variable
-        if: ${{ env.MY_ENV_123 == 123 }}
-        run: echo "$MY_ENV_123"
-
-      - name: List nothing
-        if: ${{ env.MY_ENV_123 == 124 }}
-        run: echo "$MY_ENV_123"
-
-      - name: List custom string
-        env:
-          GITHUB_REPOSITORY_ID: ${{ env.GITHUB_REPOSITORY_ID }}
-          GITHUB_RUN_ID: ${{ env.GITHUB_RUN_ID }}
-
-        run: |
-          echo "$THE_ACTOR pushed this commit to the repository $GITHUB_REPOSITORY_ID during the $GITHUB_RUN_ID"
-          echo 
-
-      - name: List hello world if condition is true
-        if: ${{ contains('Hello world', 'llo') }}
-        run: echo 'Hello world'
-
-      - name: failure
-        if: ${{ failure() && 'reason' == 'reason' }}
-        run: |
-          echo job failed
-          echo save some stats on failed causes
+#env:
+#  MY_ENV_123: 123
+#  THE_ACTOR: ${{ github.actor }}
+#  TRUE: ${{ true }}
+#  FALSE: ${{ false }}
+#  MY_NULL: ${{ null }}
+#  NUMBER: ${{ 123.4 }}
+#  STRING: some string
+#  STRING_IN_BRACES: ${{ 'some string' }}
+#
+#name: Example learn-github-actions
+#
+#run-name: Example ${{ github.actor }} is learning GitHub Actions
+#
+#on:
+#  push
+#
+#jobs:
+#  print-files:
+#    if: ${{ github.ref == 'refs/heads/main' }}
+#    env:
+#      MY_ENV_234: 234
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: List files in the repository
+#        run: |
+#          ls -la ${{ github.workspace }}
+#
+#  main_branch_only:
+#    if: ${{ github.ref == 'refs/heads/main' }}
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: echo "Main branch job"
+#
+#  not_main_branch:
+#    if: ${{ github.ref != 'refs/heads/main' }}
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: echo "any branch job, but main"
+#
+#  print_env_variables:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: List all env variables
+#        run: env
+#
+#      - name: List all issues labels
+#        run: |
+#          echo ${{ toJSON(github.event.issue) }}
+#          echo ${{ toJSON(github.event.issue.labels) }}
+#
+#      - name: Log package.json hash
+#        run: |
+#          echo ${{ hashFiles('**/yarn.lock') }}
+#
+#      - name: Log functions result
+#        run: |
+#          echo ${{ github.event.issue.labels.*.name }}
+#
+#      - name: List configuration variables
+#        run: |
+#          echo ${{ vars.FIRST_ACTION_VARIABLE }}
+#
+#      - name: Log int sum to file
+#        shell: bash
+#        run: |
+#          expr 1 + 1 > output.log
+#
+#      - name: Log env variables
+#        env:
+#          MY_ENV_345: 345
+#        run: |
+#          echo $MY_ENV_123
+#          echo $MY_ENV_234
+#          echo $MY_ENV_345
+#          echo $THE_ACTOR
+#          echo $TRUE
+#          echo $FALSE
+#          echo $NULL
+#          echo $MY_NULL
+#          echo $NUMBER
+#          echo $STRING
+#          echo $STRING_IN_BRACES
+#
+#      - name: List only 123 variable
+#        if: ${{ env.MY_ENV_123 == 123 }}
+#        run: echo "$MY_ENV_123"
+#
+#      - name: List nothing
+#        if: ${{ env.MY_ENV_123 == 124 }}
+#        run: echo "$MY_ENV_123"
+#
+#      - name: List custom string
+#        env:
+#          GITHUB_REPOSITORY_ID: ${{ env.GITHUB_REPOSITORY_ID }}
+#          GITHUB_RUN_ID: ${{ env.GITHUB_RUN_ID }}
+#
+#        run: |
+#          echo "$THE_ACTOR pushed this commit to the repository $GITHUB_REPOSITORY_ID during the $GITHUB_RUN_ID"
+#          echo
+#
+#      - name: List hello world if condition is true
+#        if: ${{ contains('Hello world', 'llo') }}
+#        run: echo 'Hello world'
+#
+#      - name: failure
+#        if: ${{ failure() && 'reason' == 'reason' }}
+#        run: |
+#          echo job failed
+#          echo save some stats on failed causes

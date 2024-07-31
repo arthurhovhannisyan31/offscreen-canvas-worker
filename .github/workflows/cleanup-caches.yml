@@ -3,6 +3,7 @@ on:
   pull_request:
     types:
       - closed
+  workflow_dispatch:
 
 jobs:
   cleanup:
@@ -15,10 +16,14 @@ jobs:
           echo "Fetching list of cache key"
           cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH -L 100 | cut -f 1 )
 
+          echo $REPO
+          echo $BRANCH
+          echo $EVENT
+
           ## Setting this to not fail the workflow while deleting cache keys.
           set +e
           echo "Deleting caches..."
-          echo $cacheKeysForPR
+          
           for cacheKey in $cacheKeysForPR
           do
               gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
@@ -28,3 +33,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
+          EVENT: ${{ toJSON(github.event.pull_request) }}
