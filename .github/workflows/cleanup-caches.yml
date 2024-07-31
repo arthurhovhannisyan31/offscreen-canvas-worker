@@ -33,8 +33,8 @@ jobs:
           gh cache list -h
 #          LIST2=$(gh cache list --ref $BRANCH2)
 #          echo $LIST2
-          LIST3=$(gh cache list --ref $BRANCH)
-          echo $LIST3
+#          LIST3=$(gh cache list --ref $BRANCH)
+#          echo $LIST3
 #           Setting this to not fail the workflow while deleting cache keys.
 #          set +e
 #          echo "Deleting caches..."
