@@ -18,11 +18,7 @@ jobs:
 
           echo $REPO
           echo $BRANCH
-<<<<<<< Updated upstream
-          LIST=$(gh cache list)
-=======
           LIST=$(gh cache list -R $REPO)
->>>>>>> Stashed changes
           echo $LIST
 
           ## Setting this to not fail the workflow while deleting cache keys.
