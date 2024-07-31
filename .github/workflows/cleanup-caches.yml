@@ -31,6 +31,7 @@ jobs:
           LIST1=$(gh cache list --repo $REPO)
           echo $LIST1
           
+          ls -al
 #          gh actions-cache -h
 #          gh actions-cache list -h
 #          echo $BRANCH2
