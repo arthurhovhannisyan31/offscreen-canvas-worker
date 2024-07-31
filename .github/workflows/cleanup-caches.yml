@@ -36,9 +36,10 @@ jobs:
           
           echo $BRANCH2
           
-          LIST2=$(gh cache list --ref $BRANCH2)
-          echo $LIST2
-          
+          ls /refs
+
+#          LIST2=$(gh cache list --ref $BRANCH2)
+#          echo $LIST2
 #          Setting this to not fail the workflow while deleting cache keys.
 #          set +e
 #          echo "Deleting caches..."
