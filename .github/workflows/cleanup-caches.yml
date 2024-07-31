@@ -18,8 +18,12 @@ jobs:
 
           echo $REPO
           echo $BRANCH
-          LIST=$(gh cache list -R $REPO)
-          echo $LIST
+          LIST0=${gh actions-cache list -R $REPO -B $BRANCH}
+          echo $LIST0
+          LIST1=$(gh cache list --repo $REPO)
+          echo $LIST1
+          LIST2=$(gh cache list --ref $BRANCH2)
+          echo $LIST2
 
           ## Setting this to not fail the workflow while deleting cache keys.
           set +e
@@ -34,3 +38,4 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
+          BRANCH2: refs/heads/${{ github.event.pull_request.head.ref }}
