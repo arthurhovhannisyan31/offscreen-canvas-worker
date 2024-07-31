@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cleanup
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
+          BRANCH2: refs/heads/${{ github.event.pull_request.head.ref }}
         run: |
           gh extension install actions/gh-actions-cache
 
@@ -23,8 +28,8 @@ jobs:
           LIST1=$(gh cache list --repo $REPO)
           echo $LIST1
           echo $BRANCH2
-#          LIST2=$(gh cache list --ref $BRANCH2)
-#          echo $LIST2
+          LIST2=$(gh cache list --ref $BRANCH2)
+          echo $LIST2
           LIST3=$(gh cache list --ref $BRANCH)
           echo $LIST3
 
@@ -37,8 +42,3 @@ jobs:
               gh actions-cache delete $cacheKey -R $REPO -B $BRANCH --confirm
           done
           echo "Done"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
-          BRANCH2: refs/heads/${{ github.event.pull_request.head.ref }}
