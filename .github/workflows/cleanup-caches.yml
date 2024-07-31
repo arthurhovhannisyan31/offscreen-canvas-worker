@@ -18,7 +18,7 @@ jobs:
 
           echo $REPO
           echo $BRANCH
-          LIST0=${gh actions-cache list -R $REPO -B $BRANCH}
+          LIST0=$(gh actions-cache list -R $REPO -B $BRANCH)
           echo $LIST0
           LIST1=$(gh cache list --repo $REPO)
           echo $LIST1
