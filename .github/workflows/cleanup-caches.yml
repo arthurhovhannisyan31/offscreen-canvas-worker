@@ -30,8 +30,9 @@ jobs:
           LIST1=$(gh cache list --repo $REPO)
           echo $LIST1
           echo $BRANCH2
-          LIST2=$(gh cache list --ref $BRANCH2)
-          echo $LIST2
+          gh cache list -h
+#          LIST2=$(gh cache list --ref $BRANCH2)
+#          echo $LIST2
 #          LIST3=$(gh cache list --ref $BRANCH)
 #          echo $LIST3
 #           Setting this to not fail the workflow while deleting cache keys.
