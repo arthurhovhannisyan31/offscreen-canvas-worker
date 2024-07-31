@@ -14,7 +14,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
           BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
-          BRANCH2: refs/heads/${{ github.event.pull_request.head.ref || "" }}
+          BRANCH2: refs/heads/${{ github.event.pull_request.head.ref }}
         run: |
           gh extension install actions/gh-actions-cache
           echo "Fetching list of cache key"
@@ -29,12 +29,12 @@ jobs:
 #          gh actions-cache list -h
           LIST1=$(gh cache list --repo $REPO)
           echo $LIST1
-          echo $BRANCH2
+#          echo $BRANCH2
           gh cache list -h
 #          LIST2=$(gh cache list --ref $BRANCH2)
 #          echo $LIST2
-#          LIST3=$(gh cache list --ref $BRANCH)
-#          echo $LIST3
+          LIST3=$(gh cache list --ref $BRANCH)
+          echo $LIST3
 #           Setting this to not fail the workflow while deleting cache keys.
 #          set +e
 #          echo "Deleting caches..."
