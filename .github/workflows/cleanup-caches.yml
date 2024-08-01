@@ -37,6 +37,8 @@ jobs:
           echo $BRANCH2
           
           pwd
+          
+          ls -al .
 
 #          LIST2=$(gh cache list --ref $BRANCH2)
 #          echo $LIST2
