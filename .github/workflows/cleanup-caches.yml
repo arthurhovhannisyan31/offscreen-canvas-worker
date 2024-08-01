@@ -15,19 +15,19 @@ jobs:
           REPO: ${{ github.repository }}
           BRANCH: refs/heads/${{ github.event.pull_request.head.ref }}
         run: |
-          gh extension install actions/gh-actions-cache
+          ## gh extension install actions/gh-actions-cache
           echo "Fetching list of cache key"
           
           CACHE_KEYS_FOR_PR=$(gh cache list --repo $REPO --ref $BRANCH --limit 100 | cut -f 2)
+          echo $CACHE_KEYS_FOR_PR
           
-          Setting this to not fail the workflow while deleting cache keys.
+          ## Setting this to not fail the workflow while deleting cache keys.
           set +e
           
-          echo $CACHE_KEYS_FOR_PR
           echo "Deleting caches..."
-          ## for CACHE_KEY in $CACHE_KEYS_FOR_PR
-          ## do
-          ##     echo Deleting $CACHE_KEY
-          ## done
-          ## echo "Done"
-          ## gh cache delete $CACHE_KEY --repo $REPO
+          for CACHE_KEY in $CACHE_KEYS_FOR_PR
+          do
+              echo Deleting $CACHE_KEY
+              ## gh cache delete $CACHE_KEY --repo $REPO
+          done
+          echo "Done"
