@@ -13,18 +13,18 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
-          BRANCH: refs/pull/${{ github.event.pull_request.number }}/merge
-          BRANCH2: refs/heads/${{ github.event.pull_request.head.ref }}
+          PR: refs/pull/${{ github.event.pull_request.number }}/merge
+          BRANCH: refs/heads/${{ github.event.pull_request.head.ref }}
         run: |
           gh extension install actions/gh-actions-cache
           echo "Fetching list of cache key"
-          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $BRANCH -L 100 | cut -f 1 )
+          cacheKeysForPR=$(gh actions-cache list -R $REPO -B $PR -L 100 | cut -f 1 )
 
           echo $REPO
-          echo $BRANCH
+          echo $PR
           echo $cacheKeysForPR
 
-          LIST0=$(gh actions-cache list -R $REPO -B $BRANCH)
+          LIST0=$(gh actions-cache list -R $REPO -B $PR)
           echo $LIST0
           
           echo ----------
@@ -36,7 +36,7 @@ jobs:
           LIST1=$(gh cache list --repo $REPO)
           echo $LIST1
           
-          echo $BRANCH2
+          echo $BRANCH
           
           pwd
           
