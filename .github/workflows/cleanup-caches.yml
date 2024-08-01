@@ -22,12 +22,12 @@ jobs:
           echo $CACHE_KEYS_FOR_PR
           
           ## Setting this to not fail the workflow while deleting cache keys.
-          #          set +e
-          #
-          #          echo "Deleting caches..."
-          #          for CACHE_KEY in $CACHE_KEYS_FOR_PR
-          #          do
-          #              echo Deleting $CACHE_KEY
-        # gh cache delete $CACHE_KEY --repo $REPO
-#          done
-#          echo "Done"
+          ## set +e
+          ##
+          ## echo "Deleting caches..."
+          ## for CACHE_KEY in $CACHE_KEYS_FOR_PR
+          ## do
+          ##     echo Deleting $CACHE_KEY
+          ## gh cache delete $CACHE_KEY --repo $REPO
+          ## done
+          ## echo "Done"
