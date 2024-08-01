@@ -22,12 +22,14 @@ jobs:
 
           echo $REPO
           echo $BRANCH
+          echo $cacheKeysForPR
 
           LIST0=$(gh actions-cache list -R $REPO -B $BRANCH)
           echo $LIST0
           
           echo ----------
           gh actions-cache list -h
+          echo ----------
           gh cache list -h
           echo ----------
           
@@ -38,7 +40,8 @@ jobs:
           
           pwd
           
-          ls -al .
+          LIST2=$(gh cache list --ref $BRANCH)
+          echo $LIST2
 
 #          LIST2=$(gh cache list --ref $BRANCH2)
 #          echo $LIST2
