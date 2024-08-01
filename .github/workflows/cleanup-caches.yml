@@ -40,7 +40,7 @@ jobs:
           
           pwd
           
-          LIST2=$(gh cache list --ref $BRANCH)
+          LIST2=$(gh cache list --repo $REPO --ref $BRANCH)
           echo $LIST2
 
 #          LIST2=$(gh cache list --ref $BRANCH2)
