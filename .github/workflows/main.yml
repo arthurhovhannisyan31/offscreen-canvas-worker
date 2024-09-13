@@ -2,6 +2,35 @@ name: Deploy
 on:
   push:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      tags:
+        description: 'Test scenario tags'
+        required: false
+        type: boolean
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+      chosen-os:
+        required: true
+        type: choice
+        options:
+          - Ubuntu
+          - MacOS
+          - Windows
+      file-path: # id of input
+        description: "Path to test script"
+        required: true
+        default: "test-file.js"
 
 jobs:
   validation:
