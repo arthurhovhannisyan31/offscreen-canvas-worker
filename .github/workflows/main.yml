@@ -33,7 +33,7 @@ on:
         default: "test-file.js"
 
 env:
-  PASSWORD: "hello kitty"
+  PASSWORD_: "hello kitty"
 
 jobs:
   validation:
@@ -41,19 +41,45 @@ jobs:
 
     env:
       USERNAME: ${{ secrets.USERNAME }}
-      PASSWORD: "can not use env context"
-      PORT: job-level-validation-port
+#      PASSWORD: "can not use env context"
+#      PORT: job-level-validation-port
 
     runs-on: ubuntu-latest
     outputs:
       yarn_cache_dir_path: ${{ steps.yarn_cache_dir_path.outputs.yarn_cache_dir_path }}
     steps:
-      - name: check_environments
+      - name: Test workflow commands
+        id: test-workflow-commands
         run: |
+          echo "::group::Info"
+          echo "::notice file=app.js,line=1,col=5,endColumn=7::Missing semicolon"
+          echo "::warning file=app.js,line=1,col=5,endColumn=7::Missing semicolon"
+          echo "::error file=app.js,line=1,col=5,endColumn=7::Missing semicolon"
+          echo "::add-mask::Mona The Octocat"
+          echo "::add-mask::${{ vars.PASSWORD }}"
+          echo "::stop-commands::stopMarker"
+          echo "Hello kitty"
+          echo "::stopMarker::"
+          echo "pwd=${{ vars.PASSWORD }}" >> $GITHUB_OUTPUT
+          echo "::endgroup::"
+
+      - name: Check environments
+        run: |
+          echo "The pwd is ${{ steps.test-workflow-commands.outputs.pwd }}"
           echo "Environment variables DB_NAME": ${{ env.DB_NAME }}
-          echo "Environment variables PASSWORD": ${{ env.PASSWORD }}
+          echo "Environment variables PASSWORD": ${{ vars.PASSWORD }}
           echo "Environment variables PORT": ${{ env.PORT }}
           echo "Environment variables USERNAME": ${{ env.USERNAME }}
+
+      - name: Add dynamic environments
+        run: |
+          echo "My_ENV_VAR=123" >> $GITHUB_ENV
+          echo "BUILD_TIME=$(date +'%D-%T')" >> $GITHUB_ENV
+
+      - name: Use environment variable
+        run: |
+          echo "The value of My_ENV_VAR is $My_ENV_VAR"
+          echo "Deploying at $BUILD_TIME"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -90,6 +116,10 @@ jobs:
 
       - name: Validate tests
         run: yarn test
+
+      - name: Generate summary
+        run: |
+          echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
 
   build:
     environment: production
