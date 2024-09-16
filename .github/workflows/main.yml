@@ -115,7 +115,16 @@ jobs:
         run: yarn check-lint
 
       - name: Validate tests
+        id: validate-tests
         run: yarn test
+
+      - name: Upload test report
+        id: upload-test-report
+        if: ${{ failure() && steps.validate-tests.outcome == 'failure' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: ./coverage/
 
       - name: Generate summary
         run: |
@@ -171,7 +180,6 @@ jobs:
         with:
           name: dist-files
           path: dist
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -187,3 +195,12 @@ jobs:
 
       - name: Display structure of downloaded files
         run: ls -R .
+  report:
+    needs: deploy
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "Hello kitty"
+          echo ${{ github }}
