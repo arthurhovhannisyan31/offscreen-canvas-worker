@@ -41,12 +41,10 @@ jobs:
 
     env:
       USERNAME: ${{ secrets.USERNAME }}
-#      PASSWORD: "can not use env context"
-#      PORT: job-level-validation-port
 
     runs-on: ubuntu-latest
-    outputs:
-      yarn_cache_dir_path: ${{ steps.yarn_cache_dir_path.outputs.yarn_cache_dir_path }}
+#    outputs:
+#      yarn_cache_dir_path: ${{ steps.yarn_cache_dir_path.outputs.yarn_cache_dir_path }}
     steps:
       - name: Test workflow commands
         id: test-workflow-commands
