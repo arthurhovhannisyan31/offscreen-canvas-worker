@@ -1,7 +1,8 @@
 name: Matrix Demo
 on:
  push:
-
+    branches:
+      - dev
 jobs:
   build:
     strategy:
