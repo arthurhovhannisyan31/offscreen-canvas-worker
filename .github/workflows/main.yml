@@ -147,7 +147,6 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install NodeJS
         uses: actions/setup-node@v4
         with:
@@ -172,7 +171,6 @@ jobs:
 
       - name: Build
         run: yarn build
-
       - name: Publish file names
         run: find dist/assets/*.js -type f -execdir echo '{}' ';'
 
@@ -190,6 +188,9 @@ jobs:
 #    secrets:
 #      some-secret: ${{ secrets.some-secret }}
 #       required: false
+  build-pages:
+    needs: build
+    uses: ./.github/workflows/publish-page.yml
   print-deploy-result:
     needs: deploy
     runs-on: ubuntu-latest
