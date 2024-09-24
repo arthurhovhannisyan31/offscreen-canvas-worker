@@ -169,6 +169,12 @@ jobs:
         if: ${{ steps.restore-dependencies.outputs.cache-hit != 'true' }}
         run: yarn
 
+      - name: Create env file
+        run: |
+          touch .env
+          echo ${{ vars.VITE_ASSETS_PATH }}
+          echo ASSET_PATH=${{ vars.VITE_ASSETS_PATH }} >> .env
+          cat .env
       - name: Build
         run: yarn build
       - name: Publish file names
