@@ -38,10 +38,8 @@ env:
 jobs:
   validation:
     environment: development
-
     env:
       USERNAME: ${{ secrets.USERNAME }}
-
     runs-on: ubuntu-latest
 #    outputs:
 #      yarn_cache_dir_path: ${{ steps.yarn_cache_dir_path.outputs.yarn_cache_dir_path }}
@@ -60,7 +58,6 @@ jobs:
           echo "::stopMarker::"
           echo "pwd=${{ vars.PASSWORD }}" >> $GITHUB_OUTPUT
           echo "::endgroup::"
-
       - name: Check environments
         run: |
           echo "The pwd is ${{ steps.test-workflow-commands.outputs.pwd }}"
@@ -68,32 +65,25 @@ jobs:
           echo "Environment variables PASSWORD": ${{ vars.PASSWORD }}
           echo "Environment variables PORT": ${{ env.PORT }}
           echo "Environment variables USERNAME": ${{ env.USERNAME }}
-
       - name: Add dynamic environments
         run: |
           echo "My_ENV_VAR=123" >> $GITHUB_ENV
           echo "BUILD_TIME=$(date +'%D-%T')" >> $GITHUB_ENV
-
       - name: Use environment variable
         run: |
           echo "The value of My_ENV_VAR is $My_ENV_VAR"
           echo "Deploying at $BUILD_TIME"
-
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Install NodeJS
         uses: actions/setup-node@v4
         with:
           node-version: 20.12.2
-
       - name: Enable yarn
         run: corepack enable
-
 #      - name: Get yarn cache directory path
 #        id: yarn_cache_dir_path
 #        run: echo "yarn_cache_dir_path=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
       - name: Restore dependencies
         id: restore-dependencies
         uses: actions/cache@v4
@@ -103,21 +93,16 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-
       - name: Install dependencies
         if: ${{ steps.restore-dependencies.outputs.cache-hit != 'true' }}
         run: yarn
-
       - name: Validate types
         run: yarn check-ts
-
       - name: Validate lint
         run: yarn check-lint
-
       - name: Validate tests
         id: validate-tests
         run: yarn test
-
       - name: Upload test report
         id: upload-test-report
         if: ${{ failure() && steps.validate-tests.outcome == 'failure' }}
@@ -125,11 +110,9 @@ jobs:
         with:
           name: test-report
           path: ./coverage/
-
       - name: Generate summary
         run: |
           echo "### Hello world! :rocket:" >> $GITHUB_STEP_SUMMARY
-
   build:
     environment: production
     runs-on: ubuntu-latest
@@ -144,17 +127,14 @@ jobs:
           echo "Environment variables PASSWORD": ${{ env.PASSWORD }}
           echo "Environment variables PORT": ${{ env.PORT }}
           echo "Environment variables USERNAME": ${{ env.USERNAME }}
-
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Install NodeJS
         uses: actions/setup-node@v4
         with:
           node-version: 20.12.2
-
       - name: Enable yarn
         run: corepack enable
-
       - name: Restore dependencies
         id: restore-dependencies
         uses: actions/cache@v4
@@ -164,11 +144,9 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-
       - name: Install dependencies
         if: ${{ steps.restore-dependencies.outputs.cache-hit != 'true' }}
         run: yarn
-
       - name: Create env file
         run: |
           touch .env
@@ -179,7 +157,6 @@ jobs:
         run: yarn build
       - name: Publish file names
         run: find dist/assets/*.js -type f -execdir echo '{}' ';'
-
       - name: Upload artifacts
         id: upload-dist
         uses: actions/upload-artifact@v4
@@ -212,3 +189,10 @@ jobs:
         run: |
           echo "Hello kitty"
           echo ${{ toJSON(github) }}
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - name: Hello world action step
+        id: hello
+        uses:
