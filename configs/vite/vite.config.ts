@@ -16,10 +16,11 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       sourcemap: true,
       manifest: true,
     },
+    /* dev server */
     server:{
       headers:{
         "Cross-Origin-Opener-Policy": "same-origin",
-          "Cross-Origin-Embedder-Policy": "require-corp",
+        "Cross-Origin-Embedder-Policy": "require-corp",
       },
     },
     plugins: [
