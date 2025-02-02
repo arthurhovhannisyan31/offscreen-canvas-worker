@@ -11,10 +11,7 @@ const htmlPluginOpt = {
 export default ({ mode }: ConfigEnv): UserConfig => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 
-  console.log(process.env.VITE_ASSETS_PATH);
-
   return defineConfig({
-    base: process.env.VITE_ASSETS_PATH,
     build: {
       sourcemap: true,
       manifest: true,
