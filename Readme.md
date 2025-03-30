@@ -1,4 +1,8 @@
-# Offscreen canvas with worker
+<div align="center">
+  <h1><code>offscreen-canvas-worker</code></h1>
+
+  <a href="https://offscreen-canvas-worker.vercel.app/">Deployment link</a>
+</div>
 
 ### Description
 This application has split core logic. Main thread is responsible for hosting DOM elements and UI interactions. Worker thread(s) responsible for data fetching, processing and submission to the main thread.
