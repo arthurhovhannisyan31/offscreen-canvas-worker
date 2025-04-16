@@ -97,9 +97,9 @@ jobs:
         if: ${{ steps.restore-dependencies.outputs.cache-hit != 'true' }}
         run: yarn
       - name: Validate types
-        run: yarn check-ts
+        run: yarn types
       - name: Validate lint
-        run: yarn check-lint
+        run: yarn lint
       - name: Validate tests
         id: validate-tests
         run: yarn test

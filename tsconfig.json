@@ -10,6 +10,6 @@
     "target": "ESNext",
     "typeRoots": ["./src/typings"],
   },
-  "include": ["src", "configs/**/*", "**/*.config.ts", "temp"],
+  "include": ["src", "configs/**/*", "temp"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

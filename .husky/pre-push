@@ -2,6 +2,6 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-yarn check-ts
-yarn check-lint
+yarn types
+yarn lint
 yarn test
